@@ -8,7 +8,7 @@ type CheckAuthProps = {
   }
 
 const CheckAuth: React.FC<CheckAuthProps> = ({ children }) => {
-    const token = cookies().get('Authorization')
+    let token = cookies().get('Authorization')
     return (
         <div>
             <div>
