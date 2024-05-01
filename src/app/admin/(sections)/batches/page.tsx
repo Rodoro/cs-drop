@@ -4,6 +4,7 @@ import Button from '@/components/interface/Button'
 import NumberInput from '@/components/interface/NumberInput'
 import { Batch, Game } from '@/types/admin.interface'
 import axios from 'axios'
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
@@ -18,19 +19,18 @@ const Batches = () => {
   const [games, setGames] = useState<Game[]>([]);
 
   const router = useRouter();
+  const { data: session, status: sessionStatus } = useSession();
 
   useEffect(() => {
-
     const fetchData = async () => {
-      const cookies = document.cookie.split(';').map(cookie => cookie.trim());
-      const authCookie = cookies.find(cookie => cookie.startsWith('Authorization='));
-      const authToken = authCookie ? authCookie.split('=')[1] : '';
-      const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/batches/get-all', {
-        headers: {
-          'Authorization': authToken
-        }
-      });
-      setBatches(res.data)
+      if (session) {
+        const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/batches/get-all', {
+          headers: {
+            'Authorization': session?.token.accessToken
+          }
+        });
+        setBatches(res.data)
+      }
       // const res2 = await axios.get('http://95.165.94.222:8090/api/v1/admin/games/get-all', {
       //   headers: {
       //     'Authorization': authToken
@@ -40,7 +40,7 @@ const Batches = () => {
       // console.log(res2.data)
     };
     fetchData();
-  }, []);
+  }, [session]);
 
   useEffect(() => {
     setFilteredBatches(batches.filter(batch => batch.title.toLowerCase().includes(searchTerm)));
@@ -62,7 +62,7 @@ const Batches = () => {
     <div className="ml-32 m-8 space-y-4">
       <div className="flex flex-row justify-between">
         <InputSearch onChange={(e: any) => setSearchTerm(e.target.value)} />
-        <Button onClick={() => router.replace("/admin/batches/create")}>Create Batche</Button>
+        <Button className="px-2" onClick={() => router.replace("/admin/batches/create")}>Create Batche</Button>
       </div>
       <div className="flex flex-row justify-end space-x-3">
         <select value={selectedGame} onChange={handleGameChange} className='flex flex-row items-center font-sans text-xm text-center font-semibold text-[#f9fafb] py-2 px-3 rounded-xl bg-blue-500 bg-[rgba(17,22,46,0.3)]'>
@@ -95,7 +95,7 @@ const Batches = () => {
                     <>Null</>
                   ) : (
                     <>
-                    {batch.game.name}
+                      {batch.game.name}
                     </>
                   )}</td>
                   <td className='flex items-center justify-end space-x-3'>

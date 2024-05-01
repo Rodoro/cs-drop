@@ -4,6 +4,7 @@ import FormInput from '@/components/interface/FormInput'
 import React from 'react'
 import { login } from '@/utils/helperApi'
 import { useRouter } from 'next/navigation'
+import { signIn } from 'next-auth/react'
 
 const LoginForm = () => {
   const router = useRouter();
@@ -13,9 +14,13 @@ const LoginForm = () => {
     const email = e.target[0].value;
     const password = e.target[1].value;
 
-    const data = await login(email, password)
-    console.log(data)
-    if (data.success === true) {
+    const res = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+    console.log(res)
+    if (res?.url) {
       router.replace('/')
     }
   }
