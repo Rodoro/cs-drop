@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react'
 const Batches = () => {
   const [filteredBatches, setFilteredBatches] = useState<Batch[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedGame, setSelectedGame] = useState('');
+  const [selectedGame, setSelectedGame] = useState();
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -24,37 +24,61 @@ const Batches = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (session) {
-        const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/batches/get-all', {
-          headers: {
-            'Authorization': session?.token.accessToken
-          }
-        });
-        setBatches(res.data)
+        getList()
       }
-      // const res2 = await axios.get('http://95.165.94.222:8090/api/v1/admin/games/get-all', {
-      //   headers: {
-      //     'Authorization': authToken
-      //   }
-      // });
-      // setGames(res2.data)
-      // console.log(res2.data)
+      const res2 = await axios.get('http://95.165.94.222:8090/api/v1/admin/games/get-all', {
+        headers: {
+          'Authorization': session?.token.accessToken
+        }
+      });
+      setGames(res2.data)
     };
     fetchData();
   }, [session]);
 
+  const getList = async () => {
+    const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/batches/get-all', {
+      headers: {
+        'Authorization': session?.token.accessToken
+      }
+    });
+    setBatches(res.data)
+  }
+
   useEffect(() => {
-    setFilteredBatches(batches.filter(batch => batch.title.toLowerCase().includes(searchTerm)));
-  }, [searchTerm, batches]);
+    if (selectedGame == "" || selectedGame == undefined) {
+      setFilteredBatches(batches.filter(batch => batch.title.toLowerCase().includes(searchTerm)));
+    } else {
+      setFilteredBatches(batches.filter(batch => batch.title.toLowerCase().includes(searchTerm)).filter(batch => batch.gameId == selectedGame ? batch : null));
+    }
+  }, [searchTerm, batches, selectedGame]);
 
   const handleGameChange = (e: any) => {
     setSelectedGame(e.target.value);
   };
 
   const handleItemsPerPageChange = (e: any) => {
+    setCurrentPage(1)
     setItemsPerPage(parseInt(e.target.value, 10));
   };
 
-  const filteredGames = games.filter(game => game.name.toLowerCase().includes(selectedGame.toLowerCase()));
+  const deleteBatches = async (id: number) => {
+    await axios.delete('http://95.165.94.222:8090/api/v1/admin/batches/delete/' + id, {
+      headers: {
+        'Authorization': session?.token.accessToken
+      }
+    });
+    getList()
+  }
+
+  const searchNameById = (id: number): string | null => {
+    const item = games.find(item => item.id === id);
+    if (item) {
+      return item.name;
+    } else {
+      return null;
+    }
+  }
 
   const sortedBatches = filteredBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
@@ -68,7 +92,7 @@ const Batches = () => {
         <select value={selectedGame} onChange={handleGameChange} className='flex flex-row items-center font-sans text-xm text-center font-semibold text-[#f9fafb] py-2 px-3 rounded-xl bg-blue-500 bg-[rgba(17,22,46,0.3)]'>
           <option className='text-left' value="">All</option>
           {games.map((game) => (
-            <option className='text-left' key={game.id} value={game.name}>
+            <option className='text-left' key={game.id} value={game.id}>
               {game.name}
             </option>
           ))}
@@ -91,17 +115,13 @@ const Batches = () => {
                 <tr key={batch.id}>
                   <td>{batch.id}</td>
                   <td>{batch.title}</td>
-                  <td>{!batch.game ? (
-                    <>Null</>
-                  ) : (
-                    <>
-                      {batch.game.name}
-                    </>
-                  )}</td>
+                  <td>
+                    {searchNameById(batch.gameId)}
+                  </td>
                   <td className='flex items-center justify-end space-x-3'>
                     <Button>Replicate</Button>
                     <Button>View</Button>
-                    <Button>Delete</Button>
+                    <Button onClick={() => { deleteBatches(batch.id) }}>Delete</Button>
                     <Button>Edit</Button>
                   </td>
                 </tr>
@@ -118,7 +138,7 @@ const Batches = () => {
             Записи ненайдены
           </div>
         ) : (
-          <div>
+          <div className='flex flex-row justify-center space-x-3'>
             <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
             <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage * itemsPerPage >= filteredBatches.length}>Next</button>
           </div>

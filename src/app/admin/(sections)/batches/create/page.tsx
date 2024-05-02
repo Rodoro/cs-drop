@@ -1,11 +1,35 @@
 "use client"
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/common/Card'
-import React, { useState } from 'react'
+import Button from '@/components/interface/Button';
+import Input from '@/components/interface/Input';
+import { Game } from '@/types/admin.interface';
+import axios from 'axios';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
 
 const CreateBatches = () => {
     const [title, setTitle] = useState('');
     const [game, setGame] = useState('');
     const [locales, setLocales] = useState([{ language: 'ru', title: '' }, { language: 'en', title: '' }]);
+    const [games, setGames] = useState<Game[]>([]);
+    const [selectedGame, setSelectedGame] = useState();
+    const { data: session, status: sessionStatus } = useSession();
+    const router = useRouter();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (session) {
+                const res2 = await axios.get('http://95.165.94.222:8090/api/v1/admin/games/get-all', {
+                    headers: {
+                        'Authorization': session?.token.accessToken
+                    }
+                });
+                setGames(res2.data)
+            }
+        };
+        fetchData();
+    }, [session]);
 
     const handleChangeLanguage = (index: number, value: string) => {
         const newLocales = [...locales];
@@ -19,6 +43,11 @@ const CreateBatches = () => {
         setLocales(newLocales);
     };
 
+    const handleGameChange = (e: any) => {
+        setSelectedGame(e.target.value);
+        console.log(e.target.value)
+    };
+
     const handleAddRow = () => {
         setLocales([...locales, { language: '', title: '' }]);
     };
@@ -29,6 +58,25 @@ const CreateBatches = () => {
         setLocales(newLocales);
     };
 
+    const handleSubmit = async () => {
+        const batchData = {
+            title,
+            gameId: selectedGame||1,
+            languages: locales.map(locale => ({ title: locale.language, text: locale.title }))
+        };
+        console.log(selectedGame)
+        await axios.post('http://95.165.94.222:8090/api/v1/admin/batches/create',batchData, {
+            headers: {
+                'Authorization': session?.token.accessToken
+            }
+        });
+    };
+
+    const handleSubmitAndNew = () => {
+        handleSubmit();
+        window.location.reload();
+    }
+
     return (
         <div className="ml-32 m-8 space-y-4">
             <Card>
@@ -38,14 +86,20 @@ const CreateBatches = () => {
                     </CardTitle>
                 </CardHeader>
 
-                <CardContent>
-                    <div>
+                <CardContent className="space-y-3 mb-5">
+                    <div className='flex flex-row space-x-3 items-center'>
                         <label>Title:</label>
-                        <input value={title} onChange={e => setTitle(e.target.value)} />
+                        <Input required value={title} onChange={e => setTitle(e.target.value)} type={'text'} />
                     </div>
-                    <div>
+                    <div className='flex flex-row space-x-3 items-center'>
                         <label>Game:</label>
-                        <input value={game} onChange={e => setGame(e.target.value)} />
+                        <select required value={selectedGame} onChange={handleGameChange} className='flex flex-row items-center font-sans text-xm text-center font-semibold text-[#f9fafb] py-2 px-3 rounded-xl bg-blue-500 bg-[rgba(17,22,46,0.3)]'>
+                            {games.map((game) => (
+                                <option className='text-left' key={game.id} value={game.id}>
+                                    {game.name}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div>
                         <table>
@@ -60,25 +114,24 @@ const CreateBatches = () => {
                                 {locales.map((locale, index) => (
                                     <tr key={index}>
                                         <td>
-                                            <input value={locale.language} onChange={e => handleChangeLanguage(index, e.target.value)} />
+                                            <Input value={locale.language} onChange={e => handleChangeLanguage(index, e.target.value)} type={'text'} />
                                         </td>
                                         <td>
-                                            <input value={locale.title} onChange={e => handleChangeTitle(index, e.target.value)} />
+                                            <Input value={locale.title} onChange={e => handleChangeTitle(index, e.target.value)} type={'text'} />
                                         </td>
                                         <td>
-                                            <button onClick={() => handleDeleteRow(index)}>Delete</button>
+                                            <Button onClick={() => handleDeleteRow(index)}>Delete</Button>
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
-                    </div>
-                    <div>
                         <button onClick={handleAddRow}>+ Add Row</button>
-                        <div>
-                            <button>Create</button>
-                            <button>Create and Open New</button>
-                        </div>
+                    </div>
+                    <div className='flex flex-row justify-end space-x-3'>
+                        <button onClick={() => router.replace("/admin/batches")}>Cansel</button>
+                        <Button onClick={() => {handleSubmit(); router.replace("/admin/batches")}}>Create</Button>
+                        <Button onClick={handleSubmitAndNew}>Create and Open New</Button>
                     </div>
                 </CardContent>
             </Card>
