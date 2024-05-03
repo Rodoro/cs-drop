@@ -80,6 +80,29 @@ const Batches = () => {
     }
   }
 
+  const replaseBatches = async (index: number) => {
+    const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/batches/get/' + index, {
+      headers: {
+        'Authorization': session?.token.accessToken
+      }
+    });
+    const data: Batch = res.data;
+    const { id, ...newData } = data;
+    const { gameId, ...filteredData } = newData;
+    const filteredLanguages = data.languages.map(({ id, ...language }) => language);
+    const result = {
+      title: filteredData.title,
+      gameId,
+      languages: filteredLanguages
+    };
+    await axios.post('http://95.165.94.222:8090/api/v1/admin/batches/create', result, {
+      headers: {
+        'Authorization': session?.token.accessToken
+      }
+    });
+    getList()
+  }
+
   const sortedBatches = filteredBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
@@ -119,10 +142,10 @@ const Batches = () => {
                     {searchNameById(batch.gameId)}
                   </td>
                   <td className='flex items-center justify-end space-x-3'>
-                    <Button>Replicate</Button>
-                    <Button onClick={() => router.replace("/admin/batches/"+batch.id+"/view")}>View</Button>
+                    <Button onClick={() => replaseBatches(batch.id)}>Replicate</Button>
+                    <Button onClick={() => router.replace("/admin/batches/" + batch.id + "/view")}>View</Button>
                     <Button onClick={() => { deleteBatches(batch.id) }}>Delete</Button>
-                    <Button onClick={() => router.replace("/admin/batches/"+batch.id+"/edit")}>Edit</Button>
+                    <Button onClick={() => router.replace("/admin/batches/" + batch.id + "/edit")}>Edit</Button>
                   </td>
                 </tr>
               ))
