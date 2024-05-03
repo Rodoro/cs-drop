@@ -120,9 +120,9 @@ const Batches = () => {
                   </td>
                   <td className='flex items-center justify-end space-x-3'>
                     <Button>Replicate</Button>
-                    <Button>View</Button>
+                    <Button onClick={() => router.replace("/admin/batches/"+batch.id+"/view")}>View</Button>
                     <Button onClick={() => { deleteBatches(batch.id) }}>Delete</Button>
-                    <Button>Edit</Button>
+                    <Button onClick={() => router.replace("/admin/batches/"+batch.id+"/edit")}>Edit</Button>
                   </td>
                 </tr>
               ))

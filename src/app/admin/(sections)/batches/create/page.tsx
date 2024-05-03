@@ -10,7 +10,6 @@ import React, { useEffect, useState } from 'react'
 
 const CreateBatches = () => {
     const [title, setTitle] = useState('');
-    const [game, setGame] = useState('');
     const [locales, setLocales] = useState([{ language: 'ru', title: '' }, { language: 'en', title: '' }]);
     const [games, setGames] = useState<Game[]>([]);
     const [selectedGame, setSelectedGame] = useState();
