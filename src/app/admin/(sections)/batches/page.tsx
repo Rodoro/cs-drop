@@ -163,6 +163,7 @@ const Batches = () => {
         ) : (
           <div className='flex flex-row justify-center space-x-3'>
             <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
+            <span> / </span>
             <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage * itemsPerPage >= filteredBatches.length}>Next</button>
           </div>
         )}

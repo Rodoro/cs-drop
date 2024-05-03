@@ -1,6 +1,47 @@
 import { Account, User as AuthUser, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+async function refreshAccessToken(token: any) {
+    try {
+        // const url =
+        //     "https://oauth2.googleapis.com/token?" +
+        //     new URLSearchParams({
+        //         client_id: process.env.GOOGLE_CLIENT_ID,
+        //         client_secret: process.env.GOOGLE_CLIENT_SECRET,
+        //         grant_type: "refresh_token",
+        //         refresh_token: token.refreshToken,
+        //     })
+
+        // const response = await fetch(url, {
+        //     headers: {
+        //         "Content-Type": "application/x-www-form-urlencoded",
+        //     },
+        //     method: "POST",
+        // })
+
+        // const refreshedTokens = await response.json()
+
+        // if (!response.ok) {
+        //     throw refreshedTokens
+        // }
+
+        // return {
+        //     ...token,
+        //     accessToken: refreshedTokens.access_token,
+        //     accessTokenExpires: Date.now() + refreshedTokens.expires_in * 1000,
+        //     refreshToken: refreshedTokens.refresh_token ?? token.refreshToken, // Fall back to old refresh token
+        // }
+
+    } catch (e) {
+        console.log(e)
+
+        return {
+            ...token,
+            error: "RefreshAccessTokenError",
+        }
+    }
+}
+
 export const authOptions: any = {
     providers: [
         CredentialsProvider({
@@ -39,9 +80,10 @@ export const authOptions: any = {
                 token.refreshToken = user.result.refreshToken
             }
 
-            //if (Date.now() < token.accessTokenExpires) {
+            if (Date.now() < token.accessTokenExpires) {
                 return token
-            //}
+            }
+            return refreshAccessToken(token)
         },
         async session(session: any, token: any) {
             if (token) {
