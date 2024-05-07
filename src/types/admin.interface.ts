@@ -17,3 +17,15 @@ export interface Language {
     title: string;
     text: string;
 }
+
+export interface Staff {
+    guid: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    name: string;
+    passwordSalt: string;
+    ts: string;
+    password: string;
+    isMainAdmin: boolean;
+}
