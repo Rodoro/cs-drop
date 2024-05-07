@@ -124,39 +124,27 @@ const Batches = () => {
         </select>
         <NumberInput value={itemsPerPage} onChange={handleItemsPerPageChange} />
       </div>
-      <table className='w-full'>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Game</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        {sortedBatches.length != 0 ? (
-          <tbody>
-            {
-              sortedBatches.map(batch => (
-                <tr key={batch.id}>
-                  <td>{batch.id}</td>
-                  <td>{batch.title}</td>
-                  <td>
-                    {searchNameById(batch.gameId)}
-                  </td>
-                  <td className='flex items-center justify-end space-x-3'>
-                    <Button onClick={() => replaseBatches(batch.id)}>Replicate</Button>
-                    <Button onClick={() => router.replace("/admin/batches/" + batch.id + "/view")}>View</Button>
-                    <Button onClick={() => { deleteBatches(batch.id) }}>Delete</Button>
-                    <Button onClick={() => router.replace("/admin/batches/" + batch.id + "/edit")}>Edit</Button>
-                  </td>
-                </tr>
-              ))
-            }
-          </tbody>
-        ) : (
-          <></>
-        )}
-      </table>
+      <div className="flex items-center flex-col">
+        <div className='flex flex-row w-full'>
+          <div className="w-1/4"><b>ID</b></div>
+          <div className="w-1/4"><b>Title</b></div>
+          <div className="w-1/4"><b>Game</b></div>
+          <div className="w-1/4"><b>Actions</b></div>
+        </div>
+        {sortedBatches.map(batch => (
+          <div className='flex flex-row w-full my-1' key={batch.id}>
+            <div className="w-1/4">{batch.id}</div>
+            <div className="w-1/4">{batch.title}</div>
+            <div className="w-1/4">{searchNameById(batch.gameId)}</div>
+            <div className="w-1/4 flex items-center justify-end space-x-3">
+              <Button onClick={() => replaseBatches(batch.id)}>Replicate</Button>
+              <Button onClick={() => router.replace("/admin/batches/" + batch.id + "/view")}>View</Button>
+              <Button onClick={() => { deleteBatches(batch.id) }}>Delete</Button>
+              <Button onClick={() => router.replace("/admin/batches/" + batch.id + "/edit")}>Edit</Button>
+            </div>
+          </div>
+        ))}
+      </div>
       <div>
         {sortedBatches.length == 0 ? (
           <div className='flex flex-row justify-center text-3xl mt-6'>
