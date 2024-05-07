@@ -23,18 +23,20 @@ const Batches = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (session) {
+      if (sessionStatus == "authenticated") {
+        console.log(123)
         getList()
+
+        const res2 = await axios.get('http://95.165.94.222:8090/api/v1/admin/games/get-all', {
+          headers: {
+            'Authorization': session?.token.accessToken
+          }
+        });
+        setGames(res2.data)
       }
-      const res2 = await axios.get('http://95.165.94.222:8090/api/v1/admin/games/get-all', {
-        headers: {
-          'Authorization': session?.token.accessToken
-        }
-      });
-      setGames(res2.data)
     };
     fetchData();
-  }, [session]);
+  }, [sessionStatus]);
 
   const getList = async () => {
     const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/batches/get-all', {

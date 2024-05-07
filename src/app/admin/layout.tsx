@@ -10,7 +10,7 @@ export default function DashboardLayout({
     children: React.ReactNode
 }) {
     const router = useRouter();
-    const { data: session, status: sessionStatus } = useSession();
+    const { status: sessionStatus } = useSession();
 
     if (sessionStatus === "loading") {
         return <h1 className="flex min-h-screen flex-col items-center mt-6">Загрузка...</h1>

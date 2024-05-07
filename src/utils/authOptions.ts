@@ -1,37 +1,27 @@
+import axios from "axios";
 import { Account, User as AuthUser, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 async function refreshAccessToken(token: any) {
     try {
-        // const url =
-        //     "https://oauth2.googleapis.com/token?" +
-        //     new URLSearchParams({
-        //         client_id: process.env.GOOGLE_CLIENT_ID,
-        //         client_secret: process.env.GOOGLE_CLIENT_SECRET,
-        //         grant_type: "refresh_token",
-        //         refresh_token: token.refreshToken,
-        //     })
-
-        // const response = await fetch(url, {
-        //     headers: {
-        //         "Content-Type": "application/x-www-form-urlencoded",
-        //     },
-        //     method: "POST",
-        // })
-
-        // const refreshedTokens = await response.json()
-
-        // if (!response.ok) {
+        const data = {
+            staffId: token.staffId,
+            refreshToken: token.refreshToken
+        }
+        console.log(token);
+        console.log(data)
+        const res = await axios.post('http://95.165.94.222:8090/api/v1/admin/staff/refresh_token', data);
+        const refreshedTokens = await res.data;
+        console.log(refreshedTokens)
+        console.log(res)
+        // if (res.data.status != 200) {
         //     throw refreshedTokens
         // }
-
-        // return {
-        //     ...token,
-        //     accessToken: refreshedTokens.access_token,
-        //     accessTokenExpires: Date.now() + refreshedTokens.expires_in * 1000,
-        //     refreshToken: refreshedTokens.refresh_token ?? token.refreshToken, // Fall back to old refresh token
-        // }
-
+        token.accessToken = refreshedTokens.result.accessToken
+        token.accessTokenExpires = Date.now() + 900 * 1000
+        token.refreshToken = refreshedTokens.result.refreshToken
+        console.log(token)
+        return token
     } catch (e) {
         console.log(e)
 
@@ -54,7 +44,7 @@ export const authOptions: any = {
 
             async authorize(credentials: any) {
                 try {
-                    const res = await fetch("http://95.165.94.222:8090/api/v1/admin/staff/login", {
+                    const res: any = await fetch("http://95.165.94.222:8090/api/v1/admin/staff/login", {
                         method: 'POST',
                         body: JSON.stringify({ email: credentials.email, password: credentials.password }),
                         headers: { "Content-Type": "application/json" }
@@ -62,6 +52,12 @@ export const authOptions: any = {
                     let user = await res.json()
 
                     if (res.ok && user) {
+                        const res2: any = await fetch("http://95.165.94.222:8090/api/v1/admin/staff/me", {
+                            method: 'GET',
+                            headers: { "Authorization": user.result.accessToken }
+                        })
+                        const resJson = await res2.json()
+                        user.staffId = resJson.result
                         return user
                     }
                     console.log(0)
@@ -78,11 +74,13 @@ export const authOptions: any = {
                 token.accessToken = user.result.accessToken
                 token.accessTokenExpires = Date.now() + 900 * 1000
                 token.refreshToken = user.result.refreshToken
+                token.staffId = user.staffId
             }
 
             if (Date.now() < token.accessTokenExpires) {
                 return token
             }
+            console.log("refresh")
             return refreshAccessToken(token)
         },
         async session(session: any, token: any) {

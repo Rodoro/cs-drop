@@ -9,7 +9,7 @@ export interface Batch {
 export interface Game {
     id: number;
     name: string;
-    SteamGameID: number;
+    steamGameID: number;
 }
 
 export interface Language {
