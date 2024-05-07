@@ -19,7 +19,7 @@ async function refreshAccessToken(token: any) {
         // }
         token.accessToken = refreshedTokens.result.accessToken
         token.accessTokenExpires = Date.now() + 900 * 1000
-        token.refreshToken = refreshedTokens.result.refreshToken
+        token.refreshToken = refreshedTokens.result.refreshtoken
         console.log(token)
         return token
     } catch (e) {
