@@ -24,7 +24,7 @@ const ViewBatchs = ({ params }: { params: { id: number } }) => {
   }, [session]);
 
   return (
-    <div className="ml-32 m-8 space-y-4">
+    <div className="ml-72 m-8 space-y-4">
       <Card>
         <CardHeader>
           <CardTitle>

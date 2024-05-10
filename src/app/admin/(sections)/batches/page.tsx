@@ -108,7 +108,7 @@ const Batches = () => {
   const sortedBatches = filteredBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <div className="ml-32 m-8 space-y-4">
+    <div className="ml-72 m-8 space-y-4">
       <div className="flex flex-row justify-between">
         <InputSearch onChange={(e: any) => setSearchTerm(e.target.value)} />
         <Button className="px-2" onClick={() => router.replace("/admin/batches/create")}>Create Batche</Button>

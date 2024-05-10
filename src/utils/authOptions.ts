@@ -13,7 +13,6 @@ async function refreshAccessToken(token: any) {
         const res = await axios.post('http://95.165.94.222:8090/api/v1/admin/staff/refresh_token', data);
         const refreshedTokens = await res.data;
         console.log(refreshedTokens)
-        console.log(res)
         // if (res.data.status != 200) {
         //     throw refreshedTokens
         // }

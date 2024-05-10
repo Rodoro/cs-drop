@@ -40,7 +40,7 @@ const Staff = () => {
     const sortedStaffs = sortedObj.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     return (
-        <div className="ml-32 m-8">
+        <div className="ml-72 m-8">
             <div className='flex flex-row justify-between mb-6'>
                 <InputSearch onChange={(e: any) => setSearchTerm(e.target.value)} />
                 <NumberInput value={itemsPerPage} onChange={handleItemsPerPageChange} />
