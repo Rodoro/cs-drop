@@ -4,21 +4,14 @@ import AppBar from '@mui/material/AppBar';
 import React from 'react'
 import Image from 'next/image'
 import Drawer from '@mui/material/Drawer';
-import { usePathname } from 'next/navigation'
-import Button from '@mui/material/Button';
 import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 
 const drawerWidth = 240;
 
@@ -115,6 +108,12 @@ const Navbar = ({ ...props }) => {
                     >
                         <MenuIcon />
                     </IconButton>
+                    <Image
+                            src="/img/interface/nav/logo+text.png"
+                            alt="Логотип"
+                            width={180}
+                            height={40}
+                        />
                 </Toolbar>
             </AppBar>
             <Box

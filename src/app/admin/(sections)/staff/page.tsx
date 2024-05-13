@@ -1,27 +1,15 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { useSession } from 'next-auth/react'
+import { DataGrid } from '@mui/x-data-grid';
+import Box from '@mui/material/Box';
 import axios from 'axios';
 import { Staff } from '@/types/admin.interface';
-import InputSearch from '@/components/InputSearch';
-import NumberInput from '@/components/interface/NumberInput';
+import { useSession } from 'next-auth/react';
 
-const Staff = () => {
+const StafsPage = () => {
     const { data: session, status: sessionStatus } = useSession();
-    const [staffs, setStaffs] = useState<Staff[]>([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [itemsPerPage, setItemsPerPage] = useState(10);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [sortedObj, setSortedObj] = useState<Staff[]>([]);
-
-    useEffect(() => {
-        setSortedObj(staffs.filter(obj => obj.name.toLowerCase().includes(searchTerm.toLowerCase())).filter(obj => obj.email.toLowerCase().includes(searchTerm.toLowerCase())))
-    }, [searchTerm, staffs]);
-
-    const handleItemsPerPageChange = (e: any) => {
-        setCurrentPage(1)
-        setItemsPerPage(parseInt(e.target.value, 10));
-    };
+    const [stafs, setStafs] = useState<Staff[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,49 +19,64 @@ const Staff = () => {
                         'Authorization': session?.token.accessToken
                     }
                 });
-                setStaffs(res.data.result);
+                setStafs(res.data.result)
+                setLoading(false);
             }
         };
         fetchData();
     }, [sessionStatus])
 
-    const sortedStaffs = sortedObj.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    const columns = [
+        { field: 'guid', headerName: 'ID', width: 150 },
+        {
+            field: 'email',
+            headerName: 'Email',
+            width: 150,
+        },
+        {
+            field: 'name',
+            headerName: 'Name',
+            width: 150,
+        },
+        {
+            field: 'updatedAt',
+            headerName: 'Updated At',
+            width: 200,
+        },
+        {
+            field: 'createdAt',
+            headerName: 'Created At',
+            width: 200,
+        },
+    ];
 
     return (
-        <div className="ml-72 m-8">
-            <div className='flex flex-row justify-between mb-6'>
-                <InputSearch onChange={(e: any) => setSearchTerm(e.target.value)} />
-                <NumberInput value={itemsPerPage} onChange={handleItemsPerPageChange} />
-            </div>
-
-            <div className="flex items-center flex-col">
-                <div className='flex flex-row w-full'>
-                    <div className="w-1/3"><b>Email</b></div>
-                    <div className="w-1/3"><b>Name</b></div>
-                    <div className="w-1/3"><b>Guid</b></div>
-                </div>
-                {sortedStaffs.map(staff => (
-                    <div className='flex flex-row w-full my-2' key={staff.guid}>
-                        <div className="w-1/3">{staff.email}</div>
-                        <div className="w-1/3">{staff.name}</div>
-                        <div className="w-1/3">{staff.guid}</div>
-                    </div>
-                ))}
-            </div>
-
-            {setSortedObj.length == 0 ? (
-                <div className='flex flex-row justify-center text-3xl mt-6'>
-                    Записи ненайдены
-                </div>
-            ) : (
-                <div className='flex flex-row justify-center space-x-3 mt-3'>
-                    <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
-                    <span> / </span>
-                    <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage * itemsPerPage >= sortedObj.length}>Next</button>
-                </div>
-            )}
-        </div>
+        <Box style={{ height: stafs.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
+            <DataGrid
+                getRowId={(row) => row.guid}
+                rows={stafs}
+                columns={columns}
+                rowHeight={60}
+                checkboxSelection
+                initialState={{
+                    pagination: { paginationModel: { pageSize: 10 } },
+                }}
+                pageSizeOptions={[5, 10, 25]}
+                loading={loading}
+                sx={{
+                    color: "#fff",
+                    borderWidth: '0px',
+                    '--DataGrid-rowBorderColor': "#272B35",
+                    '--DataGrid-containerBackground': "#272B35",
+                    '& .MuiDataGrid-footerContainer': { background: '#272B35' },
+                    '& .MuiTablePagination-root': { color: '#fff' },
+                    '& .MuiCheckbox-root': { color: '#fff' },
+                    '& .MuiDataGrid-cell:focus': { outlineColor: '#fff' },
+                    '& .MuiDataGrid-overlay': { background: '#191D3E' },
+                }}
+            />
+        </Box>
     )
 }
 
-export default Staff
+export default StafsPage

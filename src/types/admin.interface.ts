@@ -51,3 +51,13 @@ export interface User {
     steamCreated: string,
     link: string
 }
+
+export interface LootCases {
+    id: number,
+    game: string,
+    batch: string,
+    title: string,
+    price: 0,
+    netPrice: 0,
+    isVisible: boolean,
+}
