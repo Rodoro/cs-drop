@@ -7,7 +7,7 @@ import React from 'react'
 const NotFount = () => {
     const router = useRouter();
     return (
-        <div className="flex flex-col justify-center mt-60">
+        <div className="flex flex-col justify-center mt-60 md:ml-72">
             <div className="justify-center flex flex-col items-center">
                 <center className="m-auto">
                     <div className=" tracking-widest mt-4">

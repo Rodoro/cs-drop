@@ -29,3 +29,16 @@ export interface Staff {
     password: string;
     isMainAdmin: boolean;
 }
+
+export interface Item {
+    id: number,
+    game: string,
+    title: string,
+    imageUrl: string,
+    gameId: number,
+    gameTitleRu: string,
+    gameTitleEn: string,
+    price: number,
+    rarity: string,
+    quality: string
+}

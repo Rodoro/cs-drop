@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import axios from 'axios';
-import { Game } from '@/types/admin.interface';
+import { Item } from '@/types/admin.interface';
 import { useSession } from 'next-auth/react';
 import Avatar from "@mui/material/Avatar";
 
 const ItemsPage = () => {
   const { data: session, status: sessionStatus } = useSession();
-  const [games, setGames] = useState<Game[]>([]);
+  const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +19,7 @@ const ItemsPage = () => {
             'Authorization': session?.token.accessToken
           }
         });
-        setGames(res.data)
+        setItems(res.data)
         console.log(res.data)
       }
     };
@@ -45,7 +45,7 @@ const ItemsPage = () => {
       renderCell: (params: any) => {
         return (
           <div>
-            <Avatar src={params.value} variant="square" sx={{ width: 50, height: 50 }}/>
+            <Avatar src={params.value} variant="square" sx={{ width: 60, height: 60 }}/>
           </div>
         );
       }
@@ -68,20 +68,27 @@ const ItemsPage = () => {
   ];
 
   return (
-    <Box style={{ height: 648 }} className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8">
+    <Box style={{ height: items.length === 0 ? 400 : ''}} className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
       <DataGrid
-        rows={games}
+        rows={items}
         columns={columns}
+        rowHeight={60}
         checkboxSelection
-        autoPageSize
-        loading={games.length === 0}
+        initialState={{
+          pagination: { paginationModel: { pageSize: 10 } },
+        }}
+        pageSizeOptions={[5, 10, 25]}
+        loading={items.length === 0}
         sx={{
           color: "#fff",
-          '--DataGrid-containerBackground': "rgb(59 130 246)",
-          '& .MuiDataGrid-footerContainer': { background: 'rgb(59 130 246)' },
+          borderWidth: '0px',
+          '--DataGrid-rowBorderColor': "#272B35",
+          '--DataGrid-containerBackground': "#272B35",
+          '& .MuiDataGrid-footerContainer': { background: '#272B35' },
           '& .MuiTablePagination-root': { color: '#fff' },
           '& .MuiCheckbox-root': { color: '#fff' },
           '& .MuiDataGrid-cell:focus': { outlineColor: '#fff' },
+          '& .MuiDataGrid-overlay': { background: '#191D3E' },
         }}
       />
     </Box>
