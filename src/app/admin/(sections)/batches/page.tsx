@@ -1,77 +1,107 @@
+/* eslint-disable react/jsx-key */
 "use client"
-import InputSearch from '@/components/InputSearch'
-import Button from '@/components/interface/Button'
-import NumberInput from '@/components/interface/NumberInput'
-import { Batch, Game } from '@/types/admin.interface'
-import axios from 'axios'
-import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import { DataGrid } from '@mui/x-data-grid';
+import Box from '@mui/material/Box';
+import axios from 'axios';
+import { Batch, Game } from '@/types/admin.interface';
+import { useSession } from 'next-auth/react';
+import {
+  GridActionsCellItem,
+  GridRowId,
+} from '@mui/x-data-grid';
+import DeleteIcon from '@mui/icons-material/Delete';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import SettingsIcon from '@mui/icons-material/Settings';
+import Button from '@/components/interface/Button';
+import { useRouter } from 'next/navigation';
 
-const Batches = () => {
-  const [filteredBatches, setFilteredBatches] = useState<Batch[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedGame, setSelectedGame] = useState();
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
-
+const BatchesPage = () => {
+  const { data: session, status: sessionStatus } = useSession();
   const [batches, setBatches] = useState<Batch[]>([]);
   const [games, setGames] = useState<Game[]>([]);
-
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const { data: session, status: sessionStatus } = useSession();
 
   useEffect(() => {
     const fetchData = async () => {
       if (sessionStatus == "authenticated") {
-        console.log(123)
-        getList()
-
+        const res1 = await axios.get('http://95.165.94.222:8090/api/v1/admin/batches/get-all', {
+          headers: {
+            'Authorization': session?.token.accessToken
+          }
+        });
+        setBatches(res1.data)
         const res2 = await axios.get('http://95.165.94.222:8090/api/v1/admin/games/get-all', {
           headers: {
             'Authorization': session?.token.accessToken
           }
         });
         setGames(res2.data)
+        setLoading(false);
       }
     };
     fetchData();
-  }, [sessionStatus]);
+  }, [sessionStatus])
 
-  const getList = async () => {
-    const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/batches/get-all', {
-      headers: {
-        'Authorization': session?.token.accessToken
-      }
-    });
-    setBatches(res.data)
-  }
+  const deleteBatche = React.useCallback(
+    (id: GridRowId) => async () => {
+      await axios.delete('http://95.165.94.222:8090/api/v1/admin/batches/delete/' + id, {
+        headers: {
+          'Authorization': session?.token.accessToken
+        }
+      }).then(() => {
+        setTimeout(() => {
+          setBatches((prevRows) => prevRows.filter((row) => row.id !== id));
+        });
+      });
+    },
+    [],
+  );
 
-  useEffect(() => {
-    if (selectedGame == "" || selectedGame == undefined) {
-      setFilteredBatches(batches.filter(batch => batch.title.toLowerCase().includes(searchTerm)));
-    } else {
-      setFilteredBatches(batches.filter(batch => batch.title.toLowerCase().includes(searchTerm)).filter(batch => batch.gameId == selectedGame ? batch : null));
-    }
-  }, [searchTerm, batches, selectedGame]);
+  const duplicateBatche = React.useCallback(
+    (index: GridRowId) => async () => {
+      const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/batches/get/' + index, {
+        headers: {
+          'Authorization': session?.token.accessToken
+        }
+      });
+      const data: Batch = res.data;
+      const { id, ...newData } = data;
+      const { gameId, ...filteredData } = newData;
+      const filteredLanguages = data.languages.map(({ id, ...language }) => language);
+      const result = {
+        title: filteredData.title,
+        gameId,
+        languages: filteredLanguages
+      };
+      const res2: Batch = await axios.post('http://95.165.94.222:8090/api/v1/admin/batches/create', result, {
+        headers: {
+          'Authorization': session?.token.accessToken
+        }
+      })
+      setBatches((prevRows) => {
+        const rowToDuplicate = prevRows.find((row) => row.id === id)!;
+        return [...prevRows, { ...rowToDuplicate, id: res2.data.id }];
+      });
+    },
+    [],
+  );
 
-  const handleGameChange = (e: any) => {
-    setSelectedGame(e.target.value);
-  };
+  const viewBatche = React.useCallback(
+    (id: GridRowId) => () => {
+      router.push("/admin/batches/" + id + "/view")
+    },
+    [],
+  );
 
-  const handleItemsPerPageChange = (e: any) => {
-    setCurrentPage(1)
-    setItemsPerPage(parseInt(e.target.value, 10));
-  };
-
-  const deleteBatches = async (id: number) => {
-    await axios.delete('http://95.165.94.222:8090/api/v1/admin/batches/delete/' + id, {
-      headers: {
-        'Authorization': session?.token.accessToken
-      }
-    });
-    getList()
-  }
+  const editBatche = React.useCallback(
+    (id: GridRowId) => () => {
+      router.push("/admin/batches/" + id + "/edit")
+    },
+    [],
+  );
 
   const searchNameById = (id: number): string | null => {
     const item = games.find(item => item.id === id);
@@ -82,84 +112,79 @@ const Batches = () => {
     }
   }
 
-  const replaseBatches = async (index: number) => {
-    const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/batches/get/' + index, {
-      headers: {
-        'Authorization': session?.token.accessToken
-      }
-    });
-    const data: Batch = res.data;
-    const { id, ...newData } = data;
-    const { gameId, ...filteredData } = newData;
-    const filteredLanguages = data.languages.map(({ id, ...language }) => language);
-    const result = {
-      title: filteredData.title,
-      gameId,
-      languages: filteredLanguages
-    };
-    await axios.post('http://95.165.94.222:8090/api/v1/admin/batches/create', result, {
-      headers: {
-        'Authorization': session?.token.accessToken
-      }
-    });
-    getList()
-  }
-
-  const sortedBatches = filteredBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const columns = [
+    { field: 'id', headerName: 'ID', flex: 50 },
+    {
+      field: 'gameId',
+      headerName: 'Game',
+      flex: 50,
+      valueGetter: searchNameById,
+    },
+    {
+      field: 'title',
+      headerName: 'Name',
+      flex: 200,
+    },
+    {
+      field: 'actions',
+      type: 'actions',
+      resizable: false,
+      getActions: (params: any) => [
+        <GridActionsCellItem
+          icon={<DeleteIcon />}
+          label="Delete"
+          onClick={deleteBatche(params.id)}
+        />,
+        <GridActionsCellItem
+          icon={<FileCopyIcon />}
+          label="Duplicate"
+          onClick={duplicateBatche(params.id)}
+          showInMenu
+        />,
+        <GridActionsCellItem
+          icon={<VisibilityIcon />}
+          label="View"
+          onClick={viewBatche(params.id)}
+          showInMenu
+        />,
+        <GridActionsCellItem
+          icon={<SettingsIcon />}
+          label="Edit"
+          onClick={editBatche(params.id)}
+          showInMenu
+        />,
+      ],
+    },
+  ];
 
   return (
-    <div className="ml-72 m-8 space-y-4">
-      <div className="flex flex-row justify-between">
-        <InputSearch onChange={(e: any) => setSearchTerm(e.target.value)} />
-        <Button className="px-2" onClick={() => router.replace("/admin/batches/create")}>Create Batche</Button>
-      </div>
-      <div className="flex flex-row justify-end space-x-3">
-        <select value={selectedGame} onChange={handleGameChange} className='flex flex-row items-center font-sans text-xm text-center font-semibold text-[#f9fafb] py-2 px-3 rounded-xl bg-blue-500 bg-[rgba(17,22,46,0.3)]'>
-          <option className='text-left' value="">All</option>
-          {games.map((game) => (
-            <option className='text-left' key={game.id} value={game.id}>
-              {game.name}
-            </option>
-          ))}
-        </select>
-        <NumberInput value={itemsPerPage} onChange={handleItemsPerPageChange} />
-      </div>
-      <div className="flex items-center flex-col">
-        <div className='flex flex-row w-full'>
-          <div className="w-1/4"><b>ID</b></div>
-          <div className="w-1/4"><b>Title</b></div>
-          <div className="w-1/4"><b>Game</b></div>
-          <div className="w-1/4"><b>Actions</b></div>
-        </div>
-        {sortedBatches.map(batch => (
-          <div className='flex flex-row w-full my-1' key={batch.id}>
-            <div className="w-1/4">{batch.id}</div>
-            <div className="w-1/4">{batch.title}</div>
-            <div className="w-1/4">{searchNameById(batch.gameId)}</div>
-            <div className="w-1/4 flex items-center justify-end space-x-3">
-              <Button onClick={() => replaseBatches(batch.id)}>Replicate</Button>
-              <Button onClick={() => router.replace("/admin/batches/" + batch.id + "/view")}>View</Button>
-              <Button onClick={() => { deleteBatches(batch.id) }}>Delete</Button>
-              <Button onClick={() => router.replace("/admin/batches/" + batch.id + "/edit")}>Edit</Button>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div>
-        {sortedBatches.length == 0 ? (
-          <div className='flex flex-row justify-center text-3xl mt-6'>
-            Записи ненайдены
-          </div>
-        ) : (
-          <div className='flex flex-row justify-center space-x-3'>
-            <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
-            <span> / </span>
-            <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage * itemsPerPage >= filteredBatches.length}>Next</button>
-          </div>
-        )}
-      </div>
-    </div >
+    <Box style={{ height: batches.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
+      <Button className="px-2 mb-6" onClick={() => router.replace("/admin/batches/create")}>Create Batche</Button>
+      <DataGrid
+        rows={batches}
+        columns={columns}
+        rowHeight={60}
+        checkboxSelection
+        initialState={{
+          pagination: { paginationModel: { pageSize: 10 } },
+        }}
+        pageSizeOptions={[5, 10, 25]}
+        loading={loading}
+        sx={{
+          color: "#fff",
+          borderWidth: '0px',
+          '--DataGrid-rowBorderColor': "#272B35",
+          '--DataGrid-containerBackground': "#272B35",
+          '& .MuiButtonBase-root.MuiIconButton-root': { color: '#fff' },
+          '& .MuiDataGrid-footerContainer': { background: '#272B35' },
+          '& .MuiTablePagination-root': { color: '#fff' },
+          '& .MuiCheckbox-root': { color: '#fff' },
+          '& .MuiDataGrid-cell:focus': { outlineColor: '#fff' },
+          '& .MuiDataGrid-overlay': { background: '#191D3E' },
+        }}
+      />
+    </Box>
   )
 }
 
-export default Batches
+export default BatchesPage
