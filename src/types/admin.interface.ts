@@ -42,3 +42,12 @@ export interface Item {
     rarity: string,
     quality: string
 }
+
+export interface User {
+    id: number,
+    uUid: string,
+    username: string,
+    steamId: string,
+    steamCreated: string,
+    link: string
+}

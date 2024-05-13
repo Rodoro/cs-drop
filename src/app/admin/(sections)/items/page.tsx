@@ -10,6 +10,7 @@ import Avatar from "@mui/material/Avatar";
 const ItemsPage = () => {
   const { data: session, status: sessionStatus } = useSession();
   const [items, setItems] = useState<Item[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +21,7 @@ const ItemsPage = () => {
           }
         });
         setItems(res.data)
-        console.log(res.data)
+        setLoading(false);
       }
     };
     fetchData();
@@ -78,7 +79,7 @@ const ItemsPage = () => {
           pagination: { paginationModel: { pageSize: 10 } },
         }}
         pageSizeOptions={[5, 10, 25]}
-        loading={items.length === 0}
+        loading={loading}
         sx={{
           color: "#fff",
           borderWidth: '0px',
