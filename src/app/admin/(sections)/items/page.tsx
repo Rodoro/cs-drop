@@ -6,11 +6,18 @@ import axios from 'axios';
 import { Item } from '@/types/admin.interface';
 import { useSession } from 'next-auth/react';
 import Avatar from "@mui/material/Avatar";
+import {
+  GridActionsCellItem,
+  GridRowId,
+} from '@mui/x-data-grid';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useRouter } from 'next/navigation';
 
 const ItemsPage = () => {
   const { data: session, status: sessionStatus } = useSession();
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,6 +33,13 @@ const ItemsPage = () => {
     };
     fetchData();
   }, [sessionStatus])
+
+  const viewBatche = React.useCallback(
+    (id: GridRowId) => () => {
+      router.push("/admin/items/" + id + "/view")
+    },
+    [],
+  );
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
@@ -46,7 +60,7 @@ const ItemsPage = () => {
       renderCell: (params: any) => {
         return (
           <div>
-            <Avatar src={params.value} variant="square" sx={{ width: 60, height: 60 }}/>
+            <Avatar src={params.value} variant="square" sx={{ width: 60, height: 60 }} />
           </div>
         );
       }
@@ -60,16 +74,29 @@ const ItemsPage = () => {
       field: 'rarity',
       headerName: 'Rarity',
       width: 200,
-    },    
+    },
     {
       field: 'title',
       headerName: 'Title En',
       width: 400,
     },
+    {
+      field: 'actions',
+      type: 'actions',
+      resizable: false,
+      getActions: (params: any) => [
+        // eslint-disable-next-line react/jsx-key
+        <GridActionsCellItem
+          icon={<VisibilityIcon />}
+          label="View"
+          onClick={viewBatche(params.id)}
+        />
+      ],
+    },
   ];
 
   return (
-    <Box style={{ height: items.length === 0 ? 400 : ''}} className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
+    <Box style={{ height: items.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
       <DataGrid
         rows={items}
         columns={columns}
@@ -85,6 +112,7 @@ const ItemsPage = () => {
           borderWidth: '0px',
           '--DataGrid-rowBorderColor': "#272B35",
           '--DataGrid-containerBackground': "#272B35",
+          '& .MuiButtonBase-root.MuiIconButton-root': { color: '#fff' },
           '& .MuiDataGrid-footerContainer': { background: '#272B35' },
           '& .MuiTablePagination-root': { color: '#fff' },
           '& .MuiCheckbox-root': { color: '#fff' },

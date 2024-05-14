@@ -151,7 +151,6 @@ const BatchesPage = () => {
           icon={<SettingsIcon />}
           label="Edit"
           onClick={editBatche(params.id)}
-          showInMenu
         />,
       ],
     },
