@@ -48,6 +48,8 @@ const UsersPage = () => {
             field: 'steamCreated',
             headerName: 'Steam Created',
             width: 150,
+            type: 'dateTime',
+            valueGetter: (value: string) => value && new Date(value),
         },
         {
             field: 'link',

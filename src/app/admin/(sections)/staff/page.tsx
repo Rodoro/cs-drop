@@ -42,11 +42,15 @@ const StafsPage = () => {
             field: 'updatedAt',
             headerName: 'Updated At',
             width: 200,
+            type: 'dateTime',
+            valueGetter: (value: string) => value && new Date(value),
         },
         {
             field: 'createdAt',
             headerName: 'Created At',
             width: 200,
+            type: 'dateTime',
+            valueGetter: (value: string) => value && new Date(value),
         },
     ];
 

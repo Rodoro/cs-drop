@@ -37,7 +37,7 @@ const Navbar = ({ ...props }) => {
 
     const drawer = (
         <Box>
-            <List sx={{ paddingLeft: 1 }} >
+            <List sx={{ paddingLeft: 1 }}>
                 <ListItem>
                     <ListItemButton component={Link} href="/">
                         <Image
@@ -49,37 +49,37 @@ const Navbar = ({ ...props }) => {
                     </ListItemButton>
                 </ListItem>
                 <ListItem>
-                    <ListItemButton component={Link} href="/admin">
+                    <ListItemButton component={Link} href="/admin" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }}}>
                         <ListItemText primary={'Main'} />
                     </ListItemButton>
                 </ListItem>
                 <ListItem>
-                    <ListItemButton component={Link} href="/admin/batches">
+                    <ListItemButton component={Link} href="/admin/batches" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }}}>
                         <ListItemText primary={'Batches'} />
                     </ListItemButton>
                 </ListItem>
                 <ListItem>
-                    <ListItemButton component={Link} href="/admin/games">
+                    <ListItemButton component={Link} href="/admin/games" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }}}>
                         <ListItemText primary={'Games'} />
                     </ListItemButton>
                 </ListItem>
                 <ListItem>
-                    <ListItemButton component={Link} href="/admin/items">
+                    <ListItemButton component={Link} href="/admin/items" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }}}>
                         <ListItemText primary={'Items'} />
                     </ListItemButton>
                 </ListItem>
                 <ListItem>
-                    <ListItemButton component={Link} href="/admin/loot-cases">
+                    <ListItemButton component={Link} href="/admin/loot-cases" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }}}>
                         <ListItemText primary={'Loot cases'} />
                     </ListItemButton>
                 </ListItem>
                 <ListItem>
-                    <ListItemButton component={Link} href="/admin/staff">
+                    <ListItemButton component={Link} href="/admin/staff" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }}}>
                         <ListItemText primary={'Staff'} />
                     </ListItemButton>
                 </ListItem>
                 <ListItem>
-                    <ListItemButton component={Link} href="/admin/users">
+                    <ListItemButton component={Link} href="/admin/users" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }}}>
                         <ListItemText primary={'Users'} />
                     </ListItemButton>
                 </ListItem>
@@ -109,18 +109,18 @@ const Navbar = ({ ...props }) => {
                         <MenuIcon />
                     </IconButton>
                     <Image
-                            src="/img/interface/nav/logo+text.png"
-                            alt="Логотип"
-                            width={180}
-                            height={40}
-                        />
+                        src="/img/interface/nav/logo+text.png"
+                        alt="Логотип"
+                        width={180}
+                        height={40}
+                    />
                 </Toolbar>
             </AppBar>
             <Box
                 component="nav"
                 sx={{
                     width: { sm: drawerWidth }, flexShrink: { sm: 0 },
-                    '& .MuiDrawer-paper': {background: '#0A0D1D'},
+                    '& .MuiDrawer-paper': { background: '#0A0D1D' },
                     '& .MuiDrawer-paperAnchorDockedLeft': { background: '#0A0D1D', color: '#FFFF' },
                 }}
                 aria-label="mailbox folders"

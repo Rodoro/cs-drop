@@ -128,7 +128,7 @@ const CreateBatches = () => {
                         <button onClick={handleAddRow}>+ Add Row</button>
                     </div>
                     <div className='flex flex-row justify-end space-x-3'>
-                        <button onClick={() => router.replace("/admin/batches")}>Cansel</button>
+                        <button onClick={() => router.replace("/admin/batches")}>Cancel</button>
                         <Button onClick={() => {handleSubmit(); router.replace("/admin/batches")}}>Create</Button>
                         <Button onClick={handleSubmitAndNew}>Create and Open New</Button>
                     </div>

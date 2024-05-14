@@ -43,11 +43,13 @@ const LootsPage = () => {
             field: 'price',
             headerName: 'Price',
             width: 120,
+            valueGetter: (value: string) => '$ ' + value,
         },
         {
             field: 'netPrice',
             headerName: 'Net Price',
             width: 120,
+            valueGetter: (value: string) => '$ ' + value,
         },
         {
             field: 'batch',
@@ -58,6 +60,7 @@ const LootsPage = () => {
             field: 'isVisible',
             headerName: 'Is Visible',
             width: 90,
+            type: 'boolean'
         },
     ];
 
@@ -76,6 +79,8 @@ const LootsPage = () => {
                 sx={{
                     color: "#fff",
                     borderWidth: '0px',
+                    '& .MuiDataGrid-booleanCell[data-value="true"]': { color: '#1e9a19' },
+                    '& .MuiDataGrid-booleanCell[data-value="false"]': { color: '#cd2a4d' },
                     '--DataGrid-rowBorderColor': "#272B35",
                     '--DataGrid-containerBackground': "#272B35",
                     '& .MuiDataGrid-footerContainer': { background: '#272B35' },
