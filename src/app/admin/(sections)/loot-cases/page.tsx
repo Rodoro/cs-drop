@@ -5,11 +5,14 @@ import Box from '@mui/material/Box';
 import axios from 'axios';
 import { LootCases } from '@/types/admin.interface';
 import { useSession } from 'next-auth/react';
+import Button from '@/components/interface/Button';
+import { useRouter } from 'next/navigation';
 
 const LootsPage = () => {
     const { data: session, status: sessionStatus } = useSession();
     const [loots, setLoots] = useState<LootCases[]>([]);
     const [loading, setLoading] = useState(true);
+    const router = useRouter();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -66,6 +69,7 @@ const LootsPage = () => {
 
     return (
         <Box style={{ height: loots.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
+            <Button className="px-2 mb-6" onClick={() => router.push("/admin/loot-cases/create")}>Create Loot Cases</Button>
             <DataGrid
                 rows={loots}
                 columns={columns}

@@ -46,7 +46,7 @@ const ViewItem = ({ params }: { params: { id: number } }) => {
                             </tr>
                             <tr className="bg-[#272B35] border-gray-700 border-b">
                                 <td className="px-6 py-4 whitespace-nowrap">Image URL</td>
-                                <td className="px-6 py-4 text-cyan-500"><Link href={item.imageUrl}>{item?.imageUrl}</Link></td>
+                                <td className="px-6 py-4 text-cyan-500"><Link href={item.imageUrl}>{item?.title}</Link></td>
                             </tr>
                             <tr className="bg-[#272B35] border-gray-700 border-b">
                                 <td className="px-6 py-4 whitespace-nowrap">Game internal ID</td>
@@ -62,7 +62,7 @@ const ViewItem = ({ params }: { params: { id: number } }) => {
                             </tr>
                             <tr className="bg-[#272B35] border-gray-700 border-b">
                                 <td className="px-6 py-4 whitespace-nowrap">Price</td>
-                                <td className="px-6 py-4">{item?.price}</td>
+                                <td className="px-6 py-4"> $ {item?.price}</td>
                             </tr>
                             <tr className="bg-[#272B35] border-gray-700 border-b">
                                 <td className="px-6 py-4 whitespace-nowrap">Rarity</td>
