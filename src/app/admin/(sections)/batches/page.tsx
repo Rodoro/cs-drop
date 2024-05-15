@@ -76,7 +76,7 @@ const BatchesPage = () => {
         gameId,
         languages: filteredLanguages
       };
-      const res2: Batch = await axios.post('http://95.165.94.222:8090/api/v1/admin/batches/create', result, {
+      const res2 = await axios.post('http://95.165.94.222:8090/api/v1/admin/batches/create', result, {
         headers: {
           'Authorization': session?.token.accessToken
         }

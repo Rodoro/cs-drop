@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 "use client"
 import React, { useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
@@ -7,6 +8,13 @@ import { LootCases } from '@/types/admin.interface';
 import { useSession } from 'next-auth/react';
 import Button from '@/components/interface/Button';
 import { useRouter } from 'next/navigation';
+import {
+    GridActionsCellItem,
+    GridRowId,
+  } from '@mui/x-data-grid';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const LootsPage = () => {
     const { data: session, status: sessionStatus } = useSession();
@@ -29,6 +37,21 @@ const LootsPage = () => {
         };
         fetchData();
     }, [sessionStatus])
+
+    const duplicateBatche = React.useCallback(
+        (index: GridRowId) => async () => {
+          const res = await axios.post('http://95.165.94.222:8090/api/v1/admin/lootcases/replicate', {caseId: index}, {
+            headers: {
+              'Authorization': session?.token.accessToken
+            }
+          })
+          setLoots((prevRows) => {
+            const rowToDuplicate = prevRows.find((row) => row.id === index)!;
+            return [...prevRows, { ...rowToDuplicate, id: res.data.result.id }];
+          });
+        },
+        [],
+      );
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 90 },
@@ -65,6 +88,28 @@ const LootsPage = () => {
             width: 90,
             type: 'boolean'
         },
+        {
+            field: 'actions',
+            type: 'actions',
+            resizable: false,
+            getActions: (params: any) => [
+              <GridActionsCellItem
+                icon={<FileCopyIcon />}
+                label="Duplicate"
+                onClick={duplicateBatche(params.id)}
+                showInMenu
+              />,
+              <GridActionsCellItem
+                icon={<VisibilityIcon />}
+                label="View"
+                showInMenu
+              />,
+              <GridActionsCellItem
+                icon={<SettingsIcon />}
+                label="Edit"
+              />,
+            ],
+          },
     ];
 
     return (
@@ -87,6 +132,7 @@ const LootsPage = () => {
                     '& .MuiDataGrid-booleanCell[data-value="false"]': { color: '#cd2a4d' },
                     '--DataGrid-rowBorderColor': "#272B35",
                     '--DataGrid-containerBackground': "#272B35",
+                    '& .MuiButtonBase-root.MuiIconButton-root': { color: '#fff' },
                     '& .MuiDataGrid-footerContainer': { background: '#272B35' },
                     '& .MuiTablePagination-root': { color: '#fff' },
                     '& .MuiCheckbox-root': { color: '#fff' },
