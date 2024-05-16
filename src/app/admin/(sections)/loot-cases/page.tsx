@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import {
     GridActionsCellItem,
     GridRowId,
-  } from '@mui/x-data-grid';
+} from '@mui/x-data-grid';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -38,20 +38,27 @@ const LootsPage = () => {
         fetchData();
     }, [sessionStatus])
 
-    const duplicateBatche = React.useCallback(
+    const duplicateLoot = React.useCallback(
         (index: GridRowId) => async () => {
-          const res = await axios.post('http://95.165.94.222:8090/api/v1/admin/lootcases/replicate', {caseId: index}, {
-            headers: {
-              'Authorization': session?.token.accessToken
-            }
-          })
-          setLoots((prevRows) => {
-            const rowToDuplicate = prevRows.find((row) => row.id === index)!;
-            return [...prevRows, { ...rowToDuplicate, id: res.data.result.id }];
-          });
+            const res = await axios.post('http://95.165.94.222:8090/api/v1/admin/lootcases/replicate', { caseId: index }, {
+                headers: {
+                    'Authorization': session?.token.accessToken
+                }
+            })
+            setLoots((prevRows) => {
+                const rowToDuplicate = prevRows.find((row) => row.id === index)!;
+                return [...prevRows, { ...rowToDuplicate, id: res.data.result.id }];
+            });
         },
         [],
-      );
+    );
+
+    const viewLoot = React.useCallback(
+        (id: GridRowId) => () => {
+            router.push("/admin/loot-cases/" + id + "/view")
+        },
+        [],
+    );
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 90 },
@@ -93,23 +100,19 @@ const LootsPage = () => {
             type: 'actions',
             resizable: false,
             getActions: (params: any) => [
-              <GridActionsCellItem
-                icon={<FileCopyIcon />}
-                label="Duplicate"
-                onClick={duplicateBatche(params.id)}
-                showInMenu
-              />,
-              <GridActionsCellItem
-                icon={<VisibilityIcon />}
-                label="View"
-                showInMenu
-              />,
-              <GridActionsCellItem
-                icon={<SettingsIcon />}
-                label="Edit"
-              />,
+                <GridActionsCellItem
+                    icon={<FileCopyIcon />}
+                    label="Duplicate"
+                    onClick={duplicateLoot(params.id)}
+                    showInMenu
+                />,
+                <GridActionsCellItem
+                    icon={<VisibilityIcon />}
+                    label="View"
+                    onClick={viewLoot(params.id)}
+                />,
             ],
-          },
+        },
     ];
 
     return (
