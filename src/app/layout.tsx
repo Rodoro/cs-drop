@@ -10,7 +10,7 @@ import SessionProvider from "@/utils/SessionProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Mels`s Bar",
+  title: "Mel`s Bar",
 };
 
 export default async function RootLayout({
