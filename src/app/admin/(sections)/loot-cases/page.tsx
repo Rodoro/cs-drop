@@ -15,6 +15,7 @@ import {
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SettingsIcon from '@mui/icons-material/Settings';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const LootsPage = () => {
     const { data: session, status: sessionStatus } = useSession();
@@ -53,6 +54,13 @@ const LootsPage = () => {
         [],
     );
 
+    const editLoot = React.useCallback(
+        (id: GridRowId) => () => {
+            router.push("/admin/loot-cases/" + id + "/edit")
+        },
+        [],
+    );
+
     const viewLoot = React.useCallback(
         (id: GridRowId) => () => {
             router.push("/admin/loot-cases/" + id + "/view")
@@ -60,40 +68,61 @@ const LootsPage = () => {
         [],
     );
 
+    const deleteLoot = React.useCallback(
+        (id: GridRowId) => async () => {
+          await axios.delete('http://95.165.94.222:8090/api/v1/admin/lootcases/remove-case?caseId=' + id, {
+            headers: {
+              'Authorization': session?.token.accessToken
+            }
+          }).then(() => {
+            setTimeout(() => {
+                setLoots((prevRows) => prevRows.filter((row) => row.id !== id));
+            });
+          });
+        },
+        [],
+      );
+
     const columns = [
-        { field: 'id', headerName: 'ID', width: 90 },
+        { field: 'id', headerName: 'ID', flex: 90, minWidth: 80},
         {
             field: 'game',
             headerName: 'Game',
-            width: 90,
+            flex: 90,
+            minWidth: 80
         },
         {
             field: 'title',
             headerName: 'Title',
-            width: 200,
+            flex: 200,
+            minWidth: 180
         },
         {
             field: 'price',
             headerName: 'Price',
-            width: 120,
+            flex: 120,
+            minWidth: 110,
             valueGetter: (value: string) => '$ ' + value,
         },
         {
             field: 'netPrice',
             headerName: 'Net Price',
-            width: 120,
+            flex: 120,
+            minWidth: 110,
             valueGetter: (value: string) => '$ ' + value,
         },
         {
             field: 'batch',
             headerName: 'Batch',
-            width: 200,
+            flex: 200,
+            minWidth: 150
         },
         {
             field: 'isVisible',
             headerName: 'Is Visible',
-            width: 90,
-            type: 'boolean'
+            flex: 90,
+            type: 'boolean',
+            minWidth: 80
         },
         {
             field: 'actions',
@@ -107,9 +136,20 @@ const LootsPage = () => {
                     showInMenu
                 />,
                 <GridActionsCellItem
+                    icon={<SettingsIcon />}
+                    label="Edit"
+                    onClick={editLoot(params.id)}
+                    showInMenu
+                />,
+                <GridActionsCellItem
                     icon={<VisibilityIcon />}
                     label="View"
                     onClick={viewLoot(params.id)}
+                />,
+                <GridActionsCellItem
+                    icon={<DeleteIcon />}
+                    label="Delete"
+                    onClick={deleteLoot(params.id)}
                 />,
             ],
         },

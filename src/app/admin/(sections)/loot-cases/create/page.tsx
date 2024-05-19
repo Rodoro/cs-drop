@@ -71,8 +71,8 @@ const LootCreate = () => {
             batchId: Number(selectBatch),
             title,
             locales: locales.map(locale => ({ title: locale.title, text: locale.text })),
-            imageUrl: imgUrl,
-            imageHoverUrl: imgHoverUrl,
+            image: imgUrl,
+            imageHover: imgHoverUrl,
             price: Number(price),
             isVisible
         }

@@ -34,12 +34,7 @@ const ViewLootcase = ({ params }: { params: { id: number } }) => {
     const [lootcase, setLootcase] = useState()
     const { data: session, status: sessionStatus } = useSession();
     const [items, setItems] = useState([])
-    const [open, setOpen] = React.useState(false);
     const router = useRouter();
-
-    const [lowItems, setLowItems] = React.useState<number>(30);
-    const [topItems, setTopItems] = React.useState<number>(10);
-    const [midItems, setMidItems] = React.useState<number>(40);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -62,16 +57,6 @@ const ViewLootcase = ({ params }: { params: { id: number } }) => {
         fetchData();
     }, [session])
 
-    const handleChangeLowItems = (event: Event, newValue: number | number[]) => {
-        setLowItems(newValue as number);
-    };
-    const handleChangeMidItems = (event: Event, newValue: number | number[]) => {
-        setMidItems(newValue as number);
-    };
-    const handleChangeTopItems = (event: Event, newValue: number | number[]) => {
-        setTopItems(newValue as number);
-    };
-
     const viewItem = React.useCallback(
         (id: GridRowId) => () => {
             router.push("/admin/items/" + id + "/view")
@@ -79,53 +64,8 @@ const ViewLootcase = ({ params }: { params: { id: number } }) => {
         [],
     );
 
-    const deleteItem = React.useCallback(
-        (id: GridRowId) => async () => {
-            const res = await axios.delete('http://95.165.94.222:8090/api/v1/admin/content-generator/remove-item?contentId=' + params?.id + '&itemId=' + id, {
-                headers: {
-                    'Authorization': session?.token.accessToken
-                }
-            })
-            setItems(res.data.result);
-        },
-        [],
-    );
-
-    const handleSubmit = async (e: any) => {
-        e.preventDefault();
-        const data = {
-            "caseId": params?.id,
-            "excludeWords": [],
-            "includeWords": [],
-            "lowItemCount": e.target[4].value,
-            "lowItemsPrice": e.target[4].value,
-            "midItemsCount": e.target[4].value,
-            "midItemsPrice": e.target[4].value,
-            "topItemsCount": e.target[4].value,
-            "topItemsPrice": e.target[4].value
-        }
-        console.log(data);
-        //TODO: Добавить отправку к серверу
-    }
-
-    const handleAddItem = (e: any) => {
-        e.preventDefault();
-        const fetchData = async () => {
-            if (session) {
-                const res = await axios.post('http://95.165.94.222:8090/api/v1/admin/content-generator/add-item?contentId=' + params?.id + '&itemId=' + e.target[0].value, {}, {
-                    headers: {
-                        'Authorization': session?.token.accessToken
-                    }
-                });
-                setItems(res.data.result)
-                setOpen(false)
-            }
-        };
-        fetchData();
-    }
-
     const columns = [
-        { field: 'id', headerName: 'ID', flex: 50, minWidth: 50,},
+        { field: 'id', headerName: 'ID', flex: 50, minWidth: 50, },
         {
             field: 'itemId',
             headerName: 'Item ID',
@@ -157,11 +97,6 @@ const ViewLootcase = ({ params }: { params: { id: number } }) => {
             type: 'actions',
             resizable: false,
             getActions: (params: any) => [
-                <GridActionsCellItem
-                    icon={<DeleteIcon />}
-                    label="Delete"
-                    onClick={deleteItem(params.row.itemId)}
-                />,
                 <GridActionsCellItem
                     icon={<VisibilityIcon />}
                     label="View"
@@ -226,14 +161,14 @@ const ViewLootcase = ({ params }: { params: { id: number } }) => {
                     <tr className="bg-[#272B35] border-gray-700 border-b">
                         <td className="px-6 py-4 whitespace-nowrap">Image URL</td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                            <input value={lootcase?.imageUrl} disabled required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
+                            <input value={lootcase?.image} disabled required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
                             </input>
                         </td>
                     </tr>
                     <tr className="bg-[#272B35] border-gray-700 border-b">
                         <td className="px-6 py-4 whitespace-nowrap">Image hover URL</td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                            <input value={lootcase?.imageHoverUrl} disabled required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
+                            <input value={lootcase?.imageHover} disabled required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
                             </input>
                         </td>
                     </tr>
@@ -260,109 +195,11 @@ const ViewLootcase = ({ params }: { params: { id: number } }) => {
                 </tbody>
             </table>
 
-            <form onSubmit={handleSubmit}>
-                <div className="flex flex-row justify-between my-4 mt-12">
-                    <div className="text-2xl">
-                        Content Generator
-                    </div>
-                    <Button type="submit">Generate</Button>
-                </div>
-                <table className="table-auto w-full">
-                    <tbody>
-                        <tr className="bg-[#272B35] border-gray-700 border-b">
-                            <td className="px-6 py-4 whitespace-nowrap">Exclude words</td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                                <input id="exclude" placeholder="word1, word2..." className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
-                            </td>
-                        </tr>
-                        <tr className="bg-[#272B35] border-gray-700 border-b">
-                            <td className="px-6 py-4 whitespace-nowrap">Include words</td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                                <input id="include" placeholder="knife" className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
-                            </td>
-                        </tr>
-                        <tr className="bg-[#272B35]">
-                            <td className="px-6 pb-2 pt-6 whitespace-nowrap">Low items count: {lowItems}</td>
-                            <td className="px-6 pb-2 pt-6 whitespace-nowrap">
-                                <Slider value={lowItems} onChange={handleChangeLowItems} />
-                            </td>
-                        </tr>
-                        <tr className="bg-[#272B35]">
-                            <td className="px-6 py-2 whitespace-nowrap">Low items min price</td>
-                            <td className="px-6 py-2 whitespace-nowrap">
-                                <input id="lowItemMin" value={0.01} type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
-                            </td>
-                        </tr>
-                        <tr className="bg-[#272B35] border-gray-700 border-b">
-                            <td className="px-6 py-2 whitespace-nowrap">Low items max price</td>
-                            <td className="px-6 py-2 pb-4 whitespace-nowrap">
-                                <input id="lowItemMax" value={100} type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
-                            </td>
-                        </tr>
-
-                        <tr className="bg-[#272B35]">
-                            <td className="px-6 pb-2 pt-6 whitespace-nowrap">Mid items count: {midItems}</td>
-                            <td className="px-6 pb-2 pt-6 whitespace-nowrap">
-                                <Slider value={midItems} onChange={handleChangeMidItems} />
-                            </td>
-                        </tr>
-                        <tr className="bg-[#272B35]">
-                            <td className="px-6 py-2 whitespace-nowrap">Mid items min price</td>
-                            <td className="px-6 py-2 whitespace-nowrap">
-                                <input id="midItemMin" value={0.01} type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
-                            </td>
-                        </tr>
-                        <tr className="bg-[#272B35] border-gray-700 border-b">
-                            <td className="px-6 py-2 whitespace-nowrap">Mid items max price</td>
-                            <td className="px-6 py-2 pb-4 whitespace-nowrap">
-                                <input id="midItemMax" value={10000} type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
-                            </td>
-                        </tr>
-
-                        <tr className="bg-[#272B35]">
-                            <td className="px-6 pb-2 pt-6 whitespace-nowrap">Top items count: {topItems}</td>
-                            <td className="px-6 pb-2 pt-6 whitespace-nowrap">
-                                <Slider value={topItems} onChange={handleChangeTopItems} />
-                            </td>
-                        </tr>
-                        <tr className="bg-[#272B35]">
-                            <td className="px-6 py-2 whitespace-nowrap">Top items min price</td>
-                            <td className="px-6 py-2 whitespace-nowrap">
-                                <input id="topItemMin" value={0.01} type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
-                            </td>
-                        </tr>
-                        <tr className="bg-[#272B35]">
-                            <td className="px-6 py-2 whitespace-nowrap">Top items max price</td>
-                            <td className="px-6 py-2 pb-4 whitespace-nowrap">
-                                <input id="topItemMax" value={100000} type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
-
             <div style={{ height: items.length === 0 ? 400 : '' }} className="mb-20">
                 <div className="flex flex-row justify-between my-4 mt-12">
                     <div className="text-2xl">
                         Contents
                     </div>
-                    <Button onClick={() => setOpen(true)}>Create Loot Case Content</Button>
-                    <Modal
-                        open={open}
-                        onClose={() => setOpen(false)}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                    >
-                        <Box sx={style}>
-                            <form onSubmit={handleAddItem}>
-                                <div className='mb-3'>Add item:</div>
-                                <input placeholder='Id item' min='0' type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
-                                <div className='flex flex-row justify-end'>
-                                    <Button className='mt-3' type='submit'>Create</Button>
-                                </div>
-                            </form>
-                        </Box>
-                    </Modal>
                 </div>
                 <DataGrid
                     rows={items}
