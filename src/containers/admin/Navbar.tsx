@@ -12,11 +12,13 @@ import Box from '@mui/material/Box';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
+import { usePathname } from 'next/navigation'
 
 const drawerWidth = 240;
 
 const Navbar = ({ ...props }) => {
     const { window } = props;
+    const pathname = usePathname()
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [isClosing, setIsClosing] = React.useState(false);
 
@@ -49,37 +51,37 @@ const Navbar = ({ ...props }) => {
                     </ListItemButton>
                 </ListItem>
                 <ListItem>
-                    <ListItemButton component={Link} href="/admin" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }}}>
+                    <ListItemButton component={Link} href="/admin" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }, ...(pathname === '/admin' && { background: 'rgb(59,130,246)', borderRadius: '15px' })}}>
                         <ListItemText primary={'Main'} />
                     </ListItemButton>
                 </ListItem>
                 <ListItem>
-                    <ListItemButton component={Link} href="/admin/batches" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }}}>
+                    <ListItemButton component={Link} href="/admin/batches" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }, ...(pathname === '/admin/batches' && { background: 'rgb(59,130,246)', borderRadius: '15px' })}}>
                         <ListItemText primary={'Batches'} />
                     </ListItemButton>
                 </ListItem>
                 <ListItem>
-                    <ListItemButton component={Link} href="/admin/games" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }}}>
+                    <ListItemButton component={Link} href="/admin/games" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }, ...(pathname === '/admin/games' && { background: 'rgb(59,130,246)', borderRadius: '15px' })}}>
                         <ListItemText primary={'Games'} />
                     </ListItemButton>
                 </ListItem>
                 <ListItem>
-                    <ListItemButton component={Link} href="/admin/items" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }}}>
+                    <ListItemButton component={Link} href="/admin/items" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }, ...(pathname === '/admin/items' && { background: 'rgb(59,130,246)', borderRadius: '15px' })}}>
                         <ListItemText primary={'Items'} />
                     </ListItemButton>
                 </ListItem>
                 <ListItem>
-                    <ListItemButton component={Link} href="/admin/loot-cases" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }}}>
+                    <ListItemButton component={Link} href="/admin/loot-cases" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }, ...(pathname === '/admin/loot-cases' && { background: 'rgb(59,130,246)', borderRadius: '15px' })}}>
                         <ListItemText primary={'Loot cases'} />
                     </ListItemButton>
                 </ListItem>
                 <ListItem>
-                    <ListItemButton component={Link} href="/admin/staff" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }}}>
+                    <ListItemButton component={Link} href="/admin/staff" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }, ...(pathname === '/admin/staff' && { background: 'rgb(59,130,246)', borderRadius: '15px' })}}>
                         <ListItemText primary={'Staff'} />
                     </ListItemButton>
                 </ListItem>
                 <ListItem>
-                    <ListItemButton component={Link} href="/admin/users" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }}}>
+                    <ListItemButton component={Link} href="/admin/users" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }, ...(pathname === '/admin/users' && { background: 'rgb(59,130,246)', borderRadius: '15px' })}}>
                         <ListItemText primary={'Users'} />
                     </ListItemButton>
                 </ListItem>
