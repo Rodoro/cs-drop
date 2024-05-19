@@ -158,7 +158,7 @@ const BatchesPage = () => {
 
   return (
     <Box style={{ height: batches.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
-      <Button className="px-2 mb-6" onClick={() => router.replace("/admin/batches/create")}>Create Batche</Button>
+      <Button className="px-2 mb-6" onClick={() => router.push("/admin/batches/create")}>Create Batche</Button>
       <DataGrid
         rows={batches}
         columns={columns}

@@ -1,5 +1,4 @@
 "use client"
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/common/Card';
 import { Batch } from '@/types/admin.interface';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
@@ -24,43 +23,60 @@ const ViewBatchs = ({ params }: { params: { id: number } }) => {
   }, [session]);
 
   return (
-    <div className="ml-72 m-8 space-y-4">
-      <Card>
-        <CardHeader>
-          <CardTitle>
-            Create Batch
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3 mb-5">
-          <div>
-            Title: {batch?.title}
-          </div>
-          <div>
-            Game: {batch?.game.name}
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Language</th>
-                <th>Title</th>
-              </tr>
-            </thead>
+    <>
+      {batch == undefined ? (
+        <>
+        </>
+      ) : (
+        <div className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8" >
+          <table className="table-auto w-full">
             <tbody>
-              {batch?.languages.map((locale, index) => (
-                <tr key={index}>
-                  <td>
-                    {locale.title}
-                  </td>
-                  <td>
-                    {locale.text}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </CardContent>
-      </Card>
-    </div>
+              <tr className="bg-[#272B35] border-gray-700 border-b">
+                <td className="px-6 py-4 whitespace-nowrap">ID</td >
+                <td className="px-6 py-4">{batch?.id}</td>
+              </tr >
+              <tr className="bg-[#272B35] border-gray-700 border-b">
+                <td className="px-6 py-4 whitespace-nowrap">Title</td>
+                <td className="px-6 py-4">{batch?.title}</td>
+              </tr>
+              <tr className="bg-[#272B35] border-gray-700 border-b">
+                <td className="px-6 py-4 whitespace-nowrap">Game</td>
+                <td className="px-6 py-4">{batch?.game.name}</td>
+              </tr>
+              <tr className="bg-[#272B35] border-gray-700 border-b">
+                <td className="px-6 py-4 whitespace-nowrap">Sort</td>
+                <td className="px-6 py-4">{batch?.sort}</td>
+              </tr>
+              <tr className="bg-[#272B35] border-gray-700 border-b">
+                        <td className="px-6 py-4 whitespace-nowrap">Title locales</td>
+                        <td className="px-6 py-4 whitespace-nowrap flex flex-col space-y-3">
+                            <table className="w-full">
+                                <thead>
+                                    <tr>
+                                        <th>Language</th>
+                                        <th>Title</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {batch?.languages.map((languag, index) => (
+                                        <tr key={index}>
+                                            <td>
+                                                <input disabled value={languag.title} className="flex flex-row border rounded-l-lg text-sm w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
+                                            </td>
+                                            <td>
+                                                <input disabled value={languag.text} className="flex flex-row border rounded-r-lg text-sm w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+            </tbody >
+          </table >
+        </div >
+      )}
+    </>
   )
 }
 

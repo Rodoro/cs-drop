@@ -4,6 +4,7 @@ export interface Batch {
     game: Game;
     gameId: number;
     languages: Array<Language>;
+    sort: number;
 }
 
 export interface Game {

@@ -9,46 +9,45 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 const CreateBatches = () => {
-    const [title, setTitle] = useState('');
-    const [locales, setLocales] = useState([{ language: 'ru', title: '' }, { language: 'en', title: '' }]);
+    const [loading, setLoading] = useState(true)
     const [games, setGames] = useState<Game[]>([]);
-    const [selectedGame, setSelectedGame] = useState();
     const { data: session, status: sessionStatus } = useSession();
     const router = useRouter();
+
+    const [locales, setLocales] = useState([{ title: 'ru', text: '' }, { title: 'en', text: '' }]);
+    const [title, setTitle] = useState<string>('');
+    const [selectGame, setSelectGame] = useState<string>('');
+    const [sort, setSort] = useState<string>('');
 
     useEffect(() => {
         const fetchData = async () => {
             if (session) {
-                const res2 = await axios.get('http://95.165.94.222:8090/api/v1/admin/games/get-all', {
+                const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/games/get-all', {
                     headers: {
                         'Authorization': session?.token.accessToken
                     }
                 });
-                setGames(res2.data)
+                setGames(res.data)
+                setLoading(false)
             }
         };
         fetchData();
     }, [session]);
 
-    const handleChangeLanguage = (index: number, value: string) => {
-        const newLocales = [...locales];
-        newLocales[index].language = value.slice(0, 2);
-        setLocales(newLocales);
-    };
-
     const handleChangeTitle = (index: number, value: string) => {
         const newLocales = [...locales];
-        newLocales[index].title = value;
+        newLocales[index].title = value.slice(0, 2);
         setLocales(newLocales);
     };
 
-    const handleGameChange = (e: any) => {
-        setSelectedGame(e.target.value);
-        console.log(e.target.value)
+    const handleChangeText = (index: number, value: string) => {
+        const newLocales = [...locales];
+        newLocales[index].text = value;
+        setLocales(newLocales);
     };
 
     const handleAddRow = () => {
-        setLocales([...locales, { language: '', title: '' }]);
+        setLocales([...locales, { title: '', text: '' }]);
     };
 
     const handleDeleteRow = (index: number) => {
@@ -60,11 +59,11 @@ const CreateBatches = () => {
     const handleSubmit = async () => {
         const batchData = {
             title,
-            gameId: selectedGame||1,
-            languages: locales.map(locale => ({ title: locale.language, text: locale.title }))
+            sort: Number(sort),
+            gameId:  Number(selectGame) || 1,
+            languages: locales.map(locale => ({ title: locale.title, text: locale.text }))
         };
-        console.log(selectedGame)
-        await axios.post('http://95.165.94.222:8090/api/v1/admin/batches/create',batchData, {
+        await axios.post('http://95.165.94.222:8090/api/v1/admin/batches/create', batchData, {
             headers: {
                 'Authorization': session?.token.accessToken
             }
@@ -77,63 +76,72 @@ const CreateBatches = () => {
     }
 
     return (
-        <div className="ml-72 m-8 space-y-4">
-            <Card>
-                <CardHeader>
-                    <CardTitle>
-                        Create Batch
-                    </CardTitle>
-                </CardHeader>
-
-                <CardContent className="space-y-3 mb-5">
-                    <div className='flex flex-row space-x-3 items-center'>
-                        <label>Title:</label>
-                        <Input required value={title} onChange={e => setTitle(e.target.value)} type={'text'} />
-                    </div>
-                    <div className='flex flex-row space-x-3 items-center'>
-                        <label>Game:</label>
-                        <select required value={selectedGame} onChange={handleGameChange} className='flex flex-row items-center font-sans text-xm text-center font-semibold text-[#f9fafb] py-2 px-3 rounded-xl bg-blue-500 bg-[rgba(17,22,46,0.3)]'>
-                            {games.map((game) => (
-                                <option className='text-left' key={game.id} value={game.id}>
-                                    {game.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Language</th>
-                                    <th>Title</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {locales.map((locale, index) => (
-                                    <tr key={index}>
-                                        <td>
-                                            <Input value={locale.language} onChange={e => handleChangeLanguage(index, e.target.value)} type={'text'} />
-                                        </td>
-                                        <td>
-                                            <Input value={locale.title} onChange={e => handleChangeTitle(index, e.target.value)} type={'text'} />
-                                        </td>
-                                        <td>
-                                            <Button onClick={() => handleDeleteRow(index)}>Delete</Button>
-                                        </td>
-                                    </tr>
+        <div className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
+            <table className="table-auto w-full">
+                <tbody>
+                    <tr className="bg-[#272B35] border-gray-700 border-b">
+                        <td className="px-6 py-4 whitespace-nowrap">Title</td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                            <input value={title} onChange={e => setTitle(e.target.value)} required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
+                        </td>
+                    </tr>
+                    <tr className="bg-[#272B35] border-gray-700 border-b">
+                        <td className="px-6 py-4 whitespace-nowrap">Game</td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                            <select value={selectGame} onChange={e => setSelectGame(e.target.value)} required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
+                                <option value='' disabled selected>-/-</option>
+                                {games.map((game) => (
+                                    <option key={game.id} value={game.id}>
+                                        {game.name}
+                                    </option>
                                 ))}
-                            </tbody>
-                        </table>
-                        <button onClick={handleAddRow}>+ Add Row</button>
-                    </div>
-                    <div className='flex flex-row justify-end space-x-3'>
-                        <button onClick={() => router.replace("/admin/batches")}>Cancel</button>
-                        <Button onClick={() => {handleSubmit(); router.replace("/admin/batches")}}>Create</Button>
-                        <Button onClick={handleSubmitAndNew}>Create and Open New</Button>
-                    </div>
-                </CardContent>
-            </Card>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr className="bg-[#272B35] border-gray-700 border-b">
+                        <td className="px-6 py-4 whitespace-nowrap">Sort</td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                            <input type="number" value={sort} onChange={e => setSort(e.target.value)} required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
+                        </td>
+                    </tr>
+                    <tr className="bg-[#272B35] border-gray-700 border-b">
+                        <td className="px-6 py-4 whitespace-nowrap">Title locales</td>
+                        <td className="px-6 py-4 whitespace-nowrap flex flex-col space-y-3">
+                            <table className="w-full">
+                                <thead>
+                                    <tr>
+                                        <th>Language</th>
+                                        <th>Title</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {locales.map((locale, index) => (
+                                        <tr key={index}>
+                                            <td>
+                                                <input value={locale.title} onChange={e => handleChangeTitle(index, e.target.value)} required className="flex flex-row border rounded-l-lg text-sm w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
+                                            </td>
+                                            <td>
+                                                <input value={locale.text} onChange={e => handleChangeText(index, e.target.value)} required className="flex flex-row border rounded-r-lg text-sm w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
+                                            </td>
+                                            <td>
+                                                <button onClick={() => handleDeleteRow(index)} className='text-red-700 ml-3 border-red-700 p-1 px-3 rounded-full border-2'>
+                                                    <b>-</b>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                            <button onClick={handleAddRow} className='text-cyan-500'>+ Add Row</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div className='flex flex-row justify-end space-x-3 mt-4'>
+                <button onClick={() => router.push("/admin/batches")}>Cancel</button>
+                <Button onClick={() => { handleSubmit(); router.push("/admin/batches") }}>Create</Button>
+                <Button onClick={handleSubmitAndNew}>Create and Open New</Button>
+            </div>
         </div>
     )
 }
