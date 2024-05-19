@@ -185,23 +185,21 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
     }
 
     const handleSubmit2 = async () => {
-        const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/batches/get/' + selectBatch, {
-            headers: {
-                'Authorization': session?.token.accessToken
-            }
-        });
+        // const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/batches/get/' + selectBatch, {
+        //     headers: {
+        //         'Authorization': session?.token.accessToken
+        //     }
+        // });
         const batchData = {
-            case: {
-                id: Number(params?.id),
-                title,
-                batch: res.data,
-                game: games.find(obj => obj.id == selectGame),
-                isVisible,
-                image: imgUrl,
-                imageHover: imgHoverUrl,
-                price: Number(price),
-                locales: locales.map(locale => ({ title: locale.title, text: locale.text }))
-            }
+            id: Number(params?.id),
+            title,
+            batchId: Number(selectBatch),
+            gameId: Number(selectGame),
+            isVisible,
+            image: imgUrl,
+            imageHover: imgHoverUrl,
+            price: Number(price),
+            locales: locales.map(locale => ({ title: locale.title, text: locale.text }))
         };
         await axios.patch('http://95.165.94.222:8090/api/v1/admin/lootcases/edit', batchData, {
             headers: {
