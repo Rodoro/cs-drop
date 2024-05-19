@@ -16,6 +16,7 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useRouter } from 'next/navigation'
 import DeleteIcon from '@mui/icons-material/Delete';
+import ErrorModal from '@/components/common/ErrorModal';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -51,6 +52,10 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const [selectGame, setSelectGame] = useState<string>('');
     const [selectBatch, setSelectBatch] = useState<string>('');
+
+    const [open2, setOpen2] = React.useState(false);
+    const [status, setStatus] = React.useState('200');
+    const [message, setMessage] = React.useState('Ok!')
 
     useEffect(() => {
         const fetchData = async () => {
@@ -146,6 +151,22 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+        if (!e.target[1].value ||
+            !e.target[2].value ||
+            !e.target[3].value ||
+            !e.target[4].value ||
+            !e.target[5].value ||
+            !e.target[6].value ||
+            !e.target[7].value ||
+            !e.target[8].value ||
+            !e.target[9].value ||
+            !e.target[10].value ||
+            !e.target[11].value) {
+            setStatus('Ошибка данных')
+            setMessage('Все поля должны быть заполнены')
+            setOpen2(true)
+            return;
+        }
         const data = {
             "caseId": params?.id,
             "excludeWords": e.target[1].value.split(' '),
@@ -160,24 +181,62 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
             "topItemsMinPrice": e.target[10].value,
             "topItemsMaxPrice": e.target[11].value,
         }
-        const res = await axios.post('http://95.165.94.222:8090/api/v1/admin/content-generator/generate', data, {
-            headers: {
-                'Authorization': session?.token.accessToken
+        try {
+            const res = await axios.post('http://95.165.94.222:8090/api/v1/admin/content-generator/generate', data, {
+                headers: {
+                    'Authorization': session?.token.accessToken
+                }
+            })
+            if (res.data.error) {
+                setStatus('Ошибка: ' + res.data.error.code)
+                setMessage(res.data.error.description)
+                setOpen2(true)
+                return
             }
-        })
-        setItems(res.data.result);
+            setItems(res.data.result);
+        } catch (err: any) {
+            setStatus('Ошибка: ' + err.response.status)
+            setMessage(err.response.data)
+            setOpen2(true)
+            return
+        }
     }
 
     const handleAddItem = (e: any) => {
         e.preventDefault();
+        if (!e.target[0].value) {
+            setStatus('Ошибка данных')
+            setMessage('Все поля должны быть заполнены')
+            setOpen2(true)
+            return;
+        }
+        // if(items.find(item => item.itemId == e.target[0].value)){
+        //     setStatus('Повторение')
+        //     setMessage('Данный предмет уже есть')
+        //     setOpen(true)
+        //     return;
+        // }
         const fetchData = async () => {
             if (session) {
-                const res = await axios.post('http://95.165.94.222:8090/api/v1/admin/content-generator/add-item?contentId=' + params?.id + '&itemId=' + e.target[0].value, {}, {
-                    headers: {
-                        'Authorization': session?.token.accessToken
+                try {
+                    const res = await axios.post('http://95.165.94.222:8090/api/v1/admin/content-generator/add-item?contentId=' + params?.id + '&itemId=' + e.target[0].value, {}, {
+                        headers: {
+                            'Authorization': session?.token.accessToken
+                        }
+                    });
+                    if (res.data.error) {
+                        setStatus('Ошибка: ' + res.data.error.code)
+                        setMessage(res.data.error.description)
+                        setOpen2(true)
+                        return
                     }
-                });
-                setItems(res.data.result)
+                    setItems(res.data.result)
+                } catch (err: any) {
+                    setStatus('Ошибка: ' + err.response.status)
+                    setMessage(err.response.data)
+                    setOpen2(true)
+                    return
+                }
                 setOpen(false)
             }
         };
@@ -185,11 +244,12 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
     }
 
     const handleSubmit2 = async () => {
-        // const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/batches/get/' + selectBatch, {
-        //     headers: {
-        //         'Authorization': session?.token.accessToken
-        //     }
-        // });
+        if (!title || !selectBatch || !selectGame || !imgUrl || !imgHoverUrl || !price || !locales) {
+            setStatus('Ошибка данных')
+            setMessage('Все поля с "*" должны быть заполнены')
+            setOpen2(true)
+            return;
+        }
         const batchData = {
             id: Number(params?.id),
             title,
@@ -201,11 +261,25 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
             price: Number(price),
             locales: locales.map(locale => ({ title: locale.title, text: locale.text }))
         };
-        await axios.patch('http://95.165.94.222:8090/api/v1/admin/lootcases/edit', batchData, {
-            headers: {
-                'Authorization': session?.token.accessToken
+        try {
+            const res = await axios.patch('http://95.165.94.222:8090/api/v1/admin/lootcases/edit', batchData, {
+                headers: {
+                    'Authorization': session?.token.accessToken
+                }
+            });
+            if (res.data.error) {
+                setStatus('Ошибка: ' + res.data.error.code)
+                setMessage(res.data.error.description)
+                setOpen2(true)
+                return
             }
-        });
+        } catch (err: any) {
+            setStatus('Ошибка: ' + err.response.status)
+            setMessage(err.response.data)
+            setOpen2(true)
+            return
+        }
+        router.push("/admin/loot-cases") 
     };
 
     const columns = [
@@ -259,10 +333,11 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
 
     return (
         <div className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
+            <ErrorModal status={status} message={message} visible={open2} setVisible={setOpen2} />
             <table className="table-auto w-full">
                 <tbody>
                     <tr className="bg-[#272B35] border-gray-700 border-b">
-                        <td className="px-6 py-4 whitespace-nowrap">Game</td>
+                        <td className="px-6 py-4 whitespace-nowrap">Game *</td>
                         <td className="px-6 py-4 whitespace-nowrap">
                             <select value={selectGame} onChange={e => setSelectGame(e.target.value)} required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
                                 {games.map((game) => (
@@ -274,7 +349,7 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
                         </td>
                     </tr>
                     <tr className="bg-[#272B35] border-gray-700 border-b">
-                        <td className="px-6 py-4 whitespace-nowrap">Batch</td>
+                        <td className="px-6 py-4 whitespace-nowrap">Batch *</td>
                         <td className="px-6 py-4 whitespace-nowrap">
                             <select value={selectBatch} onChange={e => setSelectBatch(e.target.value)} required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
                                 {batches.map((batch) => (
@@ -286,14 +361,14 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
                         </td>
                     </tr>
                     <tr className="bg-[#272B35] border-gray-700 border-b">
-                        <td className="px-6 py-4 whitespace-nowrap">Title (EN)</td>
+                        <td className="px-6 py-4 whitespace-nowrap">Title (EN) *</td>
                         <td className="px-6 py-4 whitespace-nowrap">
                             <input value={title} onChange={e => setTitle(e.target.value)} required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
                             </input>
                         </td>
                     </tr>
                     <tr className="bg-[#272B35] border-gray-700 border-b">
-                        <td className="px-6 py-4 whitespace-nowrap">Title locales</td>
+                        <td className="px-6 py-4 whitespace-nowrap">Title locales *</td>
                         <td className="px-6 py-4 whitespace-nowrap flex flex-col space-y-3">
                             <table className="w-full">
                                 <thead>
@@ -324,21 +399,21 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
                         </td>
                     </tr>
                     <tr className="bg-[#272B35] border-gray-700 border-b">
-                        <td className="px-6 py-4 whitespace-nowrap">Image URL</td>
+                        <td className="px-6 py-4 whitespace-nowrap">Image URL *</td>
                         <td className="px-6 py-4 whitespace-nowrap">
                             <input value={imgUrl} onChange={e => setImgUrl(e.target.value)} required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
                             </input>
                         </td>
                     </tr>
                     <tr className="bg-[#272B35] border-gray-700 border-b">
-                        <td className="px-6 py-4 whitespace-nowrap">Image hover URL</td>
+                        <td className="px-6 py-4 whitespace-nowrap">Image hover URL *</td>
                         <td className="px-6 py-4 whitespace-nowrap">
                             <input value={imgHoverUrl} onChange={e => setImgHoverUrl(e.target.value)} required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
                             </input>
                         </td>
                     </tr>
                     <tr className="bg-[#272B35] border-gray-700 border-b">
-                        <td className="px-6 py-4 whitespace-nowrap">Price</td>
+                        <td className="px-6 py-4 whitespace-nowrap">Price *</td>
                         <td className="px-6 py-4 whitespace-nowrap">
                             <input value={price} onChange={e => setPrice(e.target.value)} required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
                             </input>
@@ -354,7 +429,7 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
             </table>
             <div className='flex flex-row justify-end space-x-3 mt-4'>
                 <button onClick={() => router.push("/admin/loot-cases")}>Cansel</button>
-                <Button onClick={() => { handleSubmit2(); router.push("/admin/loot-cases") }}>Update</Button>
+                <Button onClick={() => handleSubmit2()}>Update</Button>
             </div>
 
             <form onSubmit={handleSubmit}>

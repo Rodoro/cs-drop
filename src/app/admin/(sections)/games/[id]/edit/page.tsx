@@ -1,4 +1,5 @@
 "use client"
+import ErrorModal from '@/components/common/ErrorModal';
 import Button from '@/components/interface/Button';
 import { Game } from '@/types/admin.interface';
 import axios from 'axios';
@@ -15,6 +16,10 @@ const GameEdit = ({ params }: { params: { id: number } }) => {
     const [steamgameID, setSteamgameID] = useState('');
     const [isMain, setIsMain] = useState<boolean>(false);
     const [iconUrl, setIconUrl] = useState('');
+
+    const [open, setOpen] = React.useState(false);
+    const [status, setStatus] = React.useState('200');
+    const [message, setMessage] = React.useState('Ok!')
 
     useEffect(() => {
         const fetchData = async () => {
@@ -35,6 +40,12 @@ const GameEdit = ({ params }: { params: { id: number } }) => {
     }, [session]);
 
     const handleSubmit = async () => {
+        if (!name || !steamgameID) {
+            setStatus('Ошибка данных')
+            setMessage('Все поля с "*" должны быть заполнены')
+            setOpen(true)
+            return;
+        }
         const data = {
             id: Number(params?.id),
             name: name,
@@ -42,25 +53,34 @@ const GameEdit = ({ params }: { params: { id: number } }) => {
             isMain: isMain,
             iconUrl: iconUrl,
         };
-        await axios.patch('http://95.165.94.222:8090/api/v1/admin/games/update', data, {
-            headers: {
-                'Authorization': session?.token.accessToken
-            }
-        });
+        try {
+            await axios.patch('http://95.165.94.222:8090/api/v1/admin/games/update', data, {
+                headers: {
+                    'Authorization': session?.token.accessToken
+                }
+            });
+        } catch (err: any) {
+            setStatus('Ошибка: ' + err.response.status)
+            setMessage(err.response.data)
+            setOpen(true)
+            return
+        }
+        router.push("/admin/games")
     };
 
     return (
         <div className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
+            <ErrorModal status={status} message={message} visible={open} setVisible={setOpen} />
             <table className="table-auto w-full">
                 <tbody>
                     <tr className="bg-[#272B35] border-gray-700 border-b">
-                        <td className="px-6 py-4 whitespace-nowrap">Name</td>
+                        <td className="px-6 py-4 whitespace-nowrap">Name *</td>
                         <td className="px-6 py-4 whitespace-nowrap">
                             <input value={name} onChange={e => setName(e.target.value)} required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
                         </td>
                     </tr>
                     <tr className="bg-[#272B35] border-gray-700 border-b">
-                        <td className="px-6 py-4 whitespace-nowrap">Steam Game ID</td>
+                        <td className="px-6 py-4 whitespace-nowrap">Steam Game ID *</td>
                         <td className="px-6 py-4 whitespace-nowrap">
                             <input value={steamgameID} type="number" onChange={e => setSteamgameID(e.target.value)} required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
                         </td>
@@ -81,7 +101,7 @@ const GameEdit = ({ params }: { params: { id: number } }) => {
             </table>
             <div className='flex flex-row justify-end space-x-3 mt-4'>
                 <button onClick={() => router.push("/admin/games")}>Cansel</button>
-                <Button onClick={() => { handleSubmit(); router.push("/admin/games") }}>Update</Button>
+                <Button onClick={() => handleSubmit()}>Update</Button>
             </div>
         </div>
     )

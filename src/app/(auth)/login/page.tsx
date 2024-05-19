@@ -1,17 +1,17 @@
 "use client"
-import React from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/Card'
+import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { signIn } from 'next-auth/react'
-import FormInput from '@/components/interface/FormInput'
-import FormButton from '@/components/interface/FormButton'
+import ErrorModal from '@/components/common/ErrorModal'
 
-const page = () => {
+const loginPage = () => {
     const router = useRouter();
+    const [open, setOpen] = React.useState(false);
+    const [status, setStatus] = React.useState('200');
+    const [message, setMessage] = React.useState('Ok!')
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        console.log(e.target)
         const email = e.target[0].value;
         const password = e.target[1].value;
 
@@ -20,7 +20,12 @@ const page = () => {
             email,
             password,
         });
-        console.log(res)
+        if(res?.status !== 200){
+            setStatus('Ошибка авторизации: ' + res.status)
+            setMessage('Проверте коректность данных в форме')
+            setOpen(true)
+            return
+        }
         if (res?.url) {
             router.replace('/')
         }
@@ -28,6 +33,7 @@ const page = () => {
 
     return (
         <div className='flex flex-col items-center justify-center'>
+            <ErrorModal status={status} message={message} visible={open} setVisible={setOpen} />
             {/* <div className='flex'>
                 <CardTitle>Вход</CardTitle>
                 <CardDescription>Войдите в свой аккаунт!</CardDescription>
@@ -58,13 +64,13 @@ const page = () => {
                         <label className="block text-sm font-bold mb-2">
                             Email
                         </label>
-                        <input className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" type="text" placeholder="email" />
+                        <input required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" type="text" placeholder="email" />
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-bold mb-2">
                             Password
                         </label>
-                        <input className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" type="password" placeholder="password" />
+                        <input required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" type="password" placeholder="password" />
                     </div>
                     {/* <div className="mb-6">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -84,4 +90,4 @@ const page = () => {
     )
 }
 
-export default page
+export default loginPage

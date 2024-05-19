@@ -1,12 +1,11 @@
 "use client"
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/common/Card';
 import Button from '@/components/interface/Button';
-import Input from '@/components/interface/Input';
 import { Batch, Game } from '@/types/admin.interface';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
+import ErrorModal from '@/components/common/ErrorModal';
 
 const EditBatches = ({ params }: { params: { id: number } }) => {
   const [batch, setBatche] = useState<Batch>();
@@ -18,6 +17,10 @@ const EditBatches = ({ params }: { params: { id: number } }) => {
   const [locales, setLocales] = useState([]);
   const [selectedGame, setSelectedGame] = useState();
   const [sort, setSort] = useState<string>('');
+
+  const [open, setOpen] = React.useState(false);
+  const [status, setStatus] = React.useState('200');
+  const [message, setMessage] = React.useState('Ok!')
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,6 +69,12 @@ const EditBatches = ({ params }: { params: { id: number } }) => {
   };
 
   const handleSubmit = async () => {
+    if (!title || !sort || !selectedGame || !locales) {
+      setStatus('Ошибка данных')
+      setMessage('Все поля с "*" должны быть заполнены')
+      setOpen(true)
+      return;
+    }
     const batchData = {
       id: Number(params?.id),
       title,
@@ -73,30 +82,34 @@ const EditBatches = ({ params }: { params: { id: number } }) => {
       gameId: Number(selectedGame) || 1,
       languages: locales.map(locale => ({ title: locale.title, text: locale.text }))
     };
-    await axios.patch('http://95.165.94.222:8090/api/v1/admin/batches/update', batchData, {
-      headers: {
-        'Authorization': session?.token.accessToken
-      }
-    });
+    try {
+      await axios.patch('http://95.165.94.222:8090/api/v1/admin/batches/update', batchData, {
+        headers: {
+          'Authorization': session?.token.accessToken
+        }
+      });
+    } catch (err: any) {
+      setStatus('Ошибка: ' + err.response.status)
+      setMessage(err.response.data)
+      setOpen(true)
+      return
+    }
+    router.push("/admin/batches")
   };
-
-  const handleSubmitAndNew = () => {
-    handleSubmit();
-    window.location.reload();
-  }
 
   return (
     <div className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
+      <ErrorModal status={status} message={message} visible={open} setVisible={setOpen} />
       <table className="table-auto w-full">
         <tbody>
           <tr className="bg-[#272B35] border-gray-700 border-b">
-            <td className="px-6 py-4 whitespace-nowrap">Title</td>
+            <td className="px-6 py-4 whitespace-nowrap">Title *</td>
             <td className="px-6 py-4 whitespace-nowrap">
               <input value={title} onChange={e => setTitle(e.target.value)} required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
             </td>
           </tr>
           <tr className="bg-[#272B35] border-gray-700 border-b">
-            <td className="px-6 py-4 whitespace-nowrap">Game</td>
+            <td className="px-6 py-4 whitespace-nowrap">Game *</td>
             <td className="px-6 py-4 whitespace-nowrap">
               <select value={selectedGame} onChange={e => setSelectedGame(e.target.value)} required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
                 {games.map((game) => (
@@ -108,13 +121,13 @@ const EditBatches = ({ params }: { params: { id: number } }) => {
             </td>
           </tr>
           <tr className="bg-[#272B35] border-gray-700 border-b">
-            <td className="px-6 py-4 whitespace-nowrap">Sort</td>
+            <td className="px-6 py-4 whitespace-nowrap">Sort *</td>
             <td className="px-6 py-4 whitespace-nowrap">
               <input type="number" value={sort} onChange={e => setSort(e.target.value)} required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
             </td>
           </tr>
           <tr className="bg-[#272B35] border-gray-700 border-b">
-            <td className="px-6 py-4 whitespace-nowrap">Title locales</td>
+            <td className="px-6 py-4 whitespace-nowrap">Title locales *</td>
             <td className="px-6 py-4 whitespace-nowrap flex flex-col space-y-3">
               <table className="w-full">
                 <thead>
@@ -148,7 +161,7 @@ const EditBatches = ({ params }: { params: { id: number } }) => {
       </table>
       <div className='flex flex-row justify-end space-x-3 mt-4'>
         <button onClick={() => router.push("/admin/batches")}>Cansel</button>
-        <Button onClick={() => { handleSubmit(); router.push("/admin/batches") }}>Update</Button>
+        <Button onClick={() => handleSubmit()}>Update</Button>
       </div>
     </div>
   )
