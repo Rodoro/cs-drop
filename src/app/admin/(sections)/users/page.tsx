@@ -28,33 +28,33 @@ const UsersPage = () => {
     }, [sessionStatus])
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 90 },
+        { field: 'id', headerName: 'ID', flex: 90 },
         {
             field: 'username',
             headerName: 'Name',
-            width: 150,
+            flex: 150,
         },
         {
             field: 'uUid',
             headerName: 'UUID',
-            width: 150,
+            flex: 150,
         },
         {
             field: 'steamId',
             headerName: 'Steam Id',
-            width: 150,
+            flex: 150,
         },
         {
             field: 'steamCreated',
             headerName: 'Steam Created',
-            width: 150,
+            flex: 150,
             type: 'dateTime',
             valueGetter: (value: string) => value && new Date(value),
         },
         {
             field: 'link',
             headerName: 'Link',
-            width: 150,
+            flex: 150,
             renderCell: (params: any) => {
                 return (
                     <Link href={params.value}>

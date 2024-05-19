@@ -27,28 +27,32 @@ const StafsPage = () => {
     }, [sessionStatus])
 
     const columns = [
-        { field: 'guid', headerName: 'ID', width: 150 },
+        { field: 'guid', headerName: 'ID', flex: 150, minWidth:110 },
         {
             field: 'email',
             headerName: 'Email',
-            width: 150,
+            flex: 150,
+            minWidth: 150
         },
         {
             field: 'name',
             headerName: 'Name',
-            width: 150,
+            flex: 150,
+            minWidth: 110
         },
         {
             field: 'updatedAt',
             headerName: 'Updated At',
-            width: 200,
+            flex: 200,
+            minWidth: 170,
             type: 'dateTime',
             valueGetter: (value: string) => value && new Date(value),
         },
         {
             field: 'createdAt',
             headerName: 'Created At',
-            width: 200,
+            flex: 200,
+            minWidth: 170,
             type: 'dateTime',
             valueGetter: (value: string) => value && new Date(value),
         },
