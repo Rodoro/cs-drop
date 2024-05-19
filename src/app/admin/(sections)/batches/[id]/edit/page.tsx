@@ -67,11 +67,11 @@ const EditBatches = ({ params }: { params: { id: number } }) => {
 
   const handleSubmit = async () => {
     const batchData = {
-      id: params?.id,
+      id: Number(params?.id),
       title,
       sort: Number(sort),
       gameId: Number(selectedGame) || 1,
-      languages: locales.map(locale => ({ id: locale.id, title: locale.title, text: locale.text }))
+      languages: locales.map(locale => ({ title: locale.title, text: locale.text }))
     };
     await axios.patch('http://95.165.94.222:8090/api/v1/admin/batches/update', batchData, {
       headers: {
@@ -147,8 +147,8 @@ const EditBatches = ({ params }: { params: { id: number } }) => {
         </tbody>
       </table>
       <div className='flex flex-row justify-end space-x-3 mt-4'>
-        <button onClick={() => router.replace("/admin/batches")}>Cansel</button>
-        <Button onClick={() => { handleSubmit(); router.replace("/admin/batches") }}>Update</Button>
+        <button onClick={() => router.push("/admin/batches")}>Cansel</button>
+        <Button onClick={() => { handleSubmit(); router.push("/admin/batches") }}>Update</Button>
       </div>
     </div>
   )

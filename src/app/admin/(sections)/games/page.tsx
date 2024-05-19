@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 "use client"
 import React, { useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
@@ -5,11 +6,19 @@ import Box from '@mui/material/Box';
 import axios from 'axios';
 import { Game } from '@/types/admin.interface';
 import { useSession } from 'next-auth/react';
+import Avatar from "@mui/material/Avatar";
+import {
+    GridActionsCellItem,
+    GridRowId,
+} from '@mui/x-data-grid';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { useRouter } from 'next/navigation';
 
 const GamesPage = () => {
     const { data: session, status: sessionStatus } = useSession();
     const [games, setGames] = useState<Game[]>([]);
     const [loading, setLoading] = useState(true);
+    const router = useRouter();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,17 +35,57 @@ const GamesPage = () => {
         fetchData();
     }, [sessionStatus])
 
+    const editGame = React.useCallback(
+        (id: GridRowId) => () => {
+            router.push("/admin/games/" + id + "/edit")
+        },
+        [],
+    );
+
     const columns = [
-        { field: 'id', headerName: 'ID', width: 90 },
+        { field: 'id', headerName: 'ID', flex: 90, minWidth: 70 },
         {
             field: 'name',
             headerName: 'Name',
-            width: 150,
+            flex: 150,
+            minWidth: 120
         },
         {
             field: 'steamGameID',
             headerName: 'Steam Game ID',
-            width: 150,
+            flex: 150,
+            minWidth: 120
+        },
+        {
+            field: 'isMain',
+            headerName: 'Is Main',
+            flex: 90,
+            type: 'boolean',
+            minWidth: 70
+        },
+        {
+            field: 'iconUrl',
+            headerName: 'Icon',
+            flex: 150,
+            renderCell: (params: any) => {
+                return (
+                    <div>
+                        {!params.value ? (<>Нету</>) : (<Avatar src={params.value} sx={{ width: 54, height: 54 }} alt="Нету" />)}
+                    </div>
+                );
+            }
+        },
+        {
+            field: 'actions',
+            type: 'actions',
+            resizable: false,
+            getActions: (params: any) => [
+                <GridActionsCellItem
+                    icon={<SettingsIcon />}
+                    label="Edit"
+                    onClick={editGame(params.id)}
+                />,
+            ],
         },
     ];
 
@@ -55,8 +104,11 @@ const GamesPage = () => {
                 sx={{
                     color: "#fff",
                     borderWidth: '0px',
+                    '& .MuiDataGrid-booleanCell[data-value="true"]': { color: '#1e9a19' },
+                    '& .MuiDataGrid-booleanCell[data-value="false"]': { color: '#cd2a4d' },
                     '--DataGrid-rowBorderColor': "#272B35",
                     '--DataGrid-containerBackground': "#272B35",
+                    '& .MuiButtonBase-root.MuiIconButton-root': { color: '#fff' },
                     '& .MuiDataGrid-footerContainer': { background: '#272B35' },
                     '& .MuiTablePagination-root': { color: '#fff' },
                     '& .MuiCheckbox-root': { color: '#fff' },

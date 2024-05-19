@@ -126,6 +126,11 @@ const BatchesPage = () => {
       flex: 200,
     },
     {
+      field: 'sort',
+      headerName: 'Sort',
+      flex: 50,
+    },
+    {
       field: 'actions',
       type: 'actions',
       resizable: false,
