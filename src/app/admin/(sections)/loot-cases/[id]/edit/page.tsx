@@ -44,6 +44,13 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
     const [topItems, setTopItems] = React.useState<number>(10);
     const [midItems, setMidItems] = React.useState<number>(40);
 
+    const [lowMinPrice, setLowMinPrice] = React.useState(0.01)
+    const [lowMaxPrice, setLowMaxPrice] = React.useState(100)
+    const [midMinPrice, setMidMinPrice] = React.useState(0.01)
+    const [midMaxPrice, setMidMaxPrice] = React.useState(10000)
+    const [topMinPrice, setTopMinPrice] = React.useState(0.01)
+    const [topMaxPrice, setTopMaxPrice] = React.useState(100000)
+
     const [locales, setLocales] = useState([]);
     const [title, setTitle] = useState('');
     const [imgUrl, setImgUrl] = useState('');
@@ -462,13 +469,13 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
                         <tr className="bg-[#272B35]">
                             <td className="px-6 py-2 whitespace-nowrap">Low items min price</td>
                             <td className="px-6 py-2 whitespace-nowrap">
-                                <input id="lowItemMin" value={0.01} type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
+                                <input id="lowItemMin" value={lowMinPrice} onChange={e => setLowMinPrice(e.target.value)} type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
                             </td>
                         </tr>
                         <tr className="bg-[#272B35] border-gray-700 border-b">
                             <td className="px-6 py-2 whitespace-nowrap">Low items max price</td>
                             <td className="px-6 py-2 pb-4 whitespace-nowrap">
-                                <input id="lowItemMax" value={100} type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
+                                <input id="lowItemMax" value={lowMaxPrice} onChange={e => setLowMaxPrice(e.target.value)} type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
                             </td>
                         </tr>
 
@@ -481,13 +488,13 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
                         <tr className="bg-[#272B35]">
                             <td className="px-6 py-2 whitespace-nowrap">Mid items min price</td>
                             <td className="px-6 py-2 whitespace-nowrap">
-                                <input id="midItemMin" value={0.01} type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
+                                <input id="midItemMin" value={midMinPrice} onChange={e => setMidMinPrice(e.target.value)} type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
                             </td>
                         </tr>
                         <tr className="bg-[#272B35] border-gray-700 border-b">
                             <td className="px-6 py-2 whitespace-nowrap">Mid items max price</td>
                             <td className="px-6 py-2 pb-4 whitespace-nowrap">
-                                <input id="midItemMax" value={10000} type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
+                                <input id="midItemMax" value={midMaxPrice} onChange={e => setMidMaxPrice(e.target.value)} type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
                             </td>
                         </tr>
 
@@ -500,13 +507,13 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
                         <tr className="bg-[#272B35]">
                             <td className="px-6 py-2 whitespace-nowrap">Top items min price</td>
                             <td className="px-6 py-2 whitespace-nowrap">
-                                <input id="topItemMin" value={0.01} type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
+                                <input id="topItemMin" value={topMinPrice} onChange={e => setTopMinPrice(e.target.value)} type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
                             </td>
                         </tr>
                         <tr className="bg-[#272B35]">
                             <td className="px-6 py-2 whitespace-nowrap">Top items max price</td>
                             <td className="px-6 py-2 pb-4 whitespace-nowrap">
-                                <input id="topItemMax" value={100000} type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
+                                <input id="topItemMax" value={topMaxPrice} onChange={e => setTopMaxPrice(e.target.value)} type='number' className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
                             </td>
                         </tr>
                     </tbody>
