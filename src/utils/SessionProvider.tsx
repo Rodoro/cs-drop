@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider, useSession } from "next-auth/react";
 
 const AuthProvider = ({ children }: any) => {
+
+    console.log(12)
     return <SessionProvider>{children}</SessionProvider>;
 };
 

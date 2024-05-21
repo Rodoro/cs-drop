@@ -17,12 +17,13 @@ async function refreshAccessToken(token: any) {
         //     throw refreshedTokens
         // }
         token.accessToken = refreshedTokens.result.accessToken
-        token.accessTokenExpires = Date.now() + 900 * 1000
+        token.accessTokenExpires = Date.now() + 9 * 1000
         token.refreshToken = refreshedTokens.result.refreshtoken
         console.log(token)
         return token
-    } catch (e) {
-        console.log(e)
+    } catch (e: any) {
+        console.log("Error")
+        console.log(e.response.data)
 
         return {
             ...token,
@@ -71,7 +72,7 @@ export const authOptions: any = {
         async jwt({ token, user, account, profile, isNewUser }: any) {
             if (user) {
                 token.accessToken = user.result.accessToken
-                token.accessTokenExpires = Date.now() + 900 * 1000
+                token.accessTokenExpires = Date.now() + 9 * 1000
                 token.refreshToken = user.result.refreshToken
                 token.staffId = user.staffId
             }
