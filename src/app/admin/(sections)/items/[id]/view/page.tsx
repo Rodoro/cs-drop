@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 import { Item } from '@/types/admin.interface';
 import axios from 'axios';

@@ -1,5 +1,6 @@
 "use client"
 import Navbar from '@/containers/admin/Navbar'
+import ChekToken from '@/containers/auth/ChekToken';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
@@ -21,6 +22,7 @@ export default function DashboardLayout({
 
     return (
         <section>
+            <ChekToken />
             <Navbar />
             {children}
         </section >

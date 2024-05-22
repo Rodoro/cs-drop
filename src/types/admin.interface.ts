@@ -14,7 +14,7 @@ export interface Game {
 }
 
 export interface Language {
-    id: number;
+    id?: number;
     title: string;
     text: string;
 }
@@ -55,10 +55,13 @@ export interface User {
 
 export interface LootCases {
     id: number,
-    game: string,
-    batch: string,
+    game: Game,
+    batch: Batch,
+    locales: Language[]
     title: string,
     price: 0,
     netPrice: 0,
     isVisible: boolean,
+    image: string,
+    imageHover: string
 }

@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 import Button from '@/components/interface/Button';
-import { Batch, Game } from '@/types/admin.interface';
+import { Batch, Game, Language } from '@/types/admin.interface';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -14,8 +15,8 @@ const EditBatches = ({ params }: { params: { id: number } }) => {
   const router = useRouter();
 
   const [title, setTitle] = useState('');
-  const [locales, setLocales] = useState([]);
-  const [selectedGame, setSelectedGame] = useState();
+  const [locales, setLocales] = useState<Language[]>([]);
+  const [selectedGame, setSelectedGame] = useState<string>();
   const [sort, setSort] = useState<string>('');
 
   const [open, setOpen] = React.useState(false);
@@ -47,13 +48,13 @@ const EditBatches = ({ params }: { params: { id: number } }) => {
   }, [session]);
 
   const handleChangeTitle = (index: number, value: string) => {
-    const newLocales = [...locales];
+    const newLocales: Language[] = [...locales];
     newLocales[index].title = value.slice(0, 2);
     setLocales(newLocales);
   };
 
   const handleChangeText = (index: number, value: string) => {
-    const newLocales = [...locales];
+    const newLocales: Language[] = [...locales];
     newLocales[index].text = value;
     setLocales(newLocales);
   };

@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-key */
 "use client"
 import React, { useEffect, useState } from 'react'
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 import { Game } from '@/types/admin.interface';
@@ -42,7 +43,7 @@ const GamesPage = () => {
         [],
     );
 
-    const columns = [
+    const columns: GridColDef[] = [
         { field: 'id', headerName: 'ID', flex: 90, minWidth: 70 },
         {
             field: 'name',
@@ -70,7 +71,7 @@ const GamesPage = () => {
             renderCell: (params: any) => {
                 return (
                     <div>
-                        {!params.value ? (<>Нету</>) : (<Avatar src={params.value} sx={{ width: 54, height: 54 }} alt="Нету" />)}
+                        {!params.value ? (<>Нет</>) : (<Avatar src={params.value} sx={{ width: 54, height: 54 }} alt="Нету" />)}
                     </div>
                 );
             }

@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 import React, { useEffect, useState } from 'react'
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 import { User } from '@/types/admin.interface';
@@ -27,7 +28,7 @@ const UsersPage = () => {
         fetchData();
     }, [sessionStatus])
 
-    const columns = [
+    const columns: GridColDef[] = [
         { field: 'id', headerName: 'ID', flex: 90 },
         {
             field: 'username',

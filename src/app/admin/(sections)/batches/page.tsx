@@ -1,12 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-key */
 "use client"
 import React, { useEffect, useState } from 'react'
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 import { Batch, Game } from '@/types/admin.interface';
 import { useSession } from 'next-auth/react';
 import {
+  
   GridActionsCellItem,
   GridRowId,
 } from '@mui/x-data-grid';
@@ -112,7 +114,7 @@ const BatchesPage = () => {
     }
   }
 
-  const columns = [
+  const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', flex: 50 },
     {
       field: 'gameId',
@@ -134,6 +136,7 @@ const BatchesPage = () => {
       field: 'actions',
       type: 'actions',
       resizable: false,
+      cellClassName: 'actions',
       getActions: (params: any) => [
         <GridActionsCellItem
           icon={<DeleteIcon />}

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-key */
 "use client"
 import Button from '@/components/interface/Button'
@@ -5,7 +6,7 @@ import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import Slider from '@mui/material/Slider';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Link from 'next/link'
@@ -16,6 +17,7 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useRouter } from 'next/navigation'
 import DeleteIcon from '@mui/icons-material/Delete';
+import { LootCases } from '@/types/admin.interface'
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -31,7 +33,7 @@ const style = {
 
 const ViewLootcase = ({ params }: { params: { id: number } }) => {
     const [loading, setLoading] = useState(true)
-    const [lootcase, setLootcase] = useState()
+    const [lootcase, setLootcase] = useState<LootCases>()
     const { data: session, status: sessionStatus } = useSession();
     const [items, setItems] = useState([])
     const router = useRouter();
@@ -64,7 +66,7 @@ const ViewLootcase = ({ params }: { params: { id: number } }) => {
         [],
     );
 
-    const columns = [
+    const columns: GridColDef[] = [
         { field: 'id', headerName: 'ID', flex: 50, minWidth: 50, },
         {
             field: 'itemId',
@@ -147,10 +149,10 @@ const ViewLootcase = ({ params }: { params: { id: number } }) => {
                                     {lootcase?.locales.map((locale, index) => (
                                         <tr key={index}>
                                             <td>
-                                                <input disabled value={locale.title} onChange={e => handleChangeTitle(index, e.target.value)} required className="flex flex-row border rounded-l-lg text-sm w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
+                                                <input disabled value={locale.title} required className="flex flex-row border rounded-l-lg text-sm w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
                                             </td>
                                             <td>
-                                                <input disabled value={locale.text} onChange={e => handleChangeText(index, e.target.value)} required className="flex flex-row border rounded-r-lg text-sm w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
+                                                <input disabled value={locale.text} required className="flex flex-row border rounded-r-lg text-sm w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
                                             </td>
                                         </tr>
                                     ))}

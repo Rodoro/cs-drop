@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 import ErrorModal from '@/components/common/ErrorModal';
 import Button from '@/components/interface/Button';

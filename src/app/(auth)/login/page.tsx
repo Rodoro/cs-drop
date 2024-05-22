@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import ErrorModal from '@/components/common/ErrorModal'
 
-const loginPage = () => {
+const LoginPage = () => {
     const router = useRouter();
     const [open, setOpen] = React.useState(false);
     const [status, setStatus] = React.useState('200');
@@ -21,7 +21,7 @@ const loginPage = () => {
             password,
         });
         if(res?.status !== 200){
-            setStatus('Ошибка авторизации: ' + res.status)
+            setStatus('Ошибка авторизации: ' + res?.status)
             setMessage('Проверте коректность данных в форме')
             setOpen(true)
             return
@@ -90,4 +90,4 @@ const loginPage = () => {
     )
 }
 
-export default loginPage
+export default LoginPage

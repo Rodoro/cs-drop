@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-key */
 "use client"
 import Button from '@/components/interface/Button'
@@ -5,7 +6,7 @@ import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import Slider from '@mui/material/Slider';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Link from 'next/link'
@@ -17,6 +18,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useRouter } from 'next/navigation'
 import DeleteIcon from '@mui/icons-material/Delete';
 import ErrorModal from '@/components/common/ErrorModal';
+import { Batch, Game, Language } from '@/types/admin.interface'
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -30,7 +32,7 @@ const style = {
     p: 4,
 };
 
-const lootEdit = ({ params }: { params: { id: number } }) => {
+const LootEdit = ({ params }: { params: { id: number } }) => {
     const [loading, setLoading] = useState(true)
     const [lootcase, setLootcase] = useState()
     const { data: session, status: sessionStatus } = useSession();
@@ -44,14 +46,14 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
     const [topItems, setTopItems] = React.useState<number>(10);
     const [midItems, setMidItems] = React.useState<number>(40);
 
-    const [lowMinPrice, setLowMinPrice] = React.useState(0.01)
-    const [lowMaxPrice, setLowMaxPrice] = React.useState(100)
-    const [midMinPrice, setMidMinPrice] = React.useState(0.01)
-    const [midMaxPrice, setMidMaxPrice] = React.useState(10000)
-    const [topMinPrice, setTopMinPrice] = React.useState(0.01)
-    const [topMaxPrice, setTopMaxPrice] = React.useState(100000)
+    const [lowMinPrice, setLowMinPrice] = React.useState<string>('0.01')
+    const [lowMaxPrice, setLowMaxPrice] = React.useState<string>('100')
+    const [midMinPrice, setMidMinPrice] = React.useState<string>('0.01')
+    const [midMaxPrice, setMidMaxPrice] = React.useState<string>('10000')
+    const [topMinPrice, setTopMinPrice] = React.useState<string>('0.01')
+    const [topMaxPrice, setTopMaxPrice] = React.useState<string>('100000')
 
-    const [locales, setLocales] = useState([]);
+    const [locales, setLocales] = useState<Language[]>([]);
     const [title, setTitle] = useState('');
     const [imgUrl, setImgUrl] = useState('');
     const [imgHoverUrl, setImgHoverUrl] = useState('');
@@ -135,7 +137,7 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
     );
 
     const handleChangeTitle = (index: number, value: string) => {
-        const newLocales = [...locales];
+        const newLocales: Language[] = [...locales];
         newLocales[index].title = value.slice(0, 2);
         setLocales(newLocales);
     };
@@ -176,15 +178,15 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
             "caseId": params?.id,
             "excludeWords": e.target[1].value.split(' '),
             "includeWords": e.target[2].value.split(' '),
-            "lowItemCount": e.target[3].value,
-            "lowItemsMinPrice": e.target[4].value,
-            "lowItemsMaxPrice": e.target[5].value,
-            "midItemsCount": e.target[6].value,
-            "midItemsMinPrice": e.target[7].value,
-            "midItemsMaxPrice": e.target[8].value,
-            "topItemsCount": e.target[9].value,
-            "topItemsMinPrice": e.target[10].value,
-            "topItemsMaxPrice": e.target[11].value,
+            "lowItemCount": Number(e.target[3].value),
+            "lowItemsMinPrice": Number(e.target[4].value),
+            "lowItemsMaxPrice": Number(e.target[5].value),
+            "midItemsCount": Number(e.target[6].value),
+            "midItemsMinPrice": Number(e.target[7].value),
+            "midItemsMaxPrice": Number(e.target[8].value),
+            "topItemsCount": Number(e.target[9].value),
+            "topItemsMinPrice": Number(e.target[10].value),
+            "topItemsMaxPrice": Number(e.target[11].value),
         }
         try {
             const res = await axios.post('http://95.165.94.222:8090/api/v1/admin/content-generator/generate', data, {
@@ -287,7 +289,7 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
         router.push("/admin/loot-cases") 
     };
 
-    const columns = [
+    const columns: GridColDef[] = [
         { field: 'id', headerName: 'ID', flex: 50, minWidth: 50, },
         {
             field: 'itemId',
@@ -571,4 +573,4 @@ const lootEdit = ({ params }: { params: { id: number } }) => {
     )
 }
 
-export default lootEdit
+export default LootEdit
