@@ -119,6 +119,8 @@ const ItemsPage = () => {
           '& .MuiCheckbox-root': { color: '#fff' },
           '& .MuiDataGrid-cell:focus': { outlineColor: '#fff' },
           '& .MuiDataGrid-overlay': { background: '#191D3E' },
+          '& .MuiDataGrid-columnHeader:focus': { outline: '#fff'},
+          '& .MuiDataGrid-columnHeader:focus-within': { outline: '#fff'},
         }}
       />
     </Box>

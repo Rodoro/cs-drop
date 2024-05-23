@@ -187,6 +187,8 @@ const BatchesPage = () => {
           '& .MuiTablePagination-root': { color: '#fff' },
           '& .MuiCheckbox-root': { color: '#fff' },
           '& .MuiDataGrid-cell:focus': { outlineColor: '#fff' },
+          '& .MuiDataGrid-columnHeader:focus': { outline: '#fff'},
+          '& .MuiDataGrid-columnHeader:focus-within': { outline: '#fff'},
           '& .MuiDataGrid-overlay': { background: '#191D3E' },
         }}
       />
