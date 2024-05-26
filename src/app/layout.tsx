@@ -6,7 +6,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/utils/SessionProvider";
-import ChekToken from "@/containers/auth/ChekToken";
+import SupportVidget from "@/components/SupportVidget";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +27,7 @@ export default async function RootLayout({
           <AppRouterCacheProvider>
             <Navbar />
             {children}
+            <SupportVidget />
           </AppRouterCacheProvider>
         </SessionProvider>
       </body>
