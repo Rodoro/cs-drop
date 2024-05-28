@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const SelectLanguage = () => {
   return (
-    <div className='flex flex-row items-center space-x-2 px-6 bg-[#242f54] rounded-2xl border-[1.111px] border-[#ffffff]/[.30]'>
+    <div className='flex flex-row items-center space-x-2 px-6 bg-[#242f54] rounded-2xl border-[1.111px] border-[#ffffff]/[.30] py-3'>
       <Image
         src="/img/interface/nav/flag/gb.png"
         alt="flag"

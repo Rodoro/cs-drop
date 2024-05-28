@@ -7,6 +7,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/utils/SessionProvider";
 import SupportVidget from "@/components/SupportVidget";
+import Footer from "@/containers/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +27,10 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <AppRouterCacheProvider>
             <Navbar />
-            {children}
+            <div className="ml-8 md:ml-40 mr-12">
+              {children}
+              <Footer />
+            </div>
             <SupportVidget />
           </AppRouterCacheProvider>
         </SessionProvider>
