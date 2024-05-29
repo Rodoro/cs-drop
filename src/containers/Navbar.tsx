@@ -78,7 +78,7 @@ const Navbar = () => {
               Casino
             </Link>
           </nav>
-          <nav className="flex flex-row justify-between items-center px-12 pt-8 ml-32">
+          <nav className="flex flex-row justify-between items-center px-12 pt-8 ml-32 mb-11">
             <Link href='/'>
               <LogoText />
             </Link>
