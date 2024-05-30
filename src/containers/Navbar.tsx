@@ -7,9 +7,10 @@ import { VkLink } from '@/components/icons/vk'
 import { TgLink } from '@/components/icons/tg'
 import { YtLink } from '@/components/icons/yt'
 import LogoText from '@/components/icons/LogoText'
-import SelectLanguage from '@/components/interface/Select'
+
 import { AuthButton, EarnMoneyButton } from '@/components/interface/Buttons'
 import { SettingsButton } from '@/components/icons/setting'
+import { SelectLanguage } from '@/components/interface/Select'
 
 const Navbar = () => {
   const pathname = usePathname()

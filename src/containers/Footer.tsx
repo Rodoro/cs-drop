@@ -6,7 +6,7 @@ import WonIcon from '@/components/icons/Won'
 import { TgLink } from '@/components/icons/tg'
 import { VkLink } from '@/components/icons/vk'
 import { YtLink } from '@/components/icons/yt'
-import SelectLanguage from '@/components/interface/Select'
+import { SelectLanguage } from '@/components/interface/Select'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 
