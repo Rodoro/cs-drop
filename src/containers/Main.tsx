@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+import Case from '@/components/cart/Case'
 import Item from '@/components/cart/Item'
 import { GradientButton } from '@/components/interface/Buttons'
 import { SelectTop } from '@/components/interface/Select'
@@ -144,6 +145,9 @@ const Main = () => {
             </svg>
           </Link>
         </div>
+      </div>
+      <div className='mt-8'>
+        <Case />
       </div>
     </main>
   )
