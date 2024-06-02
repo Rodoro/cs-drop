@@ -1,0 +1,17 @@
+.border {
+    border: 1.12px solid transparent; /*2*/
+    background: linear-gradient(150deg,rgba(255, 255, 255, 0.2),rgba(255, 255, 255, 0)) border-box; /*3*/
+    -webkit-mask: /*4*/
+       linear-gradient(#fff 0 0) padding-box, 
+       linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; /*5'*/
+            mask-composite: exclude; /*5*/
+}
+
+.image {
+   transition: transform 0.4s;
+}
+
+.image:hover {
+   transform: scale(1.2);
+}

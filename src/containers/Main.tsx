@@ -11,6 +11,7 @@ const Main = () => {
     <main>
       <div className="absolute top-[-7rem] -z-20 left-8 flex-shrink-0 w-[587px] h-[587px] opacity-[0.2] bg-[#c51fff] blur-[227px]" />
       <div className="absolute right-20 top-[30rem] w-[511px] -z-20 h-[511px] opacity-[0.2] bg-[#821fff] blur-[197px]" />
+      <div className="absolute -z-20 mt-[400px] w-[1026px] h-[1114px] right-0 opacity-[0.6] bg-contain bg-right bg-no-repeat mix-blend-color-dodge" style={{ backgroundImage: "url(/img/smoke.png)"}}/>
 
       <div className="flex flex-row items-center justify-center gap-12">
         <div className="relative w-full max-w-4xl h-[20.5625rem] rounded-3xl bg-[#1d2565] flex flex-col py-8 px-14 bg-contain bg-right bg-no-repeat " style={{ backgroundImage: "url(/img/baner1.png), linear-gradient(146deg, #21266D 0%, #4730BA 60%, #8D6CFF 100%)" }}>
@@ -146,7 +147,11 @@ const Main = () => {
           </Link>
         </div>
       </div>
-      <div className='mt-8'>
+      <div className='mt-12 flex flex-row justify-start gap-4'>
+        <Case />
+        <Case />
+        <Case />
+        <Case />
         <Case />
       </div>
     </main>
