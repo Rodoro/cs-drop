@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import React, { ButtonHTMLAttributes } from 'react'
 import AuthIcon from '../icons/auth'
+import style from './Buttons.module.css'
 
 const AuthButton = () => {
     return (
@@ -36,4 +37,16 @@ const GradientButton = ({ children, ...props }: any) => {
     )
 }
 
-export { AuthButton, EarnMoneyButton, GradientButton }
+const PurpurButon = ({ children, ...props }: any) => {
+    return (
+        <div className={style.purpurButon + ' flex flex-row justify-center items-center rounded-[0.625rem] shadow-[0_0_24px_0_rgba(139,50,252,0.75)] p-0.5 bg-[#7e50ff] hover:bg-[#22276e] hover:shadow-[null]'}>
+            <div {...props} className='h-full w-full flex flex-row justify-center items-center self-stretch rounded-[0.625rem] bg-[#7e50ff] gap-1 hover:bg-[#22276e]'>
+                <div className="text-white text-[.8125rem] font-medium leading-[normal] justify-center items-center py-4">
+                    {children}
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export { AuthButton, EarnMoneyButton, GradientButton, PurpurButon }

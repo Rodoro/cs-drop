@@ -147,6 +147,7 @@ const Main = () => {
           </Link>
         </div>
       </div>
+      {/* TODO Обработка списка кейсов */}
       <div className='mt-12 flex flex-row justify-start gap-4'>
         <Case />
         <Case />
