@@ -42,4 +42,18 @@ const SelectTop = () => {
   )
 }
 
-export { SelectLanguage, SelectTop }
+const SelectPage = () => {
+  return (
+    <div className="flex cursor-pointer items-center gap-2 pl-[1.0625rem] pr-[1.0625rem] p-0 h-[2.625rem] rounded-xl border-[0.84px] border-[#ffffff]/[.10] bg-[#22276E]/[.30]">
+      <div className="flex items-center gap-1">
+        <Image src={'/img/interface/nav/cases.png'} alt={'Cases'} width={29} height={22}/>
+        <div className="text-white text-[.8125rem] font-medium leading-[normal]">Cases</div>
+      </div>
+      <svg width={10} height={6} viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9.28888 4.86865L4.84444 1.13128L0.39999 4.86865" stroke="white" strokeWidth="0.808081" />
+      </svg>
+    </div>
+  )
+}
+
+export { SelectLanguage, SelectTop, SelectPage }
