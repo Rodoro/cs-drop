@@ -19,7 +19,7 @@ const Footer = () => {
                 <div></div>
             ) : (
                 <div className='mt-20 flex flex-col gap-11 mb-12'>
-                    <div className="flex flex-row justify-between items-center">
+                    <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
                         <div className="flex flex-row gap-4 items-center">
                             <LogoText />
                             <SelectLanguage />
@@ -31,13 +31,13 @@ const Footer = () => {
                             <YtLink />
                         </div>
                     </div>
-                    <div className='flex flex-row justify-between items-center pt-[2.0625rem] pb-[2.0625rem] pl-[5.3125rem] pr-[5.3125rem] rounded-[30px] border border-[#ffffff]/[.30] bg-[#22276e]/[.20]'>
-                        <div className='flex flex-row justify-between items-center gap-12'>
+                    <div className='flex flex-row gap-4 justify-around mb:justify-between items-center pt-[2.0625rem] pb-[2.0625rem] px-4 sm:px-8 lg:px-[5.3125rem] rounded-[30px] border border-[#ffffff]/[.30] bg-[#22276e]/[.20]'>
+                        <div className='flex flex-col md:flex-row justify-between items-center gap-12'>
                             <OnlineIcon />
                             <PlayersIcon />
                             <WonIcon />
                         </div>
-                        <div className="flex items-center gap-6">
+                        <div className="flex flex-col lg:flex-row items-center gap-6">
                             <div className="flex flex-col justify-center items-start gap-2">
                                 <div className="flex justify-center items-center gap-1">
                                     <svg width={24} height={23} viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -77,19 +77,19 @@ const Footer = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-between items-center">
+                    <div className="flex flex-col gap-6 sm:flex-row justify-between items-center">
                         <div className="flex flex-col items-start gap-3">
-                            <div className="opacity-[0.8] text-white text-center font-semibold leading-[normal]">© 2020-2024 Mel’s Bar</div>
-                            <div className="opacity-50 text-white leading-[140%]">Experience the future of storytelling.</div>
+                            <div className="opacity-[0.8] text-white text-center sm:text-left  font-semibold leading-[normal] w-full">© 2020-2024 Mel’s Bar</div>
+                            <div className="opacity-50 text-white text-center sm:text-left  leading-[140%] w-full">Experience the future of storytelling.</div>
                         </div>
                         <div className="flex flow-row items-start gap-9">
                             <div className="flex flex-col items-start gap-4">
-                                <div className="opacity-50 text-white leading-[140%]">Support</div>
-                                <div className="opacity-50 text-white leading-[140%]">Privacy Policy</div>
+                                <div className="opacity-50 text-white text-center sm:text-left  leading-[140%] w-full">Support</div>
+                                <div className="opacity-50 text-white text-center sm:text-left  leading-[140%] w-full">Privacy Policy</div>
                             </div>
                             <div className="flex flex-col items-start gap-4">
-                                <div className="opacity-50 text-white leading-[140%]">Contact us</div>
-                                <div className="opacity-50 text-white leading-[140%]">User agreement</div>
+                                <div className="opacity-50 text-white text-center sm:text-left  leading-[140%] w-full">Contact us</div>
+                                <div className="opacity-50 text-white text-center sm:text-left leading-[140%] w-full">User agreement</div>
                             </div>
                         </div>
                     </div>

@@ -20,7 +20,7 @@ const Navbar = () => {
         <div></div>
       ) : (
         < div className="flex flex-col" >
-          <nav className="fixed flex flex-col justify-center top-0 left-0 bottom-0 bg-[#0A0D1D] space-y-6 pl-3 pr-3">
+          <nav className="hidden xl:flex fixed flex-col justify-center top-0 left-0 bottom-0 bg-[#0A0D1D] space-y-6 pl-3 pr-3">
             <Link href="/" className={`flex flex-col items-center ${pathname === '/' ? '' : 'opacity-40'}`}>
               <div className="relative flex flex-col items-center justify-center">
                 <Image
@@ -79,7 +79,7 @@ const Navbar = () => {
               Casino
             </Link>
           </nav>
-          <nav className="flex flex-row justify-between items-center px-12 pt-8 ml-32 mb-11">
+          <nav className="hidden xl:flex flex-row justify-between items-center px-12 pt-8 ml-32 mb-11">
             <Link href='/'>
               <LogoText />
             </Link>
@@ -89,7 +89,7 @@ const Navbar = () => {
                 <TgLink />
                 <YtLink />
               </div>
-              <div className='flex flex-row gap-7'>
+              <div className='flex flex-row gap-7 items-center'>
                 <SelectLanguage />
                 <AuthButton />
                 <SettingsButton />
