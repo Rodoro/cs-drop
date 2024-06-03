@@ -15,7 +15,7 @@ import ChatIcon from '@/components/icons/chat'
 import Logo from '@/components/icons/Logo'
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const pathname = usePathname()
   return (
     <>
@@ -155,7 +155,7 @@ const Navbar = () => {
               <div className='flex flex-row gap-3'>
                 <AuthButton />
                 <SettingsButton />
-                <div className="cursor-pointer flex flex-col flex-shrink-0 justify-center items-end gap-1.5 w-[1.375rem]" onClick={() => { setIsOpen(!isOpen); console.log(isOpen) }}>
+                <div className="cursor-pointer flex flex-col flex-shrink-0 justify-center items-end gap-1.5 w-[1.375rem]" onClick={() => setIsOpen(!isOpen)}>
                   <svg width={22} height={20} viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3.22192 17.7783L18.7783 2.22197" stroke="white" strokeWidth="2.75" strokeLinecap="round" />
                     <path d="M3.22192 2.22168L18.7783 17.778" stroke="white" strokeWidth="2.75" strokeLinecap="round" />
