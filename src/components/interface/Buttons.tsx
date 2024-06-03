@@ -1,3 +1,4 @@
+"use client"
 import Link from 'next/link'
 import React, { ButtonHTMLAttributes, useState } from 'react'
 import AuthIcon from '../icons/auth'

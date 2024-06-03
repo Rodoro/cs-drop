@@ -3,13 +3,16 @@ import Image from 'next/image'
 
 const Item = () => {
     return (
-        <div className="w-[180px] min-w-44 h-[117px] overflow-hidden relative rounded-[0.9375rem] border-[1.938px] border-[#ffffff]/[.30] bg-[#6b4bec]/[.20] border-r-[#E23432] border-r-2">
-            <div className="flex flex-col absolute bottom-0 mb-3 ml-3 gap-1">
-                <div className="opacity-50 text-white text-[11.41px] font-medium leading-[normal]">AK-47</div>
-                <div className="text-[#f1f1f1] text-[.8125rem] font-medium leading-[normal]">Legion of Anubis</div>
+        <div className="relative rounded-[0.9375rem] w-[180px] min-w-44 overflow-hidden p-[2px]" style={{ background: "linear-gradient(150deg,rgba(64, 57, 108, 1),rgba(43, 33, 98, 1))" }}>
+            <div className="w-full h-[117px] overflow-hidden relative rounded-[0.9375rem] bg-[#2B2162]">
+                <div className="flex flex-col absolute bottom-0 mb-3 ml-3 gap-1">
+                    <div className="opacity-50 text-white text-[11.41px] font-medium leading-[normal]">AK-47</div>
+                    <div className="text-[#f1f1f1] text-[.8125rem] font-medium leading-[normal]">Legion of Anubis</div>
+                </div>
+                <Image className="absolute left-0 mt-1" src={'/img/example/ak47.png'} alt={'Оружие'} width={150} height={95}></Image>
+
             </div>
-            <Image className="absolute left-0 mt-1" src={'/img/example/ak47.png'} alt={'Оружие'} width={150} height={95}></Image>
-            <svg className='absolute right-0' width={158} height={119} viewBox="0 0 158 119" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg className='absolute top-0 right-0 bottom-0 my-auto' width={158} height={121} viewBox="0 0 158 121" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter0_f_22_451)">
                     <ellipse cx="152.512" cy="59.3279" rx="58.9516" ry="77.0174" fill="#EF2424" fillOpacity="0.3" />
                 </g>
@@ -21,6 +24,7 @@ const Item = () => {
                     </filter>
                 </defs>
             </svg>
+            <div className='absolute h-full w-3 bg-[#E23432] top-0 -right-[0.55rem] opacity-50' />
         </div>
     )
 }

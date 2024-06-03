@@ -1,24 +1,26 @@
+"use client"
 /* eslint-disable react/no-unescaped-entities */
 import Case from '@/components/cart/Case'
 import Item from '@/components/cart/Item'
 import { GradientButton } from '@/components/interface/Buttons'
 import { SelectTop } from '@/components/interface/Select'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 
 const Main = () => {
+  const [valueLiveDrop, setValueLiveDrop] = useState("all");
   return (
     <main>
-      <div className="absolute top-[-7rem] -z-20 left-8 flex-shrink-0 w-[587px] h-[587px] opacity-[0.2] bg-[#c51fff] blur-[227px]" />
-      <div className="absolute right-20 top-[30rem] w-[511px] -z-20 h-[511px] opacity-[0.2] bg-[#821fff] blur-[197px]" />
-      <div className="absolute -z-20 mt-[400px] w-[1026px] h-[1114px] right-0 opacity-[0.6] bg-contain bg-right bg-no-repeat mix-blend-color-dodge" style={{ backgroundImage: "url(/img/smoke.png)"}}/>
+      <div className="md:hidden absolute top-[30rem] -z-20 right-0 w-[336px] h-[336px] opacity-[0.3] bg-[#821FFF] blur-[227px]" />
+      <div className="absolute -top-3 -left-3 md:top-[-7rem] -z-20 md:left-8 flex-shrink-0 w-[336px] h-[336px] md:w-[587px] md:h-[587px] opacity-[0.3] bg-[#c51fff] blur-[227px]" />
+      <div className="invisible sm:visible absolute -z-20 mt-[400px] w-[1026px] h-[1114px] right-0 opacity-[0.6] bg-contain bg-right bg-no-repeat mix-blend-color-dodge" style={{ backgroundImage: "url(/img/smoke.png)" }} />
 
-      <div className="flex flex-row items-center justify-center gap-12">
-        <div className="relative w-full max-w-4xl h-[20.5625rem] rounded-3xl bg-[#1d2565] flex flex-col py-8 px-14 bg-contain bg-right bg-no-repeat " style={{ backgroundImage: "url(/img/baner1.png), linear-gradient(146deg, #21266D 0%, #4730BA 60%, #8D6CFF 100%)" }}>
+      <div className="hidden lg:flex flex-col lg:flex-row items-center justify-center gap-12">
+        <div className="relative w-full max-w-4xl h-[20.5625rem] rounded-3xl bg-[#1d2565] flex flex-col py-8 px-6 md:px-14 bg-contain bg-right bg-no-repeat " style={{ backgroundImage: "url(/img/baner1.png), linear-gradient(146deg, #21266D 0%, #4730BA 60%, #8D6CFF 100%)" }}>
           <div className="flex flrx-row justify-between h-full">
             <div className="flex flex-col justify-between">
-              <div className="w-[17.9375rem]  text-[2.625rem] font-bold leading-[120%]">A gift from MEL to you!</div>
-              <p className="w-[23.6875rem] text-white text-[.8125rem] leading-[140%] max-w-72">
+              <div className="w-[17.9375rem] text-[1.25rem] lg:text-[2.625rem] font-bold leading-[120%]">A gift from MEL to you!</div>
+              <p className="hidden lg:flex w-[23.6875rem] text-white text-[.8125rem] leading-[140%] max-w-72">
                 Don't forget to pick up your daily gifts from Mel, just click the “Pick up a gift” button and it will go to your profile!
               </p>
               <Link href={'#'}>
@@ -85,10 +87,10 @@ const Main = () => {
           </div>
           <div className="text-white font-medium leading-[normal]">Live Drops</div>
         </div>
-        <SelectTop />
+        <SelectTop value={valueLiveDrop} setValue={setValueLiveDrop}  />
       </div>
       {/* TODO Добавить обработку показа количества предметов (количество предметов * ширину) + ((n-1)*ширину пробела) */}
-      <div className="flex flex-row gap-4 items-center overflow-clip whitespace-nowrap">
+      <div className="scroler flex flex-row gap-4 items-center overflow-x-scroll">
         <Item />
         <Item />
         <Item />
@@ -107,8 +109,8 @@ const Main = () => {
         </svg>
         <div className="w-[3.25rem] h-[1.0625rem] text-white font-medium leading-[normal]">Cases</div>
       </div>
-      <div className="flex flex-row items-center justify-between">
-        <div className="flex items-start gap-8">
+      <div className="hidden lg:flex flex-row items-center justify-between">
+        <div className="flex items-start gap-8 flex-col lg:flex-row">
           <div className="relative">
             <svg className='absolute inset-y-0 left-0 start-0 flex items-center ps-3 pt-3 pointer-events-none' width={40} height={40} viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g opacity="0.6">
@@ -148,11 +150,7 @@ const Main = () => {
         </div>
       </div>
       {/* TODO Обработка списка кейсов */}
-      <div className='mt-12 flex flex-row justify-start gap-4'>
-        <Case />
-        <Case />
-        <Case />
-        <Case />
+      <div className='flex mt-12 flex-row justify-start gap-4'>
         <Case />
       </div>
     </main>
