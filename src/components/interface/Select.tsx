@@ -2,9 +2,9 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const SelectLanguage = () => {
+const SelectLanguage = ({...props}) => {
   return (
-    <div className='flex flex-row items-center space-x-2 px-6 bg-[#242f54] rounded-2xl border-[1.111px] border-[#ffffff]/[.30] py-3'>
+    <div {...props} className='flex flex-row items-center justify-center space-x-2 px-6 bg-[#242f54] rounded-2xl border-[1.111px] border-[#ffffff]/[.30] py-3'>
       <Image
         src="/img/interface/nav/flag/gb.png"
         alt="flag"
