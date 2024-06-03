@@ -7,7 +7,8 @@ import { PurpurButon } from '@/components/interface/Buttons'
 const NotFount = () => {
     return (
         <div className="flex flex-col items-center">
-            <div className="absolute top-[-7rem] -z-20 left-8 flex-shrink-0 w-[587px] h-[587px] opacity-[0.3] bg-[#c51fff] blur-[227px]" />
+            <div className="md:hidden absolute top-[30rem] -z-20 right-0 w-[336px] h-[336px] opacity-[0.3] bg-[#821FFF] blur-[227px]" />
+            <div className="absolute -top-3 -left-3 md:top-[-7rem] -z-20 md:left-8 flex-shrink-0 w-[336px] h-[336px] md:w-[587px] md:h-[587px] opacity-[0.3] bg-[#c51fff] blur-[227px]" />
             <Image className='mix-blend-plus-lighter mt-20' src={'/img/404.png'} alt={'404'} width={574} height={287} />
             <div className="flex flex-col items-center mt-16">
                 <div className="flex flex-col items-center gap-5">
