@@ -9,10 +9,10 @@ const AuthButton = () => {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <div className="min-h-full">
-            <Link onClick={() => setIsOpen(true)} href='#' className='flex flex-row justify-center items-center self-stretch px-3 w-[10.25rem] py-4 rounded-[0.625rem] bg-[#7e50ff] gap-1  shadow-[0_0_24px_0_rgba(139,50,252,0.75)]'>
+            <div onClick={() => setIsOpen(true)} className='flex flex-row justify-center items-center self-stretch px-3 w-[10.25rem] py-4 rounded-[0.625rem] bg-[#7e50ff] gap-1  shadow-[0_0_24px_0_rgba(139,50,252,0.75)]'>
                 <AuthIcon />
                 <div className="text-white text-[.8125rem] font-medium leading-[normal]">Authorization</div>
-            </Link>
+            </div>
             <ModalAuth visible={isOpen} setVisible={setIsOpen} />
         </div>
 

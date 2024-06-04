@@ -100,14 +100,14 @@ const Navbar = () => {
               </div>
             </div>
           </nav>
-          <nav className={(isOpen ? "" : "invisible") + " w-screen flex xl:hidden flex-row justify-between items-center pt-8 pb-11 px-3"}>
+          <nav className={(isOpen ? "" : "invisible") + " fixed z-40 w-screen flex xl:hidden flex-row justify-between items-center pt-6 pb-4 px-3 mb-7"} >
             <Link href={'/'}>
               <Logo />
             </Link>
             <div className='flex flex-row gap-3'>
               <AuthButton />
               <SettingsButton />
-              <div className="cursor-pointer flex flex-col flex-shrink-0 justify-center items-end gap-1.5 w-[1.375rem]" onClick={() => { setIsOpen(!isOpen); console.log(isOpen) }}>
+              <div className="cursor-pointer flex flex-col flex-shrink-0 justify-center items-end gap-1.5 w-[1.375rem]" onClick={() => setIsOpen(!isOpen)}>
                 <svg width={24} height={3} viewBox="0 0 24 3" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M2 0.134766C1.24061 0.134766 0.625 0.750374 0.625 1.50977C0.625 2.26916 1.24061 2.88477 2 2.88477V0.134766ZM2 2.88477H24V0.134766H2V2.88477Z" fill="white" />
                 </svg>
@@ -117,6 +117,7 @@ const Navbar = () => {
               </div>
             </div>
           </nav>
+          <div  className={"xl:hidden w-screen h-32"} />
           <nav className="fixed z-40 flex xl:hidden w-full h-24 bg-[#0A0D1D] bottom-0 rounded-t-3xl flex-row items-center justify-between px-4">
             <SelectPage />
             <div className='flex flex-row items-center justify-between gap-3'>
@@ -147,8 +148,8 @@ const Navbar = () => {
               </Link>
             </div>
           </nav>
-          <div className={isOpen ? "hidden" : "flex" + " fixed z-30 w-screen h-screen bg-[#0A0D1D]/[.60] flex-col justify-start "}>
-            <div className="flex xl:hidden flex-row justify-between items-center pt-8 mb-11 mx-3">
+          <div className={isOpen ? "hidden" : "flex" + " fixed z-30 w-screen h-screen bg-[#0A0D1D]/[.80] flex-col justify-start"}>
+            <div className="flex xl:hidden flex-row justify-between items-center pt-6 mb-11 mx-3">
               <Link href={'/'}>
                 <Logo />
               </Link>
