@@ -34,8 +34,8 @@ const EarnMoneyButton = () => {
 
 const GradientButton = ({ children, ...props }: any) => {
     return (
-        <div className='flex flex-row justify-center items-center rounded-2xl p-0.5 shadow-[0_10px_79px_0_rgba(146,105,213,0.20)] bg-gradient-to-r from-[#1F79FF] via-[#6A12FA] to-[#B8A6FF]'>
-            <div {...props} className="h-full w-full flex justify-center items-center gap-2 pl-2 pr-2 p-3 rounded-2xl bg-[#262470]" style={{ boxShadow: "0px 10.311px 79.314px 0px rgba(146, 105, 213, 0.20)", backdropFilter: "blur(16.122806549072266px)" }}>
+        <div className='w-full h-full flex flex-row justify-center items-center rounded-lg lg:rounded-2xl p-0.5 shadow-[0_10px_79px_0_rgba(146,105,213,0.20)] bg-gradient-to-r from-[#1F79FF] via-[#6A12FA] to-[#B8A6FF]'>
+            <div {...props} className="h-full w-full flex justify-center items-center gap-2 pl-2 pr-2 rounded-lg lg:rounded-2xl bg-[#262470]" style={{backdropFilter: "blur(16.122806549072266px)" }}>
                 <div className="h-full w-full py-1 flex justify-center items-center gap-1 text-gray-50 text-center text-[.8125rem] font-semibold leading-[normal]">
                     {children}
                 </div>
