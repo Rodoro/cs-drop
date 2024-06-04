@@ -2,7 +2,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/common/Card'
 import ErrorModal from '@/components/common/ErrorModal';
 import Button from '@/components/interface/Button';
-import Input from '@/components/interface/Input';
 import { Game } from '@/types/admin.interface';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
