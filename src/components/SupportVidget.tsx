@@ -7,11 +7,15 @@ const SupportVidget = () => {
   return (
     <div className="invisible xl:visible fixed right-4 bottom-4 z-50">
       <div className="flex flex-row gap-2">
-        <Link href={''} className="flex items-start rounded-[0.9375rem] border-[1.066px] border-[#ffffff]/[.10] bg-[#6a4aeb]/[.60] justify-center p-2 opacity-[0.9] shadow-[0_0_54px_0_rgba(106,18,250,0.50)]">
+        <Link href={''} className="flex items-start rounded-[0.9375rem] p-[1px] justify-center shadow-[0_0_54px_0_rgba(106,18,250,0.50)] bg-[linear-gradient(150deg,rgba(81,60,169,1),rgba(76,51,172,1))]">
+          <div className='w-full h-full p-2 bg-[#4B35A8] rounded-[0.9375rem]'>
             <ChatIcon />
+          </div>
         </Link>
-        <Link href={''} className="flex items-start rounded-[0.9375rem] border-[1.066px] border-[#ffffff]/[.10] bg-[#6a4aeb]/[.60] justify-center p-2 opacity-[0.9] shadow-[0_0_54px_0_rgba(106,18,250,0.50)]">
+        <Link href={''} className="flex items-start rounded-[0.9375rem] p-[1px] justify-center shadow-[0_0_54px_0_rgba(106,18,250,0.50)] bg-[linear-gradient(150deg,rgba(81,60,169,1),rgba(76,51,172,1))]">
+          <div className='w-full h-full p-2 bg-[#4B35A8] rounded-[0.9375rem]'>
             <SupportIcon />
+          </div>
         </Link>
       </div>
     </div>

@@ -18,7 +18,7 @@ const Footer = () => {
             {pathname.startsWith('/admin') ? (
                 <div></div>
             ) : (
-                <div className='mt-20 flex flex-col gap-11 pb-32 sm:pb-12'>
+                <div className='mt-20 flex flex-col gap-11 pb-32 sm:pb-20'>
                     <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
                         <div className="flex flex-row gap-4 items-center">
                             <LogoText />

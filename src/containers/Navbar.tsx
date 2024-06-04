@@ -117,7 +117,7 @@ const Navbar = () => {
               </div>
             </div>
           </nav>
-          <div  className={"xl:hidden w-screen h-32"} />
+          <div className={"xl:hidden w-screen h-32"} />
           <nav className="fixed z-40 flex xl:hidden w-full h-24 bg-[#0A0D1D] bottom-0 rounded-t-3xl flex-row items-center justify-between px-4">
             <SelectPage />
             <div className='flex flex-row items-center justify-between gap-3'>
@@ -143,8 +143,10 @@ const Navbar = () => {
                   <div className="opacity-[0.6] text-white text-[.8125rem] font-medium leading-[normal]">4,468</div>
                 </div>
               </div>
-              <Link href={''} className="flex items-start rounded-[0.9375rem] border-[1.066px] border-[#ffffff]/[.10] bg-[#6a4aeb]/[.60] justify-center p-2 opacity-[0.9] shadow-[0_0_54px_0_rgba(106,18,250,0.50)]">
-                <ChatIcon />
+              <Link href={''} className="flex items-start rounded-[0.9375rem] p-[1px] justify-center shadow-[0_0_54px_0_rgba(106,18,250,0.50)] bg-[linear-gradient(150deg,rgba(81,60,169,1),rgba(76,51,172,1))]">
+                <div className='w-full h-full p-2 bg-[#4B35A8] rounded-[0.9375rem]'>
+                  <ChatIcon />
+                </div>
               </Link>
             </div>
           </nav>
