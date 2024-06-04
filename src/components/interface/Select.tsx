@@ -26,7 +26,7 @@ const SelectLanguage = ({ ...props }) => {
 
 const SelectTop: React.FC<SelectProps> = ({ value, setValue }) => {
   return (
-    <div className='p-[1px] rounded-[0.625rem]' style={{background: "linear-gradient(150deg,rgba(68, 72, 113, 1),rgba(39, 49, 87, 1))"}}>
+    <div className='p-[1px] rounded-[0.625rem]' style={{ background: "linear-gradient(150deg,rgba(68, 72, 113, 1),rgba(39, 49, 87, 1))" }}>
       <div className="flex-row flex items-center justify-between rounded-[0.625rem] bg-[#263056] px-2 py-2">
         <div onClick={() => setValue('all')}>
           <div className={"cursor-pointer flex flex-row items-center rounded-[0.625rem] gap-1 py-2 px-4 " + (value == "all" ? "bg-[#7e50ff] shadow-[0_0_17px_0_rgba(139,50,252,0.75)]" : "")}>
@@ -63,4 +63,46 @@ const SelectPage = () => {
   )
 }
 
-export { SelectLanguage, SelectTop, SelectPage }
+const SelectMoneyValue: React.FC<SelectProps> = ({ value, setValue }) => {
+  return (
+    <div className="flex items-start justify-around w-full gap-2 h-[2.5rem] sm:h-[3.125rem]">
+      <div
+        onClick={() => setValue('0')}
+        className={((value == "0" ? "bg-[linear-gradient(150deg,rgba(68,72,113,1),rgba(39,49,87,1))] w-[3.5rem] sm:w-[4.75rem] p-[1px]" : "opacity-[0.6]")) + " cursor-pointer flex justify-center items-center gap-2.5 self-stretch rounded-[0.625rem] text-white text-[.8rem] sm:text-[.9375rem] font-medium leading-[normal]"}>
+        <div className={((value == "0" ? "bg-[#242f54]" : "")) + " w-full h-full flex justify-center items-center rounded-[0.625rem] py-1 px-2 sm:py-2 sm:px-3"}>
+          $ 0-5
+        </div>
+      </div>
+      <div
+        onClick={() => setValue('5')}
+        className={((value == "5" ? "bg-[linear-gradient(150deg,rgba(68,72,113,1),rgba(39,49,87,1))] w-[3.9rem] sm:w-[4.9rem] p-[1px]" : "opacity-[0.6]")) + " cursor-pointer flex justify-center items-center gap-2.5 self-stretch rounded-[0.625rem] text-white text-[.8rem] sm:text-[.9375rem] font-medium leading-[normal]"}>
+        <div className={((value == "5" ? "bg-[#242f54]" : "")) + " w-full h-full flex justify-center items-center rounded-[0.625rem] py-1 px-2 sm:py-2 sm:px-3"}>
+          $ 5-15
+        </div>
+      </div>
+      <div
+        onClick={() => setValue('15')}
+        className={((value == "15" ? "bg-[linear-gradient(150deg,rgba(68,72,113,1),rgba(39,49,87,1))] w-[4.8rem] sm:w-[5.9rem] p-[1px]" : "opacity-[0.6]")) + " cursor-pointer flex justify-center items-center gap-2.5 self-stretch rounded-[0.625rem] text-white text-[.8rem] sm:text-[.9375rem] font-medium leading-[normal]"}>
+        <div className={((value == "15" ? "bg-[#242f54]" : "")) + " w-full h-full flex justify-center items-center rounded-[0.625rem] py-1 px-2 sm:py-2 sm:px-3"}>
+          $ 15-50
+        </div>
+      </div>
+      <div
+        onClick={() => setValue('50')}
+        className={((value == "50" ? "bg-[linear-gradient(150deg,rgba(68,72,113,1),rgba(39,49,87,1))] w-[4.8rem] sm:w-[5.9rem] p-[1px]" : "opacity-[0.6]")) + " cursor-pointer flex justify-center items-center gap-2.5 self-stretch rounded-[0.625rem] text-white text-[.8rem] sm:text-[.9375rem] font-medium leading-[normal]"}>
+        <div className={((value == "50" ? "bg-[#242f54]" : "")) + " w-full h-full flex justify-center items-center rounded-[0.625rem] py-1 px-2 sm:py-2 sm:px-3"}>
+          $ 50-100
+        </div>
+      </div>
+      <div
+        onClick={() => setValue('100')}
+        className={((value == "100" ? "bg-[linear-gradient(150deg,rgba(68,72,113,1),rgba(39,49,87,1))] w-[3.9rem] sm:w-[4.9rem] p-[1px]" : "opacity-[0.6]")) + " cursor-pointer flex justify-center items-center gap-2.5 self-stretch rounded-[0.625rem] text-white text-[.8rem] sm:text-[.9375rem] font-medium leading-[normal]"}>
+        <div className={((value == "100" ? "bg-[#242f54]" : "")) + " w-full h-full flex justify-center items-center rounded-[0.625rem] py-1 px-2 sm:py-2 sm:px-3"}>
+          $ 100+
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export { SelectLanguage, SelectTop, SelectPage, SelectMoneyValue }

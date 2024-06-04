@@ -1,5 +1,5 @@
 import React, { useId } from 'react'
-import Input, { InputProps } from './Input'
+import { InputProps, Input } from './Input'
 
 export interface FormInputProps extends InputProps {
     label?: string;

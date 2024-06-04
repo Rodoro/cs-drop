@@ -3,12 +3,14 @@
 import Case from '@/components/cart/Case'
 import Item from '@/components/cart/Item'
 import { GradientButton } from '@/components/interface/Buttons'
-import { SelectTop } from '@/components/interface/Select'
+import { InputSearch } from '@/components/interface/Input'
+import { SelectMoneyValue, SelectTop } from '@/components/interface/Select'
 import Link from 'next/link'
 import React, { useState } from 'react'
 
 const Main = () => {
   const [valueLiveDrop, setValueLiveDrop] = useState("all");
+  const [valueMoneyCase, setValueMoneyCase] = useState("0");
   return (
     <main>
       <div className="md:hidden absolute top-[30rem] -z-20 right-0 w-[336px] h-[336px] opacity-[0.3] bg-[#821FFF] blur-[227px]" />
@@ -87,7 +89,7 @@ const Main = () => {
           </div>
           <div className="text-white font-medium leading-[normal]">Live Drops</div>
         </div>
-        <SelectTop value={valueLiveDrop} setValue={setValueLiveDrop}  />
+        <SelectTop value={valueLiveDrop} setValue={setValueLiveDrop} />
       </div>
       {/* TODO Добавить обработку показа количества предметов (количество предметов * ширину) + ((n-1)*ширину пробела) */}
       <div className="scroler flex flex-row gap-4 items-center overflow-x-scroll">
@@ -109,35 +111,12 @@ const Main = () => {
         </svg>
         <div className="w-[3.25rem] h-[1.0625rem] text-white font-medium leading-[normal]">Cases</div>
       </div>
-      <div className="hidden lg:flex flex-row items-center justify-between">
-        <div className="flex items-start gap-8 flex-col lg:flex-row">
-          <div className="relative">
-            <svg className='absolute inset-y-0 left-0 start-0 flex items-center ps-3 pt-3 pointer-events-none' width={40} height={40} viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g opacity="0.6">
-                <path d="M18.375 18.5464L14.5687 14.7401M16.625 9.79639C16.625 13.6624 13.491 16.7964 9.625 16.7964C5.75901 16.7964 2.625 13.6624 2.625 9.79639C2.625 5.93039 5.75901 2.79639 9.625 2.79639C13.491 2.79639 16.625 5.93039 16.625 9.79639Z" stroke="white" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
-              </g>
-            </svg>
-            <input className="ps-11 flex items-center gap-3 py-4 px-5 w-[480px] h-[3.125rem] rounded-[0.9375rem] border-[1.5px] border-[#ffffff]/[.30] bg-[#242f54]/[.60] focus-visible:outline-none" placeholder="Search for cases" />
-          </div>
-          <div className="flex items-start gap-2 h-[3.125rem]">
-            <div className="cursor-pointer flex justify-center items-center gap-2.5 self-stretch py-2 px-3 w-[4.75rem] rounded-[0.625rem] border border-[#ffffff]/[.30] bg-[#242f54]/[.60] text-white text-[.9375rem] font-medium leading-[normal]">
-              $ 0-5
-            </div>
-            <div className="cursor-pointer flex justify-center items-center gap-2.5 self-stretch py-2 px-3 rounded-[0.625rem] opacity-[0.6] text-white text-[.9375rem] font-medium leading-[normal]">
-              $ 5-15
-            </div>
-            <div className="cursor-pointer flex justify-center items-center gap-2.5 self-stretch py-2 px-3 rounded-[0.625rem] opacity-[0.6] text-white text-[.9375rem] font-medium leading-[normal]">
-              $ 15-50
-            </div>
-            <div className="cursor-pointer flex justify-center items-center gap-2.5 self-stretch py-2 px-3 rounded-[0.625rem] opacity-[0.6] text-white text-[.9375rem] font-medium leading-[normal]">
-              $ 50-100
-            </div>
-            <div className="cursor-pointer flex justify-center items-center gap-2.5 self-stretch py-2 px-3 rounded-[0.625rem] opacity-[0.6] text-white text-[.9375rem] font-medium leading-[normal]">
-              $ 100+
-            </div>
-          </div>
+      <div className="flex flex-row items-center justify-between">
+        <div className="flex items-center gap-8 flex-col lg:flex-row w-full sm:w-auto">
+          <InputSearch />
+          <SelectMoneyValue value={valueMoneyCase} setValue={setValueMoneyCase} />
         </div>
-        <div className="flex items-start gap-2.5 rounded-[0.9375rem] border border-[#ffffff]/[.30] bg-[#242f54]/[.60]">
+        <div className="hidden xl:flex items-start gap-2.5 rounded-[0.9375rem] border border-[#ffffff]/[.30] bg-[#242f54]/[.60]">
           <Link href={''}>
             <svg width={50} height={51} viewBox="0 0 50 51" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g opacity="0.4">
@@ -150,7 +129,12 @@ const Main = () => {
         </div>
       </div>
       {/* TODO Обработка списка кейсов */}
-      <div className='flex mt-12 flex-row justify-start gap-4'>
+      <div className='flex mt-12' style={{display: "flex", flexWrap: "wrap", justifyContent: "space-around", gap: "4px", rowGap: "32px"}}>
+        <Case />
+        <Case />
+        <Case />
+        <Case />
+        <Case />
         <Case />
       </div>
     </main>
