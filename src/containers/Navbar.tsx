@@ -13,10 +13,12 @@ import { SettingsButton } from '@/components/icons/setting'
 import { SelectLanguage, SelectPage } from '@/components/interface/Select'
 import ChatIcon from '@/components/icons/chat'
 import Logo from '@/components/icons/Logo'
+import { useTranslation } from '@/hook/useLanguageStore'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const pathname = usePathname()
+  const { getTranslation } = useTranslation();
   return (
     <>
       {pathname.startsWith('/admin') ? (
@@ -41,7 +43,7 @@ const Navbar = () => {
                 )}
                 <div className="absolute w-16 h-16 -z-10 bg-[#7643ff] blur-xl" />
               </div>
-              Cases
+              {getTranslation('nav.cases')}
             </Link>
             <Link href="/match" className={`flex flex-col items-center ${pathname === '/match' ? '' : 'opacity-40'}`}>
               <div className="relative flex flex-col items-center justify-center">

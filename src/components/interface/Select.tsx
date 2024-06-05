@@ -1,25 +1,56 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { create } from 'zustand'
+import { useLanguageStore } from '@/hook/useLanguageStore'
 
 export type SelectProps = {
   value: string;
   setValue: (value: string) => void;
 }
 
+
 const SelectLanguage = ({ ...props }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const { language, setLanguage } = useLanguageStore();
+
   return (
-    <div {...props} className='flex flex-row items-center justify-center space-x-2 px-6 bg-[#242f54] rounded-2xl border-[1.111px] border-[#ffffff]/[.30] py-3'>
-      <Image
-        src="/img/interface/nav/flag/gb.png"
-        alt="flag"
-        width={20}
-        height={50}
-      />
-      <span>English</span>
-      <svg width={11} height={6} viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M1.00021 1.29797L5.44466 5.03535L9.8891 1.29797" stroke="white" strokeWidth="0.808081" />
-      </svg>
+    <div className="relative">
+      <div onClick={() => setIsOpen(!isOpen)} {...props} className='min-w-[162px] cursor-pointer flex flex-row items-center justify-between space-x-2 px-6 bg-[#242f54] rounded-2xl py-3' style={{ background: "linear-gradient(150deg,rgba(38,48,86,1),rgba(38,48,86,1)) padding-box, linear-gradient(150deg,rgba(68,72,113,1),rgba(39,49,87,1)) border-box", border: "1px solid transparent" }}>
+        <div className='flex flex-row space-x-2 items-center'>
+          <Image
+            src={"/img/interface/nav/flag/" + language + ".png"}
+            alt="flag"
+            width={20}
+            height={50}
+          />
+          <span>{language == 'gb' ? "English" : "Русский"}</span>
+        </div>
+        <svg width={11} height={6} viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.00021 1.29797L5.44466 5.03535L9.8891 1.29797" stroke="white" strokeWidth="0.808081" />
+        </svg>
+      </div>
+      <div className={(isOpen ? "flex" : "hidden") + " rounded-2xl cursor-pointer z-10 absolute inset-x-0 flex-col items-center justify-center bg-[#242f54]"} style={{ background: "linear-gradient(150deg,rgba(38,48,86,1),rgba(38,48,86,1)) padding-box, linear-gradient(150deg,rgba(68,72,113,1),rgba(39,49,87,1)) border-box", border: "1px solid transparent" }}>
+        <div onClick={() => { setIsOpen(!isOpen); setLanguage('gb') }} className="pl-6 flex flex-row items-center justify-start w-full gap-3 hover:bg-black/15 py-2">
+          <Image
+            src="/img/interface/nav/flag/gb.png"
+            alt="flag"
+            width={20}
+            height={50}
+          />
+          <span>English</span>
+        </div>
+        <div onClick={() => { setIsOpen(!isOpen); setLanguage('ru') }} className='pl-6 flex flex-row items-center justify-start w-full gap-3 hover:bg-black/15 py-2'>
+          <Image
+            src="/img/interface/nav/flag/ru.png"
+            alt="flag"
+            width={20}
+            height={50}
+          />
+          <span>Русский</span>
+        </div>
+      </div>
     </div>
   )
 }
