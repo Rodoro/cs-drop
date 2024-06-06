@@ -3,8 +3,9 @@ import React, { useState } from 'react'
 import { InputSearch } from './interface/Input'
 import { SelectMoneyValue } from './interface/Select'
 import Link from 'next/link'
-import Case from './cart/Case'
+import { Case } from './cart/Case'
 import { useTranslation } from '@/hook/useLanguageStore'
+import SoundButton from './icons/sound'
 
 const CasesList = () => {
     const [valueMoneyCase, setValueMoneyCase] = useState("0");
@@ -24,16 +25,8 @@ const CasesList = () => {
                     <InputSearch />
                     <SelectMoneyValue value={valueMoneyCase} setValue={setValueMoneyCase} />
                 </div>
-                <div className="hidden xl:flex items-start gap-2.5 rounded-[0.9375rem] border border-[#ffffff]/[.30] bg-[#242f54]/[.60]">
-                    <Link href={''}>
-                        <svg width={50} height={51} viewBox="0 0 50 51" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g opacity="0.4">
-                                <path d="M25.6702 18.7696C25.3308 18.6052 24.9272 18.6497 24.6316 18.8838L20.1134 22.4591H16.984C16.4407 22.4591 16 22.8994 16 23.4429V27.8998C16 28.4431 16.4407 28.8833 16.984 28.8833H20.1132L24.6316 32.4588C24.8089 32.5989 25.0244 32.6714 25.2421 32.6714C25.3881 32.6714 25.534 32.6384 25.6702 32.573C26.0105 32.4086 26.2261 32.0642 26.2261 31.6874V19.6553C26.2256 19.278 26.0098 18.9336 25.6702 18.7696Z" fill="white" />
-                                <path d="M29.8405 22.1882C29.4562 21.8038 28.8331 21.8038 28.4495 22.1882C28.0651 22.5725 28.0651 23.1955 28.4495 23.5792C29.6027 24.7326 29.6027 26.6096 28.4495 27.763C28.0651 28.1471 28.0651 28.7702 28.4495 29.1538C28.6412 29.3464 28.8934 29.4425 29.145 29.4425C29.3972 29.4425 29.6483 29.3464 29.8405 29.1538C30.7713 28.223 31.2836 26.9868 31.2836 25.671C31.2836 24.3554 30.7706 23.1183 29.8405 22.1882Z" fill="white" />
-                                <path d="M31 19.6371C30.6161 20.0214 30.6161 20.6445 31 21.0286C33.56 23.5884 33.56 27.7537 31 30.3135C30.6161 30.6976 30.6161 31.3209 31 31.7046C31.1921 31.8967 31.4439 31.9928 31.6955 31.9928C31.9477 31.9928 32.1993 31.8967 32.3914 31.7046C35.7183 28.3777 35.7183 22.9633 32.3914 19.6364C32.0073 19.2532 31.3843 19.2532 31 19.6371Z" fill="white" />
-                            </g>
-                        </svg>
-                    </Link>
+                <div className="hidden xl:flex">
+                    <SoundButton />
                 </div>
             </div>
             <div className='flex mt-12 flex-row justify-start' style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around", gap: "8px", rowGap: "32px" }}>

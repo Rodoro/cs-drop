@@ -9,6 +9,11 @@
     "page.404.title": "Что-то пошло не так...",
     "page.404.text": "Возможно, страницы, которую вы ищете, не существует. Пожалуйста, вернитесь на главную страницу",
     "page.404.button": "Главная",
+    "page.case.back": "Назад",
+    "page.case.selectNumber": "Выберите количество открытий:",
+    "page.case.skipAnim": "Без анимации",
+    "page.case.openButton": "Открыть кейс",
+    "page.case.inside": "Что находится внутри этого кейса?",
 
     "main.baner1.title": "Подарок тебе от MEL!",
     "main.baner1.text": "Не забудьте забрать свои ежедневные подарки от Mel, просто нажмите кнопку “Забрать подарок”, и он перейдет в ваш профиль!",
@@ -28,12 +33,16 @@
     "auth.login.submit": "Login",
     "auth.login.title": "АВТОРИЗАЦИЯ",
     "auth.login.text": "Добро пожаловать в Mel’s Bar",
-    "auth.login.steam": "Войдите с помощью Steam",
+    "auth.login.steam": "Войдите через Steam",
 
     "components.liveDrops.title": "Полученый дроп",
     "components.casesList.title": "Кейсы",
     "components.interface.select.top.all": "Все",
     "components.interface.select.top.top": "Топ",
+    "components.interface.select.content.cases": "Кейсы",
+    "components.interface.select.content.contracts": "Контракы",
+    "components.interface.select.content.upgrade": "Улучшения",
+    "components.interface.select.content.cards": "Карты",
     "components.interface.button.auth": "Авторизоватся",
     "components.interface.button.earnMoney": "Заработать денег"
 }

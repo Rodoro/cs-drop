@@ -9,8 +9,7 @@ const Item = () => {
                     <div className="opacity-50 text-white text-[11.41px] font-medium leading-[normal]">AK-47</div>
                     <div className="text-[#f1f1f1] text-[.8125rem] font-medium leading-[normal]">Legion of Anubis</div>
                 </div>
-                <Image className="absolute left-0 mt-1" src={'/img/example/ak47.png'} alt={'Оружие'} width={150} height={95}></Image>
-
+                <Image className="z-10 absolute left-0 mt-1" src={'/img/example/ak47.png'} alt={'Оружие'} width={150} height={95}></Image>
             </div>
             <svg className='absolute top-0 right-0 bottom-0 my-auto' width={158} height={121} viewBox="0 0 158 121" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter0_f_22_451)">
@@ -29,4 +28,49 @@ const Item = () => {
     )
 }
 
-export default Item
+const ItemBox = () => {
+    return (
+        <div className='relative rounded-[41px] w-[160px] h-[160px] sm:w-[210px] sm:h-[210px] overflow-hidden p-[2px]' style={{ background: "linear-gradient(150deg,rgba(30, 33, 52, 1),rgba(14, 16, 38, 1))" }}>
+            <div className='w-full h-full relative rounded-[41px] bg-[#0E1026]'>
+                <div className='flex flex-col items-center justify-between py-4 h-full'>
+                    <div className="inline-flex flex-col justify-center items-center gap-0.5">
+                        <div className="opacity-[0.3] text-white text-center text-[10px] sm:text-[.8125rem] font-semibold leading-[normal]">AK-47</div>
+                        <div className="text-white text-center text-[8.5px] sm:text-[10.953px] font-semibold leading-[normal]">Legion of Anubis</div>
+                    </div>
+                    <div className="inline-flex flex-col items-center">
+                        <div className="text-[19.75px] sm:text-[1.5625rem] font-bold leading-[120%]">$1500</div>
+                        <div className="opacity-[0.3] text-white text-center text-[9.4px] sm:text-xs font-semibold leading-[normal]">0.0001%</div>
+                    </div>
+                </div>
+                <Image className="z-10 absolute left-0 bottom-0 top-0 m-auto pb-4 w-[148px] h-[93px] sm:w-[190px] sm:h-[119px]" src={'/img/example/ak47.png'} alt={'Оружие'} width={190} height={119} />
+            </div>
+            <svg className='absolute top-0 left-0 m-auto' width={177} height={172} viewBox="0 0 177 172" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_f_2034_5837)">
+                    <circle cx="46.2013" cy="41.0618" r="67.0872" fill="#EF2424" fillOpacity="0.2" />
+                </g>
+                <defs>
+                    <filter id="filter0_f_2034_5837" x="-84.2901" y="-89.4296" width="260.983" height="260.982" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                        <feFlood floodOpacity={0} result="BackgroundImageFix" />
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                        <feGaussianBlur stdDeviation="31.7021" result="effect1_foregroundBlur_2034_5837" />
+                    </filter>
+                </defs>
+            </svg>
+            <svg className='absolute bottom-0 right-0 m-auto' width={166} height={185} viewBox="0 0 166 185" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_f_2034_5846)">
+                    <circle cx="131.107" cy="130.753" r="67.0872" fill="#EF2424" fillOpacity="0.06" />
+                </g>
+                <defs>
+                    <filter id="filter0_f_2034_5846" x="0.616013" y="0.261765" width="260.983" height="260.982" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                        <feFlood floodOpacity={0} result="BackgroundImageFix" />
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                        <feGaussianBlur stdDeviation="31.7021" result="effect1_foregroundBlur_2034_5846" />
+                    </filter>
+                </defs>
+            </svg>
+            <div className="absolute z-10 left-0 right-0 mx-auto -top-4 w-[0.1875rem] h-[2.375rem] bg-[#ff2f2d] -rotate-90" />
+        </div >
+    )
+}
+
+export { Item, ItemBox }

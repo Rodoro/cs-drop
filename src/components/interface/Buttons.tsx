@@ -10,7 +10,7 @@ const AuthButton = () => {
     const [isOpen, setIsOpen] = useState(false);
     const { getTranslation } = useTranslation();
     return (
-        <div className="min-h-full">
+        <div className="min-h-full cursor-pointer">
             <div onClick={() => setIsOpen(true)} className='flex flex-row justify-center items-center self-stretch px-3 w-[10.25rem] py-4 rounded-[0.625rem] bg-[#7e50ff] gap-1  shadow-[0_0_24px_0_rgba(139,50,252,0.75)]'>
                 <AuthIcon />
                 <div className="text-white text-[.8125rem] font-medium leading-[normal]">{getTranslation('components.interface.button.auth')}</div>
@@ -38,7 +38,7 @@ const EarnMoneyButton = () => {
 const GradientButton = ({ children, ...props }: any) => {
     return (
         <div className='w-full h-full flex flex-row justify-center items-center rounded-lg lg:rounded-2xl p-0.5 shadow-[0_10px_79px_0_rgba(146,105,213,0.20)] bg-gradient-to-r from-[#1F79FF] via-[#6A12FA] to-[#B8A6FF]'>
-            <div {...props} className="h-full w-full flex justify-center items-center gap-2 pl-2 pr-2 rounded-lg lg:rounded-2xl bg-[#262470]" style={{backdropFilter: "blur(16.122806549072266px)" }}>
+            <div {...props} className="h-full w-full flex justify-center items-center gap-2 pl-2 pr-2 rounded-lg lg:rounded-2xl bg-[#262470]" style={{ backdropFilter: "blur(16.122806549072266px)" }}>
                 <div className="h-full w-full py-1 flex justify-center items-center gap-1 text-gray-50 text-center text-[.8125rem] font-semibold leading-[normal]">
                     {children}
                 </div>
@@ -48,12 +48,14 @@ const GradientButton = ({ children, ...props }: any) => {
 }
 
 const PurpurButon = ({ children, ...props }: any) => {
+    const [hover, setHover] = useState(false);
     return (
-        <div className={style.purpurButon + ' flex flex-row justify-center items-center rounded-[0.625rem] shadow-[0_0_24px_0_rgba(139,50,252,0.75)] p-0.5 bg-[#7e50ff] hover:bg-[#22276e] hover:shadow-[null]'}>
-            <div {...props} className='h-full w-full flex flex-row justify-center items-center self-stretch rounded-[0.625rem] bg-[#7e50ff] gap-1 hover:bg-[#22276e]'>
-                <div className="text-white text-[.8125rem] font-medium leading-[normal] justify-center items-center py-4">
-                    {children}
-                </div>
+        <div
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            {...props} className='cursor-pointer h-full w-full flex flex-row justify-center items-center self-stretch rounded-[0.625rem] bg-[#7e50ff] gap-1 border-[1px] border-[#7e50ff] shadow-[0_0_24px_0_rgba(139,50,252,0.75)] hover:shadow hover:border-[#7e50ff]/[.0]' style={{ ...(hover && {background: "linear-gradient(170deg,rgba(34, 39, 110, 1),rgba(34, 39, 110, 1)) padding-box, linear-gradient(170deg,rgba(255, 255, 255, 0.2),rgba(255, 255, 255, 0)) border-box"})}}>
+            <div className="text-white text-[.8125rem] font-medium leading-[normal] justify-center items-center flex flex-row gap-1 py-4">
+                {children}
             </div>
         </div>
     )

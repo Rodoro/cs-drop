@@ -9,6 +9,11 @@
     "page.404.title": "Something went wrong...",
     "page.404.text": "The page you’re looking for might not exist. Please go back to the main page",
     "page.404.button": "Main page",
+    "page.case.back": "Go back",
+    "page.case.selectNumber": "Select the number of openings:",
+    "page.case.skipAnim": "Without animation",
+    "page.case.openButton": "Open case",
+    "page.case.inside": "What is inside this case?",
 
     "main.baner1.title": "A gift from MEL to you!",
     "main.baner1.text": "Don't forget to pick up your daily gifts from Mel, just click the “Pick up a gift” button and it will go to your profile!",
@@ -34,6 +39,10 @@
     "components.casesList.title": "Cases",
     "components.interface.select.top.all": "All",
     "components.interface.select.top.top": "Top",
+    "components.interface.select.content.cases": "Cases",
+    "components.interface.select.content.contracts": "Contracts",
+    "components.interface.select.content.upgrade": "Upgrade",
+    "components.interface.select.content.cards": "Cards",
     "components.interface.button.auth": "Authorization",
     "components.interface.button.earnMoney": "Earn money"
 }

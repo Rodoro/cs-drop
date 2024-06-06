@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react'
-import Item from './cart/Item'
+import { Item } from './cart/Item'
 import { SelectTop } from './interface/Select'
 import { useTranslation } from '@/hook/useLanguageStore'
 
