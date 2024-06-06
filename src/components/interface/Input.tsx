@@ -4,16 +4,6 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     type: string;
 }
 
-const Input: React.FC<InputProps> = ({ type, ...props }) => {
-    return (
-        <input
-            type={type}
-            className='border text-sm rounded-lg block p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500'
-            {...props}
-        />
-    )
-}
-
 const InputSearch = ({ ...props }: any) => {
     return (
         <div className="relative w-full sm:w-[482px] p-[1px] rounded-[0.9375rem]" { ...props } style={{background: "linear-gradient(150deg,rgba(68, 72, 113, 1),rgba(39, 49, 87, 1))"}}>
@@ -27,4 +17,4 @@ const InputSearch = ({ ...props }: any) => {
     )
 }
 
-export { Input, InputSearch }
+export { InputSearch }

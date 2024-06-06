@@ -1,3 +1,39 @@
 {
-    "nav.cases": "Кейсы"
+    "nav.cases": "Кейсы",
+    "nav.match": "Матчи",
+    "nav.casino": "Казино",
+    "nav.partnerships": "Партнеры",
+    "nav.support": "Помощь",
+    "nav.top": "Топ",
+
+    "page.404.title": "Что-то пошло не так...",
+    "page.404.text": "Возможно, страницы, которую вы ищете, не существует. Пожалуйста, вернитесь на главную страницу",
+    "page.404.button": "Главная",
+
+    "main.baner1.title": "Подарок тебе от MEL!",
+    "main.baner1.text": "Не забудьте забрать свои ежедневные подарки от Mel, просто нажмите кнопку “Забрать подарок”, и он перейдет в ваш профиль!",
+    "main.baner1.buttons": "Забери свой подарок",
+    "main.baner2.title": "Промокод в нашем Telegram-канале",
+
+    "footer.socnet": "Следуйте за нами",
+    "footer.excellent": "Отлично!",
+    "footer.text": "Ощутите будущее сторителлинга.",
+    "footer.support": "Поддержка",
+    "footer.privacy": "Политика конфиденциальности",
+    "footer.contact": "Связаться с нами",
+    "footer.user": "Пользовательское соглашение",
+
+    "auth.login.email": "Почта",
+    "auth.login.password": "Пароль",
+    "auth.login.submit": "Login",
+    "auth.login.title": "АВТОРИЗАЦИЯ",
+    "auth.login.text": "Добро пожаловать в Mel’s Bar",
+    "auth.login.steam": "Войдите с помощью Steam",
+
+    "components.liveDrops.title": "Полученый дроп",
+    "components.casesList.title": "Кейсы",
+    "components.interface.select.top.all": "Все",
+    "components.interface.select.top.top": "Топ",
+    "components.interface.button.auth": "Авторизоватся",
+    "components.interface.button.earnMoney": "Заработать денег"
 }

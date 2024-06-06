@@ -7,12 +7,13 @@ import { TgLink } from '@/components/icons/tg'
 import { VkLink } from '@/components/icons/vk'
 import { YtLink } from '@/components/icons/yt'
 import { SelectLanguage } from '@/components/interface/Select'
+import { useTranslation } from '@/hook/useLanguageStore'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 
 const Footer = () => {
     const pathname = usePathname()
-
+    const { getTranslation } = useTranslation();
     return (
         <>
             {pathname.startsWith('/admin') ? (
@@ -25,7 +26,7 @@ const Footer = () => {
                             <SelectLanguage />
                         </div>
                         <div className="flex flex-row items-center gap-3">
-                            <div className="opacity-[0.4] text-[#b0acb5] text-sm font-bold leading-[120%] uppercase">Follow us on</div>
+                            <div className="opacity-[0.4] text-[#b0acb5] text-sm font-bold leading-[120%] uppercase">{getTranslation('footer.socnet')}</div>
                             <VkLink />
                             <TgLink />
                             <YtLink />
@@ -65,7 +66,7 @@ const Footer = () => {
                                             </clipPath>
                                         </defs>
                                     </svg>
-                                    <div className="w-[3.25rem] h-5 opacity-[0.3] text-white text-xs leading-[1.9375rem]">Excellent</div>
+                                    <div className="w-[3.25rem] h-5 opacity-[0.3] text-white text-xs leading-[1.9375rem]">{getTranslation('footer.excellent')}</div>
                                 </div>
                             </div>
                             <div className="flex items-start gap-2.5">
@@ -80,16 +81,16 @@ const Footer = () => {
                     <div className="flex flex-col gap-6 sm:flex-row justify-between items-center">
                         <div className="flex flex-col items-start gap-3">
                             <div className="opacity-[0.8] text-white text-center sm:text-left  font-semibold leading-[normal] w-full">© 2020-2024 Mel’s Bar</div>
-                            <div className="opacity-50 text-white text-center sm:text-left  leading-[140%] w-full">Experience the future of storytelling.</div>
+                            <div className="opacity-50 text-white text-center sm:text-left  leading-[140%] w-full">{getTranslation('footer.text')}</div>
                         </div>
                         <div className="flex flow-row items-start gap-9">
                             <div className="flex flex-col items-start gap-4">
-                                <div className="opacity-50 text-white text-center sm:text-left  leading-[140%] w-full">Support</div>
-                                <div className="opacity-50 text-white text-center sm:text-left  leading-[140%] w-full">Privacy Policy</div>
+                                <div className="opacity-50 text-white text-center sm:text-left  leading-[140%] w-full">{getTranslation('footer.support')}</div>
+                                <div className="opacity-50 text-white text-center sm:text-left  leading-[140%] w-full">{getTranslation('footer.privacy')}</div>
                             </div>
                             <div className="flex flex-col items-start gap-4">
-                                <div className="opacity-50 text-white text-center sm:text-left  leading-[140%] w-full">Contact us</div>
-                                <div className="opacity-50 text-white text-center sm:text-left leading-[140%] w-full">User agreement</div>
+                                <div className="opacity-50 text-white text-center sm:text-left  leading-[140%] w-full">{getTranslation('footer.contact')}</div>
+                                <div className="opacity-50 text-white text-center sm:text-left leading-[140%] w-full">{getTranslation('footer.user')}</div>
                             </div>
                         </div>
                     </div>

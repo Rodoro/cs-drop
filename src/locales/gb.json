@@ -1,3 +1,39 @@
 {
-    "nav.cases": "Cases"
+    "nav.cases": "Cases",
+    "nav.match": "Match",
+    "nav.casino": "Casino",
+    "nav.partnerships": "Partnerships",
+    "nav.support": "Support",
+    "nav.top": "Top",
+
+    "page.404.title": "Something went wrong...",
+    "page.404.text": "The page you’re looking for might not exist. Please go back to the main page",
+    "page.404.button": "Main page",
+
+    "main.baner1.title": "A gift from MEL to you!",
+    "main.baner1.text": "Don't forget to pick up your daily gifts from Mel, just click the “Pick up a gift” button and it will go to your profile!",
+    "main.baner1.buttons": "Pick up your gift",
+    "main.baner2.title": "Promo code in our Telegram channel",
+
+    "footer.socnet": "Follow us on",
+    "footer.excellent": "Excellent",
+    "footer.text": "Experience the future of storytelling.",
+    "footer.support": "Support",
+    "footer.privacy": "Privacy Policy",
+    "footer.contact": "Contact us",
+    "footer.user": "User agreement",
+
+    "auth.login.email": "Email",
+    "auth.login.password": "Password",
+    "auth.login.submit": "Login",
+    "auth.login.title": "AUTHORIZATION",
+    "auth.login.text": "Welcome to Mel’s Bar",
+    "auth.login.steam": "Log in with Steam",
+
+    "components.liveDrops.title": "Live Drops",
+    "components.casesList.title": "Cases",
+    "components.interface.select.top.all": "All",
+    "components.interface.select.top.top": "Top",
+    "components.interface.button.auth": "Authorization",
+    "components.interface.button.earnMoney": "Earn money"
 }

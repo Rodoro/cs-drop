@@ -1,10 +1,13 @@
+"use client"
 /* eslint-disable react/no-unescaped-entities */
 import CasesList from '@/components/CasesList'
 import LiveDrops from '@/components/LiveDrops'
 import { GradientButton } from '@/components/interface/Buttons'
+import { useTranslation } from '@/hook/useLanguageStore'
 import Link from 'next/link'
 
 const Main = () => {
+  const { getTranslation } = useTranslation();
   return (
     <main>
       <div className="md:hidden absolute top-[30rem] -z-20 right-0 w-[336px] h-[336px] opacity-[0.3] bg-[#821FFF] blur-[227px]" />
@@ -15,13 +18,13 @@ const Main = () => {
         <div className="relative w-full max-w-4xl h-[20.5625rem] rounded-3xl bg-[#1d2565] flex flex-col py-8 px-6 md:px-14 bg-contain bg-right bg-no-repeat " style={{ backgroundImage: "url(/img/baner1.png), linear-gradient(146deg, #21266D 0%, #4730BA 60%, #8D6CFF 100%)" }}>
           <div className="flex flrx-row justify-between h-full">
             <div className="flex flex-col justify-between">
-              <div className="w-[17.9375rem] text-[1.25rem] lg:text-[2.625rem] font-bold leading-[120%]">A gift from MEL to you!</div>
+              <div className="w-[17.9375rem] text-[1.25rem] lg:text-[2.625rem] font-bold leading-[120%]">{getTranslation('main.baner1.title')}</div>
               <p className="hidden lg:flex w-[23.6875rem] text-white text-[.8125rem] leading-[140%] max-w-72">
-                Don't forget to pick up your daily gifts from Mel, just click the “Pick up a gift” button and it will go to your profile!
+                {getTranslation('main.baner1.text')}
               </p>
               <Link href={'#'} className='h-12'>
                 <GradientButton>
-                  Pick up your gift
+                  {getTranslation('main.baner1.buttons')}
                 </GradientButton>
               </Link>
             </div>
@@ -62,7 +65,7 @@ const Main = () => {
         <div className="relative w-full max-w-md h-[20.5625rem] rounded-[28.45201301574707px] border-[2.95px] border-[#ffffff]/[.30] bg-[#22276e]/[.80] bg-contain bg-right-bottom bg-no-repeat" style={{ backgroundImage: "url(/img/baner2.png)" }}>
           <div className="flex flex-col justify-between h-full py-10 pl-9 max-w-60 ">
             <div className="bg-[linear-gradient(100deg, text-white text-[1.7rem] font-bold leading-[120%]">
-              Promo code in our Telegram channel
+              {getTranslation('main.baner2.title')}
             </div>
             <Link href={''} className='h-12'>
               <GradientButton>
@@ -78,10 +81,10 @@ const Main = () => {
         <div className="relative w-full  max-w-xl  h-[8.9375rem] rounded-3xl bg-[#1d2565] flex flex-col py-4 pt-4 px-6 bg-contain bg-right bg-no-repeat " style={{ backgroundImage: "url(/img/baner1.png), linear-gradient(146deg, #21266D 0%, #4730BA 60%, #8D6CFF 100%)" }}>
           <div className="flex flrx-row justify-between h-full">
             <div className="flex flex-col justify-between max-w-44 gap-4">
-              <div className=" text-[1.25rem] font-bold leading-[120%] max-w-36">A gift from MEL to you!</div>
+              <div className=" text-[1.25rem] font-bold leading-[120%] max-w-36">{getTranslation('main.baner1.title')}</div>
               <Link href={'#'} className='w-44 h-10'>
                 <GradientButton>
-                  Pick up your gift
+                  {getTranslation('main.baner1.buttons')}
                 </GradientButton>
               </Link>
             </div>
@@ -122,7 +125,7 @@ const Main = () => {
         <div className="relative w-full max-w-xl h-[8.9375rem] rounded-[28.45201301574707px] bg-[#22276e]/[.80] bg-contain bg-right-bottom bg-no-repeat" style={{ backgroundImage: "url(/img/baner2mobile.png)" }}>
           <div className="flex flex-col justify-between h-full py-5 pl-5 max-w-60 ">
             <div className="bg-[linear-gradient(100deg, text-white text-[1.0625rem] font-bold leading-[120%]">
-              Promo code in our Telegram channel
+              {getTranslation('main.baner2.title')}
             </div>
             <Link href={''} className='w-32 h-8'>
               <GradientButton>
