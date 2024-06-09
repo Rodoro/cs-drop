@@ -3,7 +3,7 @@ import LiveDrops from '@/components/LiveDrops'
 import { CaseStatic } from '@/components/cart/Case'
 import { ItemBox } from '@/components/cart/Item'
 import SoundButton from '@/components/icons/sound'
-import { PurpurButon } from '@/components/interface/Buttons'
+import { GradientButton, GradientButton2, PurpurButon } from '@/components/interface/Buttons'
 import { SelectContent, SelectCount, SelectCustom } from '@/components/interface/Select'
 import Switch from '@/components/interface/Switch'
 import { useTranslation } from '@/hook/useLanguageStore'
@@ -15,6 +15,14 @@ const OpenCase = () => {
     const [content, setContent] = useState<string>("cases")
     const [count, setCount] = useState<number>(1)
     const [isAnim, setIsAnim] = useState<boolean>(false)
+    const [position, setPosition] = useState<string>("view")
+
+    const openCase = () => {
+        if (isAnim) {
+            setPosition('win')
+        }
+    }
+
     return (
         <div>
             <div className="absolute -top-3 -left-3 md:top-[-7rem] -z-20 md:left-8 flex-shrink-0 w-[336px] h-[336px] md:w-[587px] md:h-[587px] opacity-[0.3] bg-[#c51fff] blur-[227px]" />
@@ -54,7 +62,7 @@ const OpenCase = () => {
                     </div>
                 </Link>
             </div>
-            <div className="relative bg-contain sm:pt-8 bg-center bg-no-repeat items-center justify-center flex flex-col w-full min-[1150px]:bg-[url(/img/interface/bg/case-open.png)]" >
+            <div className={(position == 'view' ? "" : "hidden") + " relative bg-contain sm:pt-8 bg-center bg-no-repeat items-center justify-center flex flex-col w-full min-[1150px]:bg-[url(/img/interface/bg/case-open.png)]"} >
                 <div className="absolute bg-[#821FFF] w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] blur-[307px] rounded-full top-6 z-0" />
                 <CaseStatic />
                 <div className="z-10 py-4 flex flex-col items-center justify-center gap-5">
@@ -71,7 +79,7 @@ const OpenCase = () => {
                     </div>
                     <div className='flex flex-row gap-3 w-full items-center justify-center sm:mb-12'>
                         <div className="max-w-64 w-full">
-                            <PurpurButon>
+                            <PurpurButon onClick={openCase}>
                                 <svg width={21} height={22} viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M2.625 11.4414H5.25M10.5 3.56641V6.19141M6.825 7.76641L4.9 5.84141M14.175 7.76641L16.1 5.84141M6.825 15.1164L4.9 17.0414M10.5 11.4414L18.375 14.0664L14.875 15.8164L13.125 19.3164L10.5 11.4414Z" stroke="white" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
@@ -82,6 +90,40 @@ const OpenCase = () => {
                             <SoundButton />
                         </div>
                     </div>
+                </div>
+            </div>
+            <div className={(position == 'win' ? '' : 'hidden ') + 'flex flex-col items-center justify-center w-full gap-7'}>
+                <div className='relative bg-[url(/img/interface/bg/case-win.png)] w-full bg-center bg-no-repeat rounded-[30px] py-5 items-center justify-center flex' style={{ backgroundSize: "auto 100%" }}>
+                    <ItemBox />
+                    <div className='absolute bg-gradient-to-l z-10 from-black/[.25] blur-[8px] sm:blur-xl right-0 h-full w-[20%]' />
+                    <div className='absolute bg-gradient-to-r z-10 from-black/[.25] blur-[8px] sm:blur-xl left-0 h-full w-[20%]' />
+                    <svg className='absolute hidden sm:flex' width={474} height={474} viewBox="0 0 474 474" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g style={{ mixBlendMode: 'hard-light' }} opacity="0.2" filter="url(#filter0_f_579_48593)">
+                            <path d="M330 237C330 288.362 288.362 330 237 330C185.638 330 144 288.362 144 237C144 185.638 185.638 144 237 144C288.362 144 330 185.638 330 237Z" fill="#821FFF" />
+                        </g>
+                        <defs>
+                            <filter id="filter0_f_579_48593" x="0.143097" y="0.143097" width="473.714" height="473.714" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                                <feFlood floodOpacity={0} result="BackgroundImageFix" />
+                                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                                <feGaussianBlur stdDeviation="71.9285" result="effect1_foregroundBlur_579_48593" />
+                            </filter>
+                        </defs>
+                    </svg>
+                </div>
+                <div className="flex flex-row justify-center max-w-56 w-full sm:max-w-44 z-10">
+                    <GradientButton2 onClick={() => setPosition('view')}>
+                        <svg width={14} height={14} viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clipPath="url(#clip0_588_56777)">
+                                <path fillRule="evenodd" clipRule="evenodd" d="M4.91778 0.398995C6.19606 0.0519144 7.54986 0.103643 8.79793 0.547255C10.046 0.990867 11.1288 1.80519 11.9012 2.88118V1.59337C11.9012 1.43175 11.9654 1.27676 12.0797 1.16248C12.194 1.0482 12.349 0.983995 12.5106 0.983995C12.6722 0.983995 12.8272 1.0482 12.9415 1.16248C13.0558 1.27676 13.12 1.43175 13.12 1.59337V5.0465H9.66684C9.50522 5.0465 9.35023 4.98229 9.23595 4.86801C9.12167 4.75373 9.05746 4.59874 9.05746 4.43712C9.05746 4.2755 9.12167 4.12051 9.23595 4.00623C9.35023 3.89195 9.50522 3.82775 9.66684 3.82775H11.07C10.4336 2.83202 9.48154 2.07852 8.36624 1.68781C7.25094 1.29709 6.03682 1.29173 4.91812 1.67259C3.79941 2.05344 2.84077 2.7985 2.19554 3.78856C1.55032 4.77863 1.2558 5.9565 1.35911 7.13374C1.46242 8.31097 1.95758 9.41954 2.76538 10.2821C3.57318 11.1447 4.64694 11.7114 5.81488 11.8916C6.98282 12.0717 8.17745 11.855 9.20765 11.276C10.2379 10.697 11.0441 9.78923 11.4974 8.69787C11.5268 8.62221 11.5711 8.55319 11.6275 8.49486C11.684 8.43654 11.7516 8.39008 11.8262 8.35823C11.9009 8.32638 11.9812 8.30977 12.0624 8.30937C12.1436 8.30898 12.224 8.32481 12.299 8.35594C12.374 8.38707 12.442 8.43287 12.499 8.49064C12.556 8.54842 12.601 8.61701 12.6311 8.69238C12.6613 8.76775 12.6761 8.8484 12.6746 8.92957C12.6732 9.01074 12.6555 9.0908 12.6227 9.16506C12.1992 10.1844 11.5232 11.0791 10.6583 11.7648C9.79333 12.4505 8.76802 12.9047 7.67899 13.0845C6.58996 13.2643 5.47308 13.1638 4.43363 12.7925C3.39418 12.4212 2.4664 11.7914 1.73774 10.9623C1.00909 10.1332 0.503561 9.13221 0.268817 8.05369C0.0340727 6.97516 0.077843 5.85463 0.396002 4.7977C0.714161 3.74077 1.29623 2.78228 2.08734 2.01256C2.87844 1.24284 3.85253 0.688072 4.91778 0.398995Z" fill="white" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_588_56777">
+                                    <rect width={13} height={13} fill="white" transform="translate(0.120117 0.171875)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                        <div className="text-gray-50 text-center text-sm font-semibold leading-[normal]">{getTranslation('page.case.playAgain')}</div>
+                    </GradientButton2>
                 </div>
             </div>
             <div className="my-8 flex items-center gap-1.5 opacity-[0.6]">

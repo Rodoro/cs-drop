@@ -47,13 +47,21 @@ const GradientButton = ({ children, ...props }: any) => {
     )
 }
 
+const GradientButton2 = ({ children, ...props }: any) => {
+    return (
+        <div {...props} className='cursor-pointer flex flex-row gap-2 w-full h-full py-5 items-center justify-center rounded-2xl shadow-[0_10px_79px_0_rgba(146,105,213,0.20)]' style={{ border: "2px solid transparent", background: "linear-gradient(0deg,rgba(17, 22, 45, 1),rgba(17, 22, 45, 1)) padding-box, linear-gradient(90deg,rgba(31, 161, 255, 0.3),rgba(106, 18, 250, 0.3),rgba(184, 166, 255, 0.3)) border-box" }} >
+            {children}
+        </div >
+    )
+}
+
 const PurpurButon = ({ children, ...props }: any) => {
     const [hover, setHover] = useState(false);
     return (
         <div
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            {...props} className='cursor-pointer h-full w-full flex flex-row justify-center items-center self-stretch rounded-[0.625rem] bg-[#7e50ff] gap-1 border-[1px] border-[#7e50ff] shadow-[0_0_24px_0_rgba(139,50,252,0.75)] hover:shadow hover:border-[#7e50ff]/[.0]' style={{ ...(hover && {background: "linear-gradient(170deg,rgba(34, 39, 110, 1),rgba(34, 39, 110, 1)) padding-box, linear-gradient(170deg,rgba(255, 255, 255, 0.2),rgba(255, 255, 255, 0)) border-box"})}}>
+            {...props} className='cursor-pointer h-full w-full flex flex-row justify-center items-center self-stretch rounded-[0.625rem] bg-[#7e50ff] gap-1 border-[1px] border-[#7e50ff] shadow-[0_0_24px_0_rgba(139,50,252,0.75)] hover:shadow hover:border-[#7e50ff]/[.0]' style={{ ...(hover && { background: "linear-gradient(170deg,rgba(34, 39, 110, 1),rgba(34, 39, 110, 1)) padding-box, linear-gradient(170deg,rgba(255, 255, 255, 0.2),rgba(255, 255, 255, 0)) border-box" }) }}>
             <div className="text-white text-[.8125rem] font-medium leading-[normal] justify-center items-center flex flex-row gap-1 py-4">
                 {children}
             </div>
@@ -71,4 +79,4 @@ const PurpurButonNav = ({ children, ...props }: any) => {
     )
 }
 
-export { AuthButton, EarnMoneyButton, GradientButton, PurpurButon, PurpurButonNav }
+export { AuthButton, EarnMoneyButton, GradientButton, PurpurButon, PurpurButonNav, GradientButton2 }

@@ -4,9 +4,9 @@ import { SelectProps } from './Select'
 
 const Switch: React.FC<SelectProps> = ({ value, setValue }) => {
     return (
-        <label className={style.switch} onClick={() => setValue(!value)}>
+        <label className={style.switch}>
             <input type="checkbox" />
-            <span className={style.slider} />
+            <span className={style.slider} onClick={() => setValue(!value)}/>
         </label>
     )
 }
