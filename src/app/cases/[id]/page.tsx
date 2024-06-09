@@ -93,7 +93,7 @@ const OpenCase = () => {
                 </div>
             </div>
             <div className={(position == 'win' ? '' : 'hidden ') + 'flex flex-col items-center justify-center w-full gap-7'}>
-                <div className='relative bg-[url(/img/interface/bg/case-win.png)] w-full bg-center bg-no-repeat rounded-[30px] py-5 items-center justify-center flex' style={{ backgroundSize: "auto 100%" }}>
+                <div className='-z-10 relative bg-[url(/img/interface/bg/case-win.png)] max-w-[1101px] w-full bg-center bg-no-repeat rounded-[30px] py-5 items-center justify-center flex' style={{ backgroundSize: "auto 100%" }}>
                     <ItemBox />
                     <div className='absolute bg-gradient-to-l z-10 from-black/[.25] blur-[8px] sm:blur-xl right-0 h-full w-[20%]' />
                     <div className='absolute bg-gradient-to-r z-10 from-black/[.25] blur-[8px] sm:blur-xl left-0 h-full w-[20%]' />
