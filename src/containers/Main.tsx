@@ -4,10 +4,12 @@ import CasesList from '@/components/CasesList'
 import LiveDrops from '@/components/LiveDrops'
 import { GradientButton } from '@/components/interface/Buttons'
 import { useTranslation } from '@/hook/useLanguageStore'
+import useSaveTokens from '@/hook/useSaveTokens'
 import Link from 'next/link'
 
 const Main = () => {
   const { getTranslation } = useTranslation();
+  useSaveTokens()
   return (
     <main>
       <div className="md:hidden absolute top-[30rem] -z-20 right-0 w-[336px] h-[336px] opacity-[0.3] bg-[#821FFF] blur-[227px]" />

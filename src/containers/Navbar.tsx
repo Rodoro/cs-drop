@@ -14,6 +14,7 @@ import { SelectLanguage, SelectPage } from '@/components/interface/Select'
 import ChatIcon from '@/components/icons/chat'
 import Logo from '@/components/icons/Logo'
 import { useTranslation } from '@/hook/useLanguageStore'
+import SupportVidget from '@/components/SupportVidget'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -211,6 +212,7 @@ const Navbar = () => {
               <EarnMoneyButton />
             </div>
           </div>
+          <SupportVidget />
         </div >
       )
       }
