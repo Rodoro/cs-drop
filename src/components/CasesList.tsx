@@ -1,15 +1,38 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { InputSearch } from './interface/Input'
 import { SelectMoneyValue } from './interface/Select'
 import Link from 'next/link'
 import { Case } from './cart/Case'
 import { useTranslation } from '@/hook/useLanguageStore'
 import SoundButton from './icons/sound'
+import { useQuery } from '@tanstack/react-query'
+import { axiosClassic } from '@/api/intreceptors'
+import { ICase } from '@/types/ui.types'
+
+const getData = async () => {
+    return await axiosClassic.get('/ui/content/get')
+}
 
 const CasesList = () => {
     const [valueMoneyCase, setValueMoneyCase] = useState("0");
     const { getTranslation } = useTranslation();
+    const [loots, setLoots] = useState<ICase[]>()
+
+    const { data, isSuccess } = useQuery({
+        queryKey: ['loot-case'],
+        queryFn: getData,
+        select: data => data.data
+    })
+
+    useEffect(() => {
+        if (isSuccess) {
+            setLoots(data[0].lootCases)
+            console.log(data[0].lootCases)
+        }
+    }, [isSuccess, data])
+
     return (
         <div>
             <div className="flex items-center gap-1.5 opacity-[0.6] my-8">
@@ -30,12 +53,14 @@ const CasesList = () => {
                 </div>
             </div>
             <div className='flex mt-12 flex-row justify-start' style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around", gap: "8px", rowGap: "32px" }}>
-                <Case />
-                <Case />
-                <Case />
-                <Case />
-                <Case />
-                <Case />
+                {!loots ?
+                    <div>Loading...</div> :
+                    <>
+                        {loots.map((item: ICase) => {
+                            return <Case lootCase={item} key={item.id} />
+                        })}
+                    </>
+                }
             </div>
         </div>
     )

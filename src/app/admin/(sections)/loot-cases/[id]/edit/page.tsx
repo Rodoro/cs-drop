@@ -2,8 +2,6 @@
 /* eslint-disable react/jsx-key */
 "use client"
 import Button from '@/components/interface/Button'
-import axios from 'axios'
-import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import Slider from '@mui/material/Slider';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
@@ -19,6 +17,7 @@ import { useRouter } from 'next/navigation'
 import DeleteIcon from '@mui/icons-material/Delete';
 import ErrorModal from '@/components/common/ErrorModal';
 import { Batch, Game, Language } from '@/types/admin.interface'
+import { axiosWithAuthAdmin } from '@/api/intreceptors';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -35,7 +34,6 @@ const style = {
 const LootEdit = ({ params }: { params: { id: number } }) => {
     const [loading, setLoading] = useState(true)
     const [lootcase, setLootcase] = useState()
-    const { data: session, status: sessionStatus } = useSession();
     const [items, setItems] = useState([])
     const [open, setOpen] = React.useState(false);
     const router = useRouter();
@@ -68,44 +66,26 @@ const LootEdit = ({ params }: { params: { id: number } }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (session) {
-                const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/games/get-all', {
-                    headers: {
-                        'Authorization': session?.token.accessToken
-                    }
-                });
-                setGames(res.data)
-                const res2 = await axios.get('http://95.165.94.222:8090/api/v1/admin/batches/get-all', {
-                    headers: {
-                        'Authorization': session?.token.accessToken
-                    }
-                });
-                setBatches(res2.data)
-                const res3 = await axios.get('http://95.165.94.222:8090/api/v1/admin/lootcases/get-case?caseId=' + params?.id, {
-                    headers: {
-                        'Authorization': session?.token.accessToken
-                    }
-                });
-                setLootcase(res3.data.result)
-                setLocales(res3.data.result.locales)
-                setTitle(res3.data.result.title)
-                setImgHoverUrl(res3.data.result.imageHover)
-                setImgUrl(res3.data.result.image)
-                setPrice(res3.data.result.price)
-                setIsVisible(res3.data.result.isVisible)
-                setSelectGame(res3.data.result.game.id)
-                setSelectBatch(res3.data.result.batch.id)
-                const res4 = await axios.get('http://95.165.94.222:8090/api/v1/admin/content-generator/get?caseId=' + params?.id, {
-                    headers: {
-                        'Authorization': session?.token.accessToken
-                    }
-                });
-                setItems(res4.data.result)
-                setLoading(false)
-            }
+            const res = await axiosWithAuthAdmin.get('/admin/games/get-all');
+            setGames(res.data)
+            const res2 = await axiosWithAuthAdmin.get('/admin/batches/get-all');
+            setBatches(res2.data)
+            const res3 = await axiosWithAuthAdmin.get('/admin/lootcases/get-case?caseId=' + params?.id);
+            setLootcase(res3.data.result)
+            setLocales(res3.data.result.locales)
+            setTitle(res3.data.result.title)
+            setImgHoverUrl(res3.data.result.imageHover)
+            setImgUrl(res3.data.result.image)
+            setPrice(res3.data.result.price)
+            setIsVisible(res3.data.result.isVisible)
+            setSelectGame(res3.data.result.game.id)
+            setSelectBatch(res3.data.result.batch.id)
+            const res4 = await axiosWithAuthAdmin.get('/admin/content-generator/get?caseId=' + params?.id);
+            setItems(res4.data.result)
+            setLoading(false)
         };
         fetchData();
-    }, [session])
+    }, [])
 
     const handleChangeLowItems = (event: Event, newValue: number | number[]) => {
         setLowItems(newValue as number);
@@ -126,11 +106,7 @@ const LootEdit = ({ params }: { params: { id: number } }) => {
 
     const deleteItem = React.useCallback(
         (id: GridRowId) => async () => {
-            const res = await axios.delete('http://95.165.94.222:8090/api/v1/admin/content-generator/remove-item?contentId=' + params?.id + '&itemId=' + id, {
-                headers: {
-                    'Authorization': session?.token.accessToken
-                }
-            })
+            const res = await axiosWithAuthAdmin.delete('/admin/content-generator/remove-item?contentId=' + params?.id + '&itemId=' + id)
             setItems(res.data.result);
         },
         [],
@@ -189,11 +165,7 @@ const LootEdit = ({ params }: { params: { id: number } }) => {
             "topItemsMaxPrice": Number(e.target[11].value),
         }
         try {
-            const res = await axios.post('http://95.165.94.222:8090/api/v1/admin/content-generator/generate', data, {
-                headers: {
-                    'Authorization': session?.token.accessToken
-                }
-            })
+            const res = await axiosWithAuthAdmin.post('/admin/content-generator/generate', data)
             if (res.data.error) {
                 setStatus('Ошибка: ' + res.data.error.code)
                 setMessage(res.data.error.description)
@@ -224,13 +196,8 @@ const LootEdit = ({ params }: { params: { id: number } }) => {
         //     return;
         // }
         const fetchData = async () => {
-            if (session) {
                 try {
-                    const res = await axios.post('http://95.165.94.222:8090/api/v1/admin/content-generator/add-item?contentId=' + params?.id + '&itemId=' + e.target[0].value, {}, {
-                        headers: {
-                            'Authorization': session?.token.accessToken
-                        }
-                    });
+                    const res = await axiosWithAuthAdmin.post('/admin/content-generator/add-item?contentId=' + params?.id + '&itemId=' + e.target[0].value, {});
                     if (res.data.error) {
                         setStatus('Ошибка: ' + res.data.error.code)
                         setMessage(res.data.error.description)
@@ -245,7 +212,6 @@ const LootEdit = ({ params }: { params: { id: number } }) => {
                     return
                 }
                 setOpen(false)
-            }
         };
         fetchData();
     }
@@ -269,11 +235,7 @@ const LootEdit = ({ params }: { params: { id: number } }) => {
             locales: locales.map(locale => ({ title: locale.title, text: locale.text }))
         };
         try {
-            const res = await axios.patch('http://95.165.94.222:8090/api/v1/admin/lootcases/edit', batchData, {
-                headers: {
-                    'Authorization': session?.token.accessToken
-                }
-            });
+            const res = await axiosWithAuthAdmin.patch('/admin/lootcases/edit', batchData);
             if (res.data.error) {
                 setStatus('Ошибка: ' + res.data.error.code)
                 setMessage(res.data.error.description)
@@ -286,7 +248,7 @@ const LootEdit = ({ params }: { params: { id: number } }) => {
             setOpen2(true)
             return
         }
-        router.push("/admin/loot-cases") 
+        router.push("/admin/loot-cases")
     };
 
     const columns: GridColDef[] = [
@@ -339,7 +301,7 @@ const LootEdit = ({ params }: { params: { id: number } }) => {
     if (loading) return <h1 className="flex min-h-screen flex-col items-center mt-6">Загрузка...</h1>
 
     return (
-        <div className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
+        <div className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
             <ErrorModal status={status} message={message} visible={open2} setVisible={setOpen2} />
             <table className="table-auto w-full">
                 <tbody>
@@ -566,8 +528,8 @@ const LootEdit = ({ params }: { params: { id: number } }) => {
                         '& .MuiCheckbox-root': { color: '#fff' },
                         '& .MuiDataGrid-cell:focus': { outlineColor: '#fff' },
                         '& .MuiDataGrid-overlay': { background: '#191D3E' },
-                        '& .MuiDataGrid-columnHeader:focus': { outline: '#fff'},
-                        '& .MuiDataGrid-columnHeader:focus-within': { outline: '#fff'},
+                        '& .MuiDataGrid-columnHeader:focus': { outline: '#fff' },
+                        '& .MuiDataGrid-columnHeader:focus-within': { outline: '#fff' },
                     }}
                 />
             </div>

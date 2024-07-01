@@ -1,16 +1,14 @@
 "use client"
+import { axiosWithAuthAdmin } from '@/api/intreceptors';
 import ErrorModal from '@/components/common/ErrorModal';
 import Button from '@/components/interface/Button';
 import { Game } from '@/types/admin.interface';
-import axios from 'axios';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 const CreateBatches = () => {
     const [loading, setLoading] = useState(true)
     const [games, setGames] = useState<Game[]>([]);
-    const { data: session, status: sessionStatus } = useSession();
     const router = useRouter();
 
     const [locales, setLocales] = useState([{ title: 'ru', text: '' }, { title: 'en', text: '' }]);
@@ -24,18 +22,12 @@ const CreateBatches = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (session) {
-                const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/games/get-all', {
-                    headers: {
-                        'Authorization': session?.token.accessToken
-                    }
-                });
-                setGames(res.data)
-                setLoading(false)
-            }
+            const res = await axiosWithAuthAdmin.get('/admin/games/get-all');
+            setGames(res.data)
+            setLoading(false)
         };
         fetchData();
-    }, [session]);
+    }, []);
 
     const handleChangeTitle = (index: number, value: string) => {
         const newLocales = [...locales];
@@ -73,12 +65,8 @@ const CreateBatches = () => {
             languages: locales.map(locale => ({ title: locale.title, text: locale.text }))
         };
         try {
-            await axios.post('http://95.165.94.222:8090/api/v1/admin/batches/create', batchData, {
-                headers: {
-                    'Authorization': session?.token.accessToken
-                }
-            })
-        } catch(err: any){
+            await axiosWithAuthAdmin.post('/admin/batches/create', batchData)
+        } catch (err: any) {
             setStatus('Ошибка: ' + err.response.status)
             setMessage(err.response.data)
             setOpen(true)
@@ -101,12 +89,8 @@ const CreateBatches = () => {
             languages: locales.map(locale => ({ title: locale.title, text: locale.text }))
         };
         try {
-            await axios.post('http://95.165.94.222:8090/api/v1/admin/batches/create', batchData, {
-                headers: {
-                    'Authorization': session?.token.accessToken
-                }
-            })
-        } catch(err: any){
+            await axiosWithAuthAdmin.post('/admin/batches/create', batchData)
+        } catch (err: any) {
             setStatus('Ошибка: ' + err.response.status)
             setMessage(err.response.data)
             setOpen(true)
@@ -117,7 +101,7 @@ const CreateBatches = () => {
 
 
     return (
-        <div className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
+        <div className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
             <ErrorModal status={status} message={message} visible={open} setVisible={setOpen} />
             <table className="table-auto w-full">
                 <tbody>

@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -15,11 +15,13 @@ import ChatIcon from '@/components/icons/chat'
 import Logo from '@/components/icons/Logo'
 import { useTranslation } from '@/hook/useLanguageStore'
 import SupportVidget from '@/components/SupportVidget'
+import useProfile from '@/hook/useProfile'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const pathname = usePathname()
   const { getTranslation } = useTranslation();
+  const user = useProfile()
   return (
     <>
       {pathname.startsWith('/admin') ? (
@@ -97,6 +99,7 @@ const Navbar = () => {
               </div>
               <div className='flex flex-row gap-7 items-center'>
                 <SelectLanguage />
+                {/* TODO: Убрать authButton если зареган и добавить профиль и link на page profile */}
                 <AuthButton />
                 <SettingsButton />
                 <EarnMoneyButton />
@@ -108,6 +111,7 @@ const Navbar = () => {
               <Logo />
             </Link>
             <div className='flex flex-row gap-3'>
+              {/* TODO: Убрать authButton если зареган и добавить avatar, eventsButton и link на page profile */}
               <AuthButton />
               <SettingsButton />
               <div className="cursor-pointer flex flex-col flex-shrink-0 justify-center items-end gap-1.5 w-[1.375rem]" onClick={() => setIsOpen(!isOpen)}>
@@ -143,6 +147,7 @@ const Navbar = () => {
                       </filter>
                     </defs>
                   </svg>
+                  {/* TODO: Привязка количества валюты, по умалчанию 0 */}
                   <div className="opacity-[0.6] text-white text-[.8125rem] font-medium leading-[normal]">4,468</div>
                 </div>
               </div>
@@ -159,6 +164,7 @@ const Navbar = () => {
                 <Logo />
               </Link>
               <div className='flex flex-row gap-3'>
+                {/* TODO: Убрать authButton если зареган и добавить avatar, eventsButton и link на page profile */}
                 <AuthButton />
                 <SettingsButton />
                 <div className="cursor-pointer flex flex-col flex-shrink-0 justify-center items-end gap-1.5 w-[1.375rem]" onClick={() => setIsOpen(!isOpen)}>

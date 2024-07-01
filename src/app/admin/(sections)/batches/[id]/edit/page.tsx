@@ -2,16 +2,14 @@
 "use client"
 import Button from '@/components/interface/Button';
 import { Batch, Game, Language } from '@/types/admin.interface';
-import axios from 'axios';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import ErrorModal from '@/components/common/ErrorModal';
+import { axiosWithAuthAdmin } from '@/api/intreceptors';
 
 const EditBatches = ({ params }: { params: { id: number } }) => {
   const [batch, setBatche] = useState<Batch>();
   const [games, setGames] = useState<Game[]>([]);
-  const { data: session, status: sessionStatus } = useSession();
   const router = useRouter();
 
   const [title, setTitle] = useState('');
@@ -25,27 +23,17 @@ const EditBatches = ({ params }: { params: { id: number } }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (session) {
-        const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/batches/get/' + params?.id, {
-          headers: {
-            'Authorization': session?.token.accessToken
-          }
-        });
+        const res = await axiosWithAuthAdmin.get('/admin/batches/get/' + params?.id);
         setBatche(res.data)
         setLocales(res.data.languages)
         setTitle(res.data.title)
         setSelectedGame(res.data.game.id)
         setSort(res.data.sort)
-        const res2 = await axios.get('http://95.165.94.222:8090/api/v1/admin/games/get-all', {
-          headers: {
-            'Authorization': session?.token.accessToken
-          }
-        });
+        const res2 = await axiosWithAuthAdmin.get('/admin/games/get-all');
         setGames(res2.data)
-      }
     };
     fetchData();
-  }, [session]);
+  }, []);
 
   const handleChangeTitle = (index: number, value: string) => {
     const newLocales: Language[] = [...locales];
@@ -84,11 +72,7 @@ const EditBatches = ({ params }: { params: { id: number } }) => {
       languages: locales.map(locale => ({ title: locale.title, text: locale.text }))
     };
     try {
-      await axios.patch('http://95.165.94.222:8090/api/v1/admin/batches/update', batchData, {
-        headers: {
-          'Authorization': session?.token.accessToken
-        }
-      });
+      await axiosWithAuthAdmin.patch('/admin/batches/update', batchData);
     } catch (err: any) {
       setStatus('Ошибка: ' + err.response.status)
       setMessage(err.response.data)
@@ -99,7 +83,7 @@ const EditBatches = ({ params }: { params: { id: number } }) => {
   };
 
   return (
-    <div className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
+    <div className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
       <ErrorModal status={status} message={message} visible={open} setVisible={setOpen} />
       <table className="table-auto w-full">
         <tbody>

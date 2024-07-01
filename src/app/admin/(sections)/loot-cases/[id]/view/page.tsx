@@ -2,8 +2,6 @@
 /* eslint-disable react/jsx-key */
 "use client"
 import Button from '@/components/interface/Button'
-import axios from 'axios'
-import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import Slider from '@mui/material/Slider';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
@@ -18,6 +16,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useRouter } from 'next/navigation'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { LootCases } from '@/types/admin.interface'
+import { axiosWithAuthAdmin } from '@/api/intreceptors';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -34,30 +33,19 @@ const style = {
 const ViewLootcase = ({ params }: { params: { id: number } }) => {
     const [loading, setLoading] = useState(true)
     const [lootcase, setLootcase] = useState<LootCases>()
-    const { data: session, status: sessionStatus } = useSession();
     const [items, setItems] = useState([])
     const router = useRouter();
 
     useEffect(() => {
         const fetchData = async () => {
-            if (session) {
-                const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/lootcases/get-case?caseId=' + params?.id, {
-                    headers: {
-                        'Authorization': session?.token.accessToken
-                    }
-                });
-                setLootcase(res.data.result)
-                const res2 = await axios.get('http://95.165.94.222:8090/api/v1/admin/content-generator/get?caseId=' + params?.id, {
-                    headers: {
-                        'Authorization': session?.token.accessToken
-                    }
-                });
-                setItems(res2.data.result)
-                setLoading(false)
-            }
+            const res = await axiosWithAuthAdmin.get('/admin/lootcases/get-case?caseId=' + params?.id);
+            setLootcase(res.data.result)
+            const res2 = await axiosWithAuthAdmin.get('/admin/content-generator/get?caseId=' + params?.id);
+            setItems(res2.data.result)
+            setLoading(false)
         };
         fetchData();
-    }, [session])
+    }, [])
 
     const viewItem = React.useCallback(
         (id: GridRowId) => () => {
@@ -111,7 +99,7 @@ const ViewLootcase = ({ params }: { params: { id: number } }) => {
     if (loading) return <h1 className="flex min-h-screen flex-col items-center mt-6">Загрузка...</h1>
 
     return (
-        <div className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
+        <div className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
             <table className="table-auto w-full">
                 <tbody>
                     <tr className="bg-[#272B35] border-gray-700 border-b">
@@ -226,8 +214,8 @@ const ViewLootcase = ({ params }: { params: { id: number } }) => {
                         '& .MuiCheckbox-root': { color: '#fff' },
                         '& .MuiDataGrid-cell:focus': { outlineColor: '#fff' },
                         '& .MuiDataGrid-overlay': { background: '#191D3E' },
-                        '& .MuiDataGrid-columnHeader:focus': { outline: '#fff'},
-                        '& .MuiDataGrid-columnHeader:focus-within': { outline: '#fff'},
+                        '& .MuiDataGrid-columnHeader:focus': { outline: '#fff' },
+                        '& .MuiDataGrid-columnHeader:focus-within': { outline: '#fff' },
                     }}
                 />
             </div>

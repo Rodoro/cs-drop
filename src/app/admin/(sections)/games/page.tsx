@@ -4,9 +4,7 @@
 import React, { useEffect, useState } from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
-import axios from 'axios';
 import { Game } from '@/types/admin.interface';
-import { useSession } from 'next-auth/react';
 import Avatar from "@mui/material/Avatar";
 import {
     GridActionsCellItem,
@@ -14,27 +12,21 @@ import {
 } from '@mui/x-data-grid';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useRouter } from 'next/navigation';
+import { axiosWithAuthAdmin } from '@/api/intreceptors';
 
 const GamesPage = () => {
-    const { data: session, status: sessionStatus } = useSession();
     const [games, setGames] = useState<Game[]>([]);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
     useEffect(() => {
         const fetchData = async () => {
-            if (sessionStatus == "authenticated") {
-                const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/games/get-all', {
-                    headers: {
-                        'Authorization': session?.token.accessToken
-                    }
-                });
-                setGames(res.data)
-                setLoading(false);
-            }
+            const res = await axiosWithAuthAdmin.get('/admin/games/get-all');
+            setGames(res.data)
+            setLoading(false);
         };
         fetchData();
-    }, [sessionStatus])
+    }, [])
 
     const editGame = React.useCallback(
         (id: GridRowId) => () => {
@@ -91,7 +83,7 @@ const GamesPage = () => {
     ];
 
     return (
-        <Box style={{ height: games.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
+        <Box style={{ height: games.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
             <DataGrid
                 rows={games}
                 columns={columns}
@@ -115,8 +107,8 @@ const GamesPage = () => {
                     '& .MuiCheckbox-root': { color: '#fff' },
                     '& .MuiDataGrid-cell:focus': { outlineColor: '#fff' },
                     '& .MuiDataGrid-overlay': { background: '#191D3E' },
-                    '& .MuiDataGrid-columnHeader:focus': { outline: '#fff'},
-                    '& .MuiDataGrid-columnHeader:focus-within': { outline: '#fff'},
+                    '& .MuiDataGrid-columnHeader:focus': { outline: '#fff' },
+                    '& .MuiDataGrid-columnHeader:focus-within': { outline: '#fff' },
                 }}
             />
         </Box>

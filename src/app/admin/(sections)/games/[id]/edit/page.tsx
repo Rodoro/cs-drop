@@ -1,16 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client"
+import { axiosWithAuthAdmin } from '@/api/intreceptors';
 import ErrorModal from '@/components/common/ErrorModal';
 import Button from '@/components/interface/Button';
 import { Game } from '@/types/admin.interface';
-import axios from 'axios';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 const GameEdit = ({ params }: { params: { id: number } }) => {
     const [game, setGame] = useState<Game>();
-    const { data: session, status: sessionStatus } = useSession();
     const router = useRouter();
 
     const [name, setName] = useState('');
@@ -24,21 +22,15 @@ const GameEdit = ({ params }: { params: { id: number } }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (session) {
-                const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/games/get-all', {
-                    headers: {
-                        'Authorization': session?.token.accessToken
-                    }
-                });
-                setGame(res.data[params.id - 1]);
-                setName(res.data[params.id - 1].name)
-                setSteamgameID(res.data[params.id - 1].steamGameID)
-                setIsMain(res.data[params.id - 1].isMain)
-                setIconUrl(res.data[params.id - 1].iconUrl)
-            }
+            const res = await axiosWithAuthAdmin.get('/admin/games/get-all');
+            setGame(res.data[params.id - 1]);
+            setName(res.data[params.id - 1].name)
+            setSteamgameID(res.data[params.id - 1].steamGameID)
+            setIsMain(res.data[params.id - 1].isMain)
+            setIconUrl(res.data[params.id - 1].iconUrl)
         };
         fetchData();
-    }, [session]);
+    }, []);
 
     const handleSubmit = async () => {
         if (!name || !steamgameID) {
@@ -55,11 +47,7 @@ const GameEdit = ({ params }: { params: { id: number } }) => {
             iconUrl: iconUrl,
         };
         try {
-            await axios.patch('http://95.165.94.222:8090/api/v1/admin/games/update', data, {
-                headers: {
-                    'Authorization': session?.token.accessToken
-                }
-            });
+            await axiosWithAuthAdmin.patch('/admin/games/update', data);
         } catch (err: any) {
             setStatus('Ошибка: ' + err.response.status)
             setMessage(err.response.data)
@@ -70,7 +58,7 @@ const GameEdit = ({ params }: { params: { id: number } }) => {
     };
 
     return (
-        <div className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
+        <div className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
             <ErrorModal status={status} message={message} visible={open} setVisible={setOpen} />
             <table className="table-auto w-full">
                 <tbody>

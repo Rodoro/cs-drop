@@ -3,30 +3,22 @@
 import React, { useEffect, useState } from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
-import axios from 'axios';
 import { User } from '@/types/admin.interface';
-import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { axiosWithAuthAdmin } from '@/api/intreceptors';
 
 const UsersPage = () => {
-    const { data: session, status: sessionStatus } = useSession();
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
-            if (sessionStatus == "authenticated") {
-                const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/users/get-all', {
-                    headers: {
-                        'Authorization': session?.token.accessToken
-                    }
-                });
-                setUsers(res.data.result)
-                setLoading(false);
-            }
+            const res = await axiosWithAuthAdmin.get('/admin/users/get-all');
+            setUsers(res.data.result)
+            setLoading(false);
         };
         fetchData();
-    }, [sessionStatus])
+    }, [])
 
     const columns: GridColDef[] = [
         { field: 'id', headerName: 'ID', flex: 90 },
@@ -58,16 +50,24 @@ const UsersPage = () => {
             flex: 150,
             renderCell: (params: any) => {
                 return (
-                    <Link href={params.value}>
-                        {params.value}
-                    </Link>
+                    <>
+                        {
+                            params.value ? <>
+                                < Link href={params.value} >
+                                    {params.value}
+                                </Link >
+                            </> : <>
+                                Нету
+                            </>
+                        }
+                    </>
                 );
             }
         },
     ];
 
     return (
-        <Box style={{ height: users.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
+        <Box style={{ height: users.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
             <DataGrid
                 rows={users}
                 columns={columns}
@@ -89,8 +89,8 @@ const UsersPage = () => {
                     '& .MuiCheckbox-root': { color: '#fff' },
                     '& .MuiDataGrid-cell:focus': { outlineColor: '#fff' },
                     '& .MuiDataGrid-overlay': { background: '#191D3E' },
-                    '& .MuiDataGrid-columnHeader:focus': { outline: '#fff'},
-                    '& .MuiDataGrid-columnHeader:focus-within': { outline: '#fff'},
+                    '& .MuiDataGrid-columnHeader:focus': { outline: '#fff' },
+                    '& .MuiDataGrid-columnHeader:focus-within': { outline: '#fff' },
                 }}
             />
         </Box>

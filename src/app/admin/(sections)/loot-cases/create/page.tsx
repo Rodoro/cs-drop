@@ -1,17 +1,15 @@
 "use client"
 import Button from '@/components/interface/Button'
 import { Batch, Game } from '@/types/admin.interface'
-import axios from 'axios'
-import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import ErrorModal from '@/components/common/ErrorModal';
+import { axiosWithAuthAdmin } from '@/api/intreceptors'
 
 const LootCreate = () => {
     const [loading, setLoading] = useState(true)
     const [games, setGames] = useState<Game[]>([])
     const [batches, setBatches] = useState<Batch[]>([])
-    const { data: session, status: sessionStatus } = useSession();
     const router = useRouter();
 
     const [locales, setLocales] = useState([{ title: 'ru', text: '' }, { title: 'en', text: '' }]);
@@ -29,24 +27,14 @@ const LootCreate = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (session) {
-                const res = await axios.get('http://95.165.94.222:8090/api/v1/admin/games/get-all', {
-                    headers: {
-                        'Authorization': session?.token.accessToken
-                    }
-                });
-                setGames(res.data)
-                const res2 = await axios.get('http://95.165.94.222:8090/api/v1/admin/batches/get-all', {
-                    headers: {
-                        'Authorization': session?.token.accessToken
-                    }
-                });
-                setBatches(res2.data)
-                setLoading(false)
-            }
-        };
+            const res = await axiosWithAuthAdmin.get('http://95.165.94.222:8090/api/v1/admin/games/get-all');
+            setGames(res.data)
+            const res2 = await axiosWithAuthAdmin.get('http://95.165.94.222:8090/api/v1/admin/batches/get-all');
+            setBatches(res2.data)
+            setLoading(false)
+        }
         fetchData();
-    }, [session]);
+    }, []);
 
     const handleChangeTitle = (index: number, value: string) => {
         const newLocales = [...locales];
@@ -88,11 +76,7 @@ const LootCreate = () => {
             isVisible
         }
         try {
-            const res = await axios.post('http://95.165.94.222:8090/api/v1/admin/lootcases/create-case', data, {
-                headers: {
-                    'Authorization': session?.token.accessToken
-                }
-            });
+            const res = await axiosWithAuthAdmin.post('/admin/lootcases/create-case', data);
             if (res.data.error) {
                 setStatus('Ошибка: ' + res.data.error.code)
                 setMessage(res.data.error.description)
@@ -111,7 +95,7 @@ const LootCreate = () => {
     if (loading) return <h1 className="flex min-h-screen flex-col items-center mt-6">Загрузка...</h1>
 
     return (
-        <div className="mt-20 mr-8 ml-8 md:ml-72 md:mt-8 mb-8">
+        <div className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
             <ErrorModal status={status} message={message} visible={open} setVisible={setOpen} />
             <table className="table-auto w-full">
                 <tbody>
