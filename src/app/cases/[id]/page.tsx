@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
+import { axiosClassic } from '@/api/intreceptors'
 import LiveDrops from '@/components/LiveDrops'
 import { CaseStatic } from '@/components/cart/Case'
 import { ItemBox } from '@/components/cart/Item'
@@ -7,15 +9,34 @@ import { GradientButton, GradientButton2, PurpurButon } from '@/components/inter
 import { SelectContent, SelectCount, SelectCustom } from '@/components/interface/Select'
 import Switch from '@/components/interface/Switch'
 import { useTranslation } from '@/hook/useLanguageStore'
+import { IItem } from '@/types/ui.types'
+import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-const OpenCase = () => {
+const getData = async (id: string) => {
+    return await axiosClassic.get('/ui/content/case-content?caseId=' + id)
+}
+
+const OpenCase = ({ params }: { params: { id: string } }) => {
     const { getTranslation } = useTranslation();
     const [content, setContent] = useState<string>("cases")
     const [count, setCount] = useState<number>(1)
     const [isAnim, setIsAnim] = useState<boolean>(false)
     const [position, setPosition] = useState<string>("view")
+    const [lootCase, setLootCase] = useState<any>()
+
+    const { data, isSuccess } = useQuery({
+        queryKey: ['case', params.id],
+        queryFn: () => getData(params.id),
+        select: data => data.data
+    })
+
+    useEffect(() => {
+        if (isSuccess) {
+            setLootCase(data.result)
+        }
+    }, [isSuccess, data])
 
     const openCase = () => {
         if (isAnim) {
@@ -41,7 +62,7 @@ const OpenCase = () => {
                     <svg width={21} height={22} viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8.56784 3.92672V5.37572H12.4318V3.92672C12.4318 3.79862 12.381 3.67577 12.2904 3.58519C12.1998 3.49461 12.0769 3.44372 11.9488 3.44372H9.05084C8.92274 3.44372 8.79989 3.49461 8.70931 3.58519C8.61873 3.67577 8.56784 3.79862 8.56784 3.92672ZM6.63584 5.37572V3.92672C6.63584 2.59364 7.71776 1.51172 9.05084 1.51172H11.9488C13.2819 1.51172 14.3638 2.59364 14.3638 3.92672V5.37572H16.2958C17.3206 5.37572 18.3035 5.78282 19.0281 6.50746C19.7527 7.2321 20.1598 8.21492 20.1598 9.23972V10.2057C20.1598 10.9743 19.8545 11.7114 19.311 12.2549C18.7676 12.7984 18.0304 13.1037 17.2618 13.1037H12.4318V12.1377C12.4318 11.8815 12.3301 11.6358 12.1489 11.4547C11.9677 11.2735 11.722 11.1717 11.4658 11.1717H9.53384C9.27764 11.1717 9.03194 11.2735 8.85078 11.4547C8.66962 11.6358 8.56784 11.8815 8.56784 12.1377V13.1037H3.73784C2.96925 13.1037 2.23213 12.7984 1.68865 12.2549C1.14517 11.7114 0.839844 10.9743 0.839844 10.2057V9.23972C0.839844 8.21492 1.24694 7.2321 1.97158 6.50746C2.69622 5.78282 3.67905 5.37572 4.70384 5.37572H6.63584ZM0.839844 14.0697V16.9677C0.839844 17.9925 1.24694 18.9753 1.97158 19.7C2.69622 20.4246 3.67905 20.8317 4.70384 20.8317H16.2958C17.3206 20.8317 18.3035 20.4246 19.0281 19.7C19.7527 18.9753 20.1598 17.9925 20.1598 16.9677V14.0697C19.3523 14.6764 18.3496 15.0357 17.2618 15.0357H12.4318V16.0017C12.4318 16.2579 12.3301 16.5036 12.1489 16.6848C11.9677 16.8659 11.722 16.9677 11.4658 16.9677H9.53384C9.27764 16.9677 9.03194 16.8659 8.85078 16.6848C8.66962 16.5036 8.56784 16.2579 8.56784 16.0017V15.0357H3.73784C2.69253 15.0373 1.67517 14.6981 0.839844 14.0697Z" fill="white" />
                     </svg>
-                    <div className="h-[1.0625rem] text-white font-semibold leading-[normal]">Batman</div>
+                    <div className="h-[1.0625rem] text-white font-semibold leading-[normal]">{lootCase?.title ? lootCase.title : 'None'}</div>
                 </div>
             </div>
             <div className='flex sm:hidden my-6 flex-row items-center justify-between gap-4'>
@@ -64,7 +85,10 @@ const OpenCase = () => {
             </div>
             <div className={(position == 'view' ? "" : "hidden") + " relative bg-contain sm:pt-8 bg-center bg-no-repeat items-center justify-center flex flex-col w-full min-[1150px]:bg-[url(/img/interface/bg/case-open.png)]"} >
                 <div className="absolute bg-[#821FFF] w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] blur-[307px] rounded-full top-6 z-0" />
-                <CaseStatic />
+                {!lootCase ?
+                    <div>Loading...</div> :
+                    <CaseStatic lootCase={lootCase} />
+                }
                 <div className="z-10 py-4 flex flex-col items-center justify-center gap-5">
                     <div className="opacity-[0.6] text-white text-sm font-medium leading-[normal]">{getTranslation('page.case.selectNumber')}</div>
                     <div className='flex flex-row gap-4'>
@@ -94,7 +118,7 @@ const OpenCase = () => {
             </div>
             <div className={(position == 'win' ? '' : 'hidden ') + 'flex flex-col items-center justify-center w-full gap-7'}>
                 <div className='-z-10 relative bg-[url(/img/interface/bg/case-win.png)] max-w-[1101px] w-full bg-center bg-no-repeat rounded-[30px] py-5 items-center justify-center flex' style={{ backgroundSize: "auto 100%" }}>
-                    {position == 'win' ? <ItemBox /> : <></>}
+                    {position == 'win' ? <ItemBox item={null} /> : <></>}
                     <div className='absolute bg-gradient-to-l z-10 from-black/[.25] blur-[8px] sm:blur-xl right-0 h-full w-[20%]' />
                     <div className='absolute bg-gradient-to-r z-10 from-black/[.25] blur-[8px] sm:blur-xl left-0 h-full w-[20%]' />
                     <svg className='absolute hidden sm:flex' width={474} height={474} viewBox="0 0 474 474" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -133,18 +157,16 @@ const OpenCase = () => {
                 <div className="h-[1.1875rem] text-white font-medium leading-[normal]">{getTranslation('page.case.inside')}</div>
             </div>
             <div className='flex mt-12 flex-row justify-start' style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around", gap: "16px", rowGap: "16px" }}>
-                <ItemBox />
-                <ItemBox />
-                <ItemBox />
-                <ItemBox />
-                <ItemBox />
-                <ItemBox />
-                <ItemBox />
-                <ItemBox />
-                <ItemBox />
-                <ItemBox />
-                <ItemBox />
-                <ItemBox />
+                {!lootCase ?
+                    <div>Loading...</div> :
+                    <>
+                        {
+                            lootCase.items.map((item: IItem) => {
+                                return <ItemBox item={item}/>
+                            })
+                        }
+                    </>
+                }
             </div>
         </div >
     )

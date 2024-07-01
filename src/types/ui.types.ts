@@ -5,3 +5,13 @@ export interface ICase {
     price: number;
     title: string;
 }
+
+export interface IItem {
+    price: number;
+    image: string;
+    rarity: string;
+    quality: string;
+    chance: number;
+    weaponName: string;
+    skinName: string;
+}

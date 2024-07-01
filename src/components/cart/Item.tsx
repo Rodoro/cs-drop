@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import { IItem } from '@/types/ui.types'
 
 const Item = () => {
     return (
@@ -28,21 +29,21 @@ const Item = () => {
     )
 }
 
-const ItemBox = () => {
+const ItemBox = ({ item }: { item: IItem | null }) => {
     return (
         <div className='relative rounded-[41px] w-[160px] h-[160px] sm:w-[210px] sm:h-[210px] overflow-hidden p-[2px]' style={{ background: "linear-gradient(150deg,rgba(30, 33, 52, 1),rgba(14, 16, 38, 1))" }}>
             <div className='w-full h-full relative rounded-[41px] bg-[#0E1026]'>
                 <div className='flex flex-col items-center justify-between py-4 h-full'>
                     <div className="inline-flex flex-col justify-center items-center gap-0.5">
-                        <div className="opacity-[0.3] text-white text-center text-[10px] sm:text-[.8125rem] font-semibold leading-[normal]">AK-47</div>
-                        <div className="text-white text-center text-[8.5px] sm:text-[10.953px] font-semibold leading-[normal]">Legion of Anubis</div>
+                        <div className="opacity-[0.3] text-white text-center text-[10px] sm:text-[.8125rem] font-semibold leading-[normal]">{item?.weaponName ? item?.weaponName : 'AK-47'}</div>
+                        <div className="text-white text-center text-[8.5px] sm:text-[10.953px] font-semibold leading-[normal]">{item?.skinName ? item?.skinName : 'Legion of Anubis'}</div>
                     </div>
                     <div className="inline-flex flex-col items-center">
-                        <div className="text-[19.75px] sm:text-[1.5625rem] font-bold leading-[120%]">$1500</div>
-                        <div className="opacity-[0.3] text-white text-center text-[9.4px] sm:text-xs font-semibold leading-[normal]">0.0001%</div>
+                        <div className="text-[19.75px] sm:text-[1.5625rem] font-bold leading-[120%]">${item?.price ? item?.price : '1500'}</div>
+                        <div className="opacity-[0.3] text-white text-center text-[9.4px] sm:text-xs font-semibold leading-[normal]">{item?.chance ? Math.round(item?.chance * 10000) / 10000: '0.0001'}%</div>
                     </div>
                 </div>
-                <Image className="z-10 absolute left-0 bottom-0 top-0 m-auto pb-4 w-[148px] h-[93px] sm:w-[190px] sm:h-[119px]" src={'/img/example/ak47.png'} alt={'Оружие'} width={190} height={119} />
+                <Image className="z-10 absolute left-0 bottom-0 top-0 m-auto pb-4 w-[148px] h-[93px] sm:w-[190px] sm:h-[119px]" src={item?.image ? item?.image : '/img/example/ak47.png'} alt={'Оружие'} width={190} height={119} />
             </div>
             <svg className='absolute top-0 left-0 m-auto' width={177} height={172} viewBox="0 0 177 172" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter0_f_2034_5837)">
