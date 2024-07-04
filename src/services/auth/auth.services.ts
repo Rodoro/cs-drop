@@ -38,7 +38,7 @@ export const authService = {
     async getNewTokens() {
 
         const response = await axiosClassic.post<IAuthResponseAdmin>(
-            'admin/staff/refresh_token?UserId=' + getUserIdByToken() + "&RefreshToken=" + getRefreshToken())
+            'ui/users/refresh_token?UserId=' + getUserIdByToken() + "&RefreshToken=" + getRefreshToken())
 
         if (response.data.result.accessToken) saveTokensAdminStorage(response.data.result.accessToken, response.data.result.refreshToken)
 

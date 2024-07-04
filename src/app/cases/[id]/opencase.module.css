@@ -1,0 +1,11 @@
+.container {
+    position: relative;
+    /*
+  
+    left: 0; Тоже укажите, иначе transition не будет работать
+  
+    */
+    left: 0;
+    display: inline-flex;
+    transition: 4s ease;
+}

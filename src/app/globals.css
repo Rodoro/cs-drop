@@ -37,21 +37,17 @@ body {
 
 /* Chrome, Edge, and Safari */
 .scroler::-webkit-scrollbar {
-  width: 17px;
-  background: rgba(0, 0, 0, 0);
+  display: none;
 }
 
 .scroler::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0);
-  border-radius: 5px;
+  display: none;
 }
 
 .scroler::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0);
-  border-radius: 14px;
-  border: 3px solid rgba(0, 0, 0, 0);
+  display: none;
 }
 
 .scroler::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0, 0, 0, 0);
+  display: none;
 }

@@ -2,6 +2,28 @@ import React from 'react'
 import Image from 'next/image'
 import { IItem } from '@/types/ui.types'
 
+export function getColorByRarity(rarity: string | undefined | null, isPrimary: boolean) {
+    switch (rarity) {
+        case "Ширпотреб":
+            return isPrimary ? "#CACDE4" : '#8287B1'
+        case "Промышленное качество":
+            return isPrimary ? "#818BE9" : '#6E7BEB'
+        case "Армейское качество":
+            return isPrimary ? "#5969FF" : '#2438EF'
+        case "Запрещенное":
+            return isPrimary ? "#E74FFF" : '#D324EF'
+        case "Засекреченное":
+            return isPrimary ? "#FF7CF2" : '#FF7CF2'
+        case "Тайное":
+            return isPrimary ? "#FF2F2D" : '#EF2424'
+        case "Редкое":
+            return isPrimary ? "#FFC772" : '#EF9E24'
+
+        default:
+            return isPrimary ? "#FF7CF2" : '#FF7CF2'
+    }
+}
+
 const Item = () => {
     return (
         <div className="relative rounded-[0.9375rem] w-[180px] min-w-44 overflow-hidden p-[2px]" style={{ background: "linear-gradient(150deg,rgba(64, 57, 108, 1),rgba(43, 33, 98, 1))" }}>
@@ -40,14 +62,16 @@ const ItemBox = ({ item }: { item: IItem | null }) => {
                     </div>
                     <div className="inline-flex flex-col items-center">
                         <div className="text-[19.75px] sm:text-[1.5625rem] font-bold leading-[120%]">${item?.price ? item?.price : '1500'}</div>
-                        <div className="opacity-[0.3] text-white text-center text-[9.4px] sm:text-xs font-semibold leading-[normal]">{item?.chance ? Math.round(item?.chance * 10000) / 10000: '0.0001'}%</div>
+                        <div className="opacity-[0.3] text-white text-center text-[9.4px] sm:text-xs font-semibold leading-[normal]">{item?.chance ? Math.round(item?.chance * 10000) / 10000 : '0.0001'}%</div>
                     </div>
                 </div>
-                <Image className="z-10 absolute left-0 bottom-0 top-0 m-auto pb-4 w-[148px] h-[93px] sm:w-[190px] sm:h-[119px]" src={item?.image ? item?.image : '/img/example/ak47.png'} alt={'Оружие'} width={190} height={119} />
+                <div className='z-10 absolute left-0 right-0 bottom-0 top-0 flex flex-col justify-center items-center mb-16 m-7 my-12'>
+                    <Image className="" src={item?.image ? item?.image : '/img/example/ak47.png'} alt={'Оружие'} width={140} height={80} />
+                </div>
             </div>
             <svg className='absolute top-0 left-0 m-auto' width={177} height={172} viewBox="0 0 177 172" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter0_f_2034_5837)">
-                    <circle cx="46.2013" cy="41.0618" r="67.0872" fill="#EF2424" fillOpacity="0.2" />
+                    <circle cx="46.2013" cy="41.0618" r="67.0872" fill={getColorByRarity(item?.rarity, false)} fillOpacity="0.2" />
                 </g>
                 <defs>
                     <filter id="filter0_f_2034_5837" x="-84.2901" y="-89.4296" width="260.983" height="260.982" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
@@ -59,7 +83,7 @@ const ItemBox = ({ item }: { item: IItem | null }) => {
             </svg>
             <svg className='absolute bottom-0 right-0 m-auto' width={166} height={185} viewBox="0 0 166 185" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter0_f_2034_5846)">
-                    <circle cx="131.107" cy="130.753" r="67.0872" fill="#EF2424" fillOpacity="0.06" />
+                    <circle cx="131.107" cy="130.753" r="67.0872" fill={getColorByRarity(item?.rarity, false)} fillOpacity="0.06" />
                 </g>
                 <defs>
                     <filter id="filter0_f_2034_5846" x="0.616013" y="0.261765" width="260.983" height="260.982" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
@@ -69,7 +93,7 @@ const ItemBox = ({ item }: { item: IItem | null }) => {
                     </filter>
                 </defs>
             </svg>
-            <div className="absolute z-10 left-0 right-0 mx-auto -top-4 w-[0.1875rem] h-[2.375rem] bg-[#ff2f2d] -rotate-90" />
+            <div className={"absolute z-10 left-0 right-0 mx-auto -top-4 w-[0.1875rem] h-[2.375rem]  -rotate-90 "} style={{ background: getColorByRarity(item?.rarity, true) }} />
         </div >
     )
 }

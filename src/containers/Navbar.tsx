@@ -17,6 +17,7 @@ import { useTranslation } from '@/hook/useLanguageStore'
 import SupportVidget from '@/components/SupportVidget'
 import useProfile from '@/hook/useProfile'
 
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const pathname = usePathname()

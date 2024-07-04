@@ -25,11 +25,11 @@ const useSaveTokens = () => {
 
     }, [queryParams]);
 
-    const { data } = useQuery({
-        queryKey: ['profile'],
-        queryFn: getData,
-        select: data => data.data,
-    })
+    // const { data } = useQuery({
+    //     queryKey: ['profile'],
+    //     queryFn: getData,
+    //     select: data => data.data,
+    // })
 }
 
 export default useSaveTokens
