@@ -9,7 +9,11 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'cdn2.csgo.com',
-            }
+            },
+            {
+                protocol: 'https',
+                hostname: 'avatars.steamstatic.com',
+            },
         ]
     }
 };

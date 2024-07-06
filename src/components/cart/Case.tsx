@@ -7,7 +7,7 @@ import { ICase } from '@/types/ui.types'
 function Case({ lootCase }: { lootCase: ICase }) {
   return (
     <Link className="relative cursor-pointer w-[10.3125rem] h-[10.8125rem] sm:w-64 sm:h-[16.6875rem]" href={'/cases/' + lootCase.id}>
-      <Image className={style.image + ' absolute z-10 right-0 left-0 mx-auto my-auto -top-6 sm:-top-4 w-[145px] h-[145px] sm:w-[212px] sm:h-[212px]'} src={lootCase.image ? lootCase.image : '/img/example/batman-def.png'} alt={lootCase.title ? lootCase.title : 'None'} width={212} height={212} />
+      <Image className={style.image + ' absolute z-10 right-0 left-0 mx-auto my-auto -top-6 sm:-top-6 w-[145px] h-[145px] sm:w-[212px] sm:h-[212px]'} src={lootCase.image ? lootCase.image : '/img/example/batman-def.png'} alt={lootCase.title ? lootCase.title : 'None'} width={212} height={212} />
       <div className={"absolute w-full h-full rounded-[1.375rem] " + style.border} />
       <div className="relative flex flex-col items-center justify-end overflow-hidden w-[10.3125rem] h-[10.8125rem] sm:w-64 sm:h-[16.6875rem] rounded-[1.375rem] border-0 border-[#ffffff]/[.1] gap-2 sm:gap-4 bg-contain bg-repeat" style={{ background: "url(/img/interface/bg/case.png)" }}>
         <svg className="absolute" width={257} height={269} viewBox="0 0 257 269" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -39,7 +39,7 @@ const CaseStatic = ({ lootCase }: { lootCase: ICase }) => {
       {!lootCase ?
         <div>Loading...</div> :
         <div className="relative cursor-pointer w-64 h-[16.6875rem]">
-          <Image className={style.image + ' absolute z-10 right-0 left-0 mx-auto my-auto -top-4w-[212px] h-[212px]'} src={lootCase.image ? lootCase.image : '/img/example/batman-def.png'} alt={lootCase.title ? lootCase.title : 'None'} width={212} height={212} />
+          <Image className={style.image + ' absolute z-10 right-0 left-0 mx-auto my-auto -top-6 w-[212px] h-[212px]'} src={lootCase.image ? lootCase.image : '/img/example/batman-def.png'} alt={lootCase.title ? lootCase.title : 'None'} width={212} height={212} />
           <div className={"absolute w-full h-full rounded-[1.375rem] " + style.border} />
           <div className="relative flex flex-col items-center justify-end overflow-hidden w-64 h-[16.6875rem] rounded-[1.375rem] border-0 border-[#ffffff]/[.1] gap-4 bg-contain bg-repeat" style={{ background: "url(/img/interface/bg/case.png)" }}>
             <svg className="absolute" width={257} height={269} viewBox="0 0 257 269" fill="none" xmlns="http://www.w3.org/2000/svg">

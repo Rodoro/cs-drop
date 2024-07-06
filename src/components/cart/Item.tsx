@@ -58,11 +58,11 @@ const ItemBox = ({ item }: { item: IItem | null }) => {
                 <div className='flex flex-col items-center justify-between py-4 h-full'>
                     <div className="inline-flex flex-col justify-center items-center gap-0.5">
                         <div className="opacity-[0.3] text-white text-center text-[10px] sm:text-[.8125rem] font-semibold leading-[normal]">{item?.weaponName ? item?.weaponName : 'AK-47'}</div>
-                        <div className="text-white text-center text-[8.5px] sm:text-[10.953px] font-semibold leading-[normal]">{item?.skinName ? item?.skinName : 'Legion of Anubis'}</div>
+                        <div className="text-white text-center text-[8.5px] sm:text-[10.953px] font-semibold leading-[normal]">{item?.skinName ? item?.skinName : ''}</div>
                     </div>
                     <div className="inline-flex flex-col items-center">
                         <div className="text-[19.75px] sm:text-[1.5625rem] font-bold leading-[120%]">${item?.price ? item?.price : '1500'}</div>
-                        <div className="opacity-[0.3] text-white text-center text-[9.4px] sm:text-xs font-semibold leading-[normal]">{item?.chance ? Math.round(item?.chance * 10000) / 10000 : '0.0001'}%</div>
+                        <div className="opacity-[0.3] text-white text-center text-[9.4px] sm:text-xs font-semibold leading-[normal]">{item?.chance ? Math.round(item?.chance * 1000000) / 10000 : '0.0001'}%</div>
                     </div>
                 </div>
                 <div className='z-10 absolute left-0 right-0 bottom-0 top-0 flex flex-col justify-center items-center mb-16 m-7 my-12'>

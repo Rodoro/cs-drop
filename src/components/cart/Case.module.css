@@ -9,9 +9,9 @@
 }
 
 .image {
-   transition: transform 0.4s;
+   transition: transform 0.4s, translateY 0.4s;
 }
 
 .image:hover {
-   transform: scale(1.2);
+   transform: scale(1.2) translateY(-20px);
 }

@@ -16,6 +16,7 @@ import Logo from '@/components/icons/Logo'
 import { useTranslation } from '@/hook/useLanguageStore'
 import SupportVidget from '@/components/SupportVidget'
 import useProfile from '@/hook/useProfile'
+import Profile from '@/components/common/Profile'
 
 
 const Navbar = () => {
@@ -29,9 +30,9 @@ const Navbar = () => {
         <div></div>
       ) : (
         < div className="flex flex-col" >
-          <nav className="hidden xl:flex fixed flex-col justify-center top-0 left-0 bottom-0 bg-[#0A0D1D] space-y-6 pl-3 pr-3">
-            <Link href="/" className={`flex flex-col items-center ${pathname === '/' ? '' : 'opacity-40'}`}>
-              <div className="relative flex flex-col items-center justify-center">
+          <nav className="hidden xl:flex fixed flex-col justify-center top-0 left-0 bottom-0 w-[124px] transition-all bg-[#0A0D1D] pl-3 pr-3">
+            <Link href="/" className={`flex flex-col items-center ${pathname === '/' ? '' : 'opacity-40'} ` + (pathname === '/' ? '' : 'py-[20px]')}>
+              <div className={"relative flex flex-col items-center justify-center "}>
                 <Image
                   src="/img/interface/nav/cases.png"
                   alt="Cases"
@@ -49,7 +50,7 @@ const Navbar = () => {
               </div>
               {getTranslation('nav.cases')}
             </Link>
-            <Link href="/match" className={`flex flex-col items-center ${pathname === '/match' ? '' : 'opacity-40'}`}>
+            <Link href="/match" className={`flex flex-col items-center ${pathname === '/match' ? '' : 'opacity-40'} ` + (pathname === '/match' ? '' : 'py-[20px]')}>
               <div className="relative flex flex-col items-center justify-center">
                 <Image
                   src="/img/interface/nav/match.png"
@@ -68,7 +69,7 @@ const Navbar = () => {
               </div>
               {getTranslation('nav.match')}
             </Link>
-            <Link href="/casino" className={`flex flex-col items-center ${pathname === '/casino' ? '' : 'opacity-40'}`}>
+            <Link href="/casino" className={`flex flex-col items-center ${pathname === '/casino' ? '' : 'opacity-40'} ` + (pathname === '/casino' ? '' : 'py-[20px]')}>
               <div className="relative flex flex-col items-center justify-center">
                 <Image
                   src="/img/interface/nav/casino.png"
@@ -100,8 +101,10 @@ const Navbar = () => {
               </div>
               <div className='flex flex-row gap-7 items-center'>
                 <SelectLanguage />
-                {/* TODO: Убрать authButton если зареган и добавить профиль и link на page profile */}
-                <AuthButton />
+                {user ?
+                  <Profile images={user.image} /> :
+                  <AuthButton />
+                }
                 <SettingsButton />
                 <EarnMoneyButton />
               </div>
@@ -112,8 +115,10 @@ const Navbar = () => {
               <Logo />
             </Link>
             <div className='flex flex-row gap-3'>
-              {/* TODO: Убрать authButton если зареган и добавить avatar, eventsButton и link на page profile */}
-              <AuthButton />
+              {user ?
+                <Profile images={user.image} /> :
+                <AuthButton />
+              }
               <SettingsButton />
               <div className="cursor-pointer flex flex-col flex-shrink-0 justify-center items-end gap-1.5 w-[1.375rem]" onClick={() => setIsOpen(!isOpen)}>
                 <svg width={24} height={3} viewBox="0 0 24 3" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -165,8 +170,10 @@ const Navbar = () => {
                 <Logo />
               </Link>
               <div className='flex flex-row gap-3'>
-                {/* TODO: Убрать authButton если зареган и добавить avatar, eventsButton и link на page profile */}
-                <AuthButton />
+                {user ?
+                  <Profile images={user.image} /> :
+                  <AuthButton />
+                }
                 <SettingsButton />
                 <div className="cursor-pointer flex flex-col flex-shrink-0 justify-center items-end gap-1.5 w-[1.375rem]" onClick={() => setIsOpen(!isOpen)}>
                   <svg width={22} height={20} viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">

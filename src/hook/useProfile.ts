@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { axiosWithAuthUser } from "@/api/intreceptors";
 import { getAccessToken } from "@/services/auth/auth.helper"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
@@ -10,14 +10,16 @@ const getData = async () => {
 }
 
 export default function useProfile() {
-    if (!getAccessToken()) return null
+    const accessToken = getAccessToken();
 
     const { data: user, isLoading, error } = useQuery({
         queryKey: ['profile'],
         queryFn: getData,
         select: data => data.data,
+        enabled: !!accessToken,
     })
-
+    
+    if (!accessToken) return null;
     if (isLoading) return null;
     if (error) return null;
 

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { axiosClassic, axiosWithAuthUser } from '@/api/intreceptors'
 import LiveDrops from '@/components/LiveDrops'
@@ -126,7 +125,7 @@ const OpenCase = ({ params }: { params: { id: string } }) => {
                     <CaseStatic lootCase={lootCase} />
                 }
                 {!user ?
-                    <div className='mt-4'>Нужно авторизоватся</div> :
+                    <div className='mt-4 mb-4'>Authorization required</div> :
                     <div className="z-10 py-4 flex flex-col items-center justify-center gap-5">
                         <div className="opacity-[0.6] text-white text-sm font-medium leading-[normal]">{getTranslation('page.case.selectNumber')}</div>
                         <div className='flex flex-row gap-4'>
@@ -226,8 +225,8 @@ const OpenCase = ({ params }: { params: { id: string } }) => {
                     <div>Loading...</div> :
                     <>
                         {
-                            lootCase.items.map((item: IItem) => {
-                                return <ItemBox item={item} />
+                            lootCase.items.map((item: IItem, index: any) => {
+                                return <ItemBox item={item} key={index} />
                             })
                         }
                     </>
