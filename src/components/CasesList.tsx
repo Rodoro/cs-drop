@@ -9,16 +9,18 @@ import { useTranslation } from '@/hook/useLanguageStore'
 import SoundButton from './icons/sound'
 import { useQuery } from '@tanstack/react-query'
 import { axiosClassic } from '@/api/intreceptors'
-import { ICase } from '@/types/ui.types'
+import { IBathe, ICase } from '@/types/ui.types'
 
 const getData = async () => {
     return await axiosClassic.get('/ui/content/get')
 }
 
 const CasesList = () => {
-    const [valueMoneyCase, setValueMoneyCase] = useState("0");
+    const [valueMoneyCase, setValueMoneyCase] = useState('');
+    const [valueName, setValueName] = useState<string>('');
+
     const { getTranslation } = useTranslation();
-    const [loots, setLoots] = useState<ICase[]>()
+    const [bathes, setBathes] = useState<IBathe[]>([])
 
     const { data, isSuccess } = useQuery({
         queryKey: ['loot-case'],
@@ -28,10 +30,27 @@ const CasesList = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            setLoots(data[0].lootCases)
-            console.log(data[0].lootCases)
+            setBathes(data)
         }
     }, [isSuccess, data])
+
+    const filteredBathes = bathes.map((bathe) => ({
+        ...bathe,
+        lootCases: bathe.lootCases.filter((lootCase) => {
+            // Apply filters to each loot case
+            const priceFilter =
+                (valueMoneyCase == ''  && lootCase.price >= 0 ) ||
+                (valueMoneyCase === "0" && lootCase.price >= 0 && lootCase.price <= 5) ||
+                (valueMoneyCase === "5" && lootCase.price >= 5 && lootCase.price <= 15) ||
+                (valueMoneyCase === "15" && lootCase.price >= 15 && lootCase.price <= 50) ||
+                (valueMoneyCase === "50" && lootCase.price >= 50 && lootCase.price <= 100) ||
+                (valueMoneyCase === "100" && lootCase.price > 100);
+
+            const nameFilter = valueName ? lootCase.title.toLowerCase().includes(valueName.toLowerCase()) : true;
+
+            return priceFilter && nameFilter;
+        })
+    }));
 
     return (
         <div>
@@ -45,19 +64,35 @@ const CasesList = () => {
             </div>
             <div className="flex flex-row items-center justify-between">
                 <div className="flex items-center gap-8 flex-col lg:flex-row w-full sm:w-auto">
-                    <InputSearch />
+                    <InputSearch value={valueName} setValue={setValueName} />
                     <SelectMoneyValue value={valueMoneyCase} setValue={setValueMoneyCase} />
                 </div>
                 <div className="hidden xl:flex">
                     <SoundButton />
                 </div>
             </div>
-            <div className='flex mt-12 flex-row justify-start' style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around", gap: "8px", rowGap: "32px" }}>
-                {!loots ?
+            <div>
+                {!bathes ?
                     <div>Loading...</div> :
                     <>
-                        {loots.map((item: ICase) => {
-                            return <Case lootCase={item} key={item.id} />
+                        {filteredBathes.map((bathe, index) => {
+                            return (
+                                <>
+                                    {bathe.lootCases.length != 0 ?
+                                        <div key={index} className='my-11'>
+                                            <div className='ml-6 text-white font-medium leading-[normal] opacity-[0.6]'>
+                                                {bathe.title}
+                                            </div>
+                                            <div className='flex mt-12 flex-row justify-start' style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around", gap: "8px", rowGap: "32px" }}>
+                                                {bathe.lootCases.map((lootCase: ICase) => {
+                                                    return <Case lootCase={lootCase} key={lootCase.id} />
+                                                })}
+                                            </div>
+                                        </div> :
+                                        <> </>
+                                    }
+                                </>
+                            )
                         })}
                     </>
                 }

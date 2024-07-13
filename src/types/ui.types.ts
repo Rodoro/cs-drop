@@ -15,3 +15,8 @@ export interface IItem {
     weaponName: string;
     skinName: string;
 }
+
+export interface IBathe {
+    title: string;
+    lootCases: ICase[]
+}
