@@ -54,7 +54,7 @@ const OpenCase = ({ params }: { params: { id: string } }) => {
     }, [move])
 
     const openCase = async () => {
-        const res = await (await axiosWithAuthUser.post('/ui/users/open-case?caseId=' + params.id)).data.result
+        const res = await (await axiosWithAuthUser.post('/ui/users/open-case?caseId=' + params.id)).data.result[0]
         setWinLoot(res)
         if (isAnim) {
             setPosition('win')
