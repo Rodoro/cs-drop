@@ -94,7 +94,7 @@ const Navbar = () => {
               <LogoText />
             </Link>
             <div className="flex flex-row items-center justify-between gap-6">
-              <div className="flex flex-row items-center justify-between gap-2">
+              <div className="flex flex-row items-center justify-between gap-4">
                 <VkLink />
                 <TgLink />
                 <YtLink />

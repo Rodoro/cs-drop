@@ -32,11 +32,18 @@ const Footer = () => {
                             <YtLink />
                         </div>
                     </div>
-                    <div className='flex flex-row gap-4 justify-around mb:justify-between items-center pt-[2.0625rem] pb-[2.0625rem] px-4 sm:px-8 lg:px-[5.3125rem] rounded-[30px] border border-[#ffffff]/[.30] bg-[#22276e]/[.20]'>
+                    <div
+                        className='flex flex-row gap-4 justify-around mb:justify-between items-center pt-[2.0625rem] pb-[2.0625rem] px-4 sm:px-8 lg:px-[5.3125rem] rounded-[30px] border border-[#ffffff]/[.30] bg-[#22276e]/[.20]'
+                        style={{
+                            border: "1px solid transparent",
+                            background: "linear-gradient(150deg,rgba(22,25,62,1),rgba(27,26,74,1)) padding-box, linear-gradient(150deg,rgba(57,59,91,1),rgba(27,26,74,1)) border-box"
+                        }}
+                    >
                         <div className='flex flex-col md:flex-row justify-between items-center gap-12'>
                             <OnlineIcon />
                             <PlayersIcon />
                             <WonIcon />
+                            {/* TODO: Логику для обновления данных */}
                         </div>
                         <div className="flex flex-col lg:flex-row items-center gap-6">
                             <div className="flex flex-col justify-center items-start gap-2">
@@ -85,12 +92,12 @@ const Footer = () => {
                         </div>
                         <div className="flex flow-row items-start gap-9">
                             <div className="flex flex-col items-start gap-4">
-                                <div className="opacity-50 text-white text-center sm:text-left  leading-[140%] w-full">{getTranslation('footer.support')}</div>
-                                <div className="opacity-50 text-white text-center sm:text-left  leading-[140%] w-full">{getTranslation('footer.privacy')}</div>
+                                <div className="opacity-50 transition-all hover:opacity-100 cursor-pointer text-white text-center sm:text-left  leading-[140%] w-full">{getTranslation('footer.support')}</div>
+                                <div className="opacity-50 transition-all hover:opacity-100 cursor-pointer text-white text-center sm:text-left  leading-[140%] w-full">{getTranslation('footer.privacy')}</div>
                             </div>
                             <div className="flex flex-col items-start gap-4">
-                                <div className="opacity-50 text-white text-center sm:text-left  leading-[140%] w-full">{getTranslation('footer.contact')}</div>
-                                <div className="opacity-50 text-white text-center sm:text-left leading-[140%] w-full">{getTranslation('footer.user')}</div>
+                                <div className="opacity-50 transition-all hover:opacity-100 cursor-pointer text-white text-center sm:text-left  leading-[140%] w-full">{getTranslation('footer.contact')}</div>
+                                <div className="opacity-50 transition-all hover:opacity-100 cursor-pointer text-white text-center sm:text-left leading-[140%] w-full">{getTranslation('footer.user')}</div>
                             </div>
                         </div>
                     </div>

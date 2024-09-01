@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { create } from 'zustand'
 import { useLanguageStore, useTranslation } from '@/hook/useLanguageStore'
 import style from './Select.module.css'
+import { motion } from "framer-motion";
+import useMenuAnimation from '@/hook/animation/useMenuAnimation'
 
 export type SelectProps = {
   value: any;
@@ -22,11 +24,18 @@ interface ListItemProps {
 const SelectLanguage = ({ ...props }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { language, setLanguage } = useLanguageStore();
+  const scope = useMenuAnimation(isOpen);
 
   return (
-    <div className="relative">
-      <div onClick={() => setIsOpen(!isOpen)} {...props} className='min-w-[162px] cursor-pointer flex flex-row items-center justify-between space-x-2 px-6 bg-[#242f54] rounded-2xl py-3' style={{ background: "linear-gradient(150deg,rgba(38,48,86,1),rgba(38,48,86,1)) padding-box, linear-gradient(150deg,rgba(68,72,113,1),rgba(39,49,87,1)) border-box", border: "1px solid transparent" }}>
-        <div className='flex flex-row space-x-2 items-center'>
+    <div className="relative" ref={scope}>
+      <motion.div
+        whileTap={{ scale: 0.97 }}
+        onClick={() => setIsOpen(!isOpen)}
+        {...props}
+        className='min-w-[162px] cursor-pointer flex flex-row items-center justify-between space-x-2 px-6 bg-[#242f54] rounded-2xl py-3'
+        style={{ background: "linear-gradient(150deg,rgba(38,48,86,1),rgba(38,48,86,1)) padding-box, linear-gradient(150deg,rgba(68,72,113,1),rgba(39,49,87,1)) border-box", border: "1px solid transparent" }}
+      >
+        <div className='flex flex-row space-x-2 items-center select-none'>
           <Image
             src={"/img/interface/nav/flag/" + language + ".png"}
             alt="flag"
@@ -35,12 +44,23 @@ const SelectLanguage = ({ ...props }) => {
           />
           <span>{language == 'gb' ? "English" : "Русский"}</span>
         </div>
-        <svg width={11} height={6} viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1.00021 1.29797L5.44466 5.03535L9.8891 1.29797" stroke="white" strokeWidth="0.808081" />
-        </svg>
-      </div>
-      <div className={(isOpen ? "flex" : "hidden") + " rounded-2xl cursor-pointer z-10 absolute inset-x-0 flex-col items-center justify-center bg-[#242f54]"} style={{ background: "linear-gradient(150deg,rgba(38,48,86,1),rgba(38,48,86,1)) padding-box, linear-gradient(150deg,rgba(68,72,113,1),rgba(39,49,87,1)) border-box", border: "1px solid transparent" }}>
-        <div onClick={() => { setIsOpen(!isOpen); setLanguage('gb') }} className="pl-6 flex flex-row items-center justify-start w-full gap-3 rounded-2xl hover:bg-black/15 py-2">
+        <div className='arrow' style={{ transformOrigin: "50% 55%" }}>
+          <svg width={11} height={6} viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.00021 1.29797L5.44466 5.03535L9.8891 1.29797" stroke="white" strokeWidth="0.808081" />
+          </svg>
+        </div>
+      </motion.div>
+      <ul
+        className={"rounded-2xl cursor-pointer z-10 absolute top-14 inset-x-0 flex-col items-center justify-center bg-[#242f54]"}
+        style={{
+          pointerEvents: isOpen ? "auto" : "none",
+          clipPath: "inset(10% 50% 90% 50% round 10px)",
+          background: "linear-gradient(150deg,rgba(38,48,86,1),rgba(38,48,86,1)) padding-box, linear-gradient(150deg,rgba(68,72,113,1),rgba(39,49,87,1)) border-box",
+          border: "1px solid transparent"
+        }}
+      >
+        {/* TODO: Более красочние наводка на выбранный флаг */}
+        <li onClick={() => { setIsOpen(!isOpen); setLanguage('gb') }} className="select-none pl-6 flex flex-row items-center justify-start w-full gap-3 rounded-2xl hover:bg-black/15 py-2">
           <Image
             src="/img/interface/nav/flag/gb.png"
             alt="flag"
@@ -48,8 +68,8 @@ const SelectLanguage = ({ ...props }) => {
             height={50}
           />
           <span>English</span>
-        </div>
-        <div onClick={() => { setIsOpen(!isOpen); setLanguage('ru') }} className='pl-6 flex flex-row items-center justify-start w-full gap-3 rounded-2xl hover:bg-black/15 py-2'>
+        </li>
+        <li onClick={() => { setIsOpen(!isOpen); setLanguage('ru') }} className='select-none pl-6 flex flex-row items-center justify-start w-full gap-3 rounded-2xl hover:bg-black/15 py-2'>
           <Image
             src="/img/interface/nav/flag/ru.png"
             alt="flag"
@@ -57,8 +77,8 @@ const SelectLanguage = ({ ...props }) => {
             height={50}
           />
           <span>Русский</span>
-        </div>
-      </div>
+        </li>
+      </ul>
     </div>
   )
 }
@@ -107,35 +127,35 @@ const SelectMoneyValue: React.FC<SelectProps> = ({ value, setValue }) => {
   return (
     <div className="flex items-start justify-around w-full gap-2 h-[2.5rem] sm:h-[3.125rem]">
       <div
-        onClick={() => {setValue('0'); if(value == "0") setValue('')}}
+        onClick={() => { setValue('0'); if (value == "0") setValue('') }}
         className={((value == "0" ? "bg-[linear-gradient(150deg,rgba(68,72,113,1),rgba(39,49,87,1))] w-[3.5rem] sm:w-[4.75rem] p-[1px]" : "opacity-[0.6]")) + " cursor-pointer flex justify-center items-center gap-2.5 self-stretch rounded-[0.625rem] text-white text-[.8rem] sm:text-[.9375rem] font-medium leading-[normal]"}>
         <div className={((value == "0" ? "bg-[#242f54]" : "")) + " w-full h-full flex justify-center items-center rounded-[0.625rem] py-1 px-2 sm:py-2 sm:px-3"}>
           $ 0-5
         </div>
       </div>
       <div
-        onClick={() => {setValue('5'); if(value == "5") setValue('')}}
+        onClick={() => { setValue('5'); if (value == "5") setValue('') }}
         className={((value == "5" ? "bg-[linear-gradient(150deg,rgba(68,72,113,1),rgba(39,49,87,1))] w-[3.9rem] sm:w-[4.9rem] p-[1px]" : "opacity-[0.6]")) + " cursor-pointer flex justify-center items-center gap-2.5 self-stretch rounded-[0.625rem] text-white text-[.8rem] sm:text-[.9375rem] font-medium leading-[normal]"}>
         <div className={((value == "5" ? "bg-[#242f54]" : "")) + " w-full h-full flex justify-center items-center rounded-[0.625rem] py-1 px-2 sm:py-2 sm:px-3"}>
           $ 5-15
         </div>
       </div>
       <div
-        onClick={() => {setValue('15'); if(value == "15") setValue('')}}
+        onClick={() => { setValue('15'); if (value == "15") setValue('') }}
         className={((value == "15" ? "bg-[linear-gradient(150deg,rgba(68,72,113,1),rgba(39,49,87,1))] w-[4.8rem] sm:w-[5.9rem] p-[1px]" : "opacity-[0.6]")) + " cursor-pointer flex justify-center items-center gap-2.5 self-stretch rounded-[0.625rem] text-white text-[.8rem] sm:text-[.9375rem] font-medium leading-[normal]"}>
         <div className={((value == "15" ? "bg-[#242f54]" : "")) + " w-full h-full flex justify-center items-center rounded-[0.625rem] py-1 px-2 sm:py-2 sm:px-3"}>
           $ 15-50
         </div>
       </div>
       <div
-        onClick={() => {setValue('50'); if(value == "50") setValue('')}}
+        onClick={() => { setValue('50'); if (value == "50") setValue('') }}
         className={((value == "50" ? "bg-[linear-gradient(150deg,rgba(68,72,113,1),rgba(39,49,87,1))] w-[4.8rem] sm:w-[5.9rem] p-[1px]" : "opacity-[0.6]")) + " cursor-pointer flex justify-center items-center gap-2.5 self-stretch rounded-[0.625rem] text-white text-[.8rem] sm:text-[.9375rem] font-medium leading-[normal]"}>
         <div className={((value == "50" ? "bg-[#242f54]" : "")) + " w-full h-full flex justify-center items-center rounded-[0.625rem] py-1 px-2 sm:py-2 sm:px-3"}>
           $ 50-100
         </div>
       </div>
       <div
-        onClick={() => {setValue('100'); if(value == "100") setValue('')}}
+        onClick={() => { setValue('100'); if (value == "100") setValue('') }}
         className={((value == "100" ? "bg-[linear-gradient(150deg,rgba(68,72,113,1),rgba(39,49,87,1))] w-[3.9rem] sm:w-[4.9rem] p-[1px]" : "opacity-[0.6]")) + " cursor-pointer flex justify-center items-center gap-2.5 self-stretch rounded-[0.625rem] text-white text-[.8rem] sm:text-[.9375rem] font-medium leading-[normal]"}>
         <div className={((value == "100" ? "bg-[#242f54]" : "")) + " w-full h-full flex justify-center items-center rounded-[0.625rem] py-1 px-2 sm:py-2 sm:px-3"}>
           $ 100+
@@ -226,7 +246,7 @@ const SelectCustom: React.FC<SelectCustomProps> = ({ value, setValue, items }) =
       <div className={(isOpen ? "flex" : "hidden") + " rounded-2xl cursor-pointer z-30 p-5 absolute inset-x-0 top-14 gap-3 flex-col items-center justify-center bg-[#19192E]"} style={{ background: "linear-gradient(150deg,rgba(25,25,46,1),rgba(25,25,46,1)) padding-box, linear-gradient(150deg,rgba(28,27,47,1),rgba(14,16,38,1)) border-box", border: "2px solid transparent" }}>
         {items.map((item, index) => (
           <div
-            onClick={() => {setValue(item.value); setIsOpen(false)}}
+            onClick={() => { setValue(item.value); setIsOpen(false) }}
             key={index}
             className={(value == item.value ? "bg-[#7e50ff] shadow-[0_0_16px_0_rgba(139,50,252,0.75)]" : style.selectButton) + " rounded-[12px] py-5 flex flex-row items-center w-full justify-center gap-1 h-5"}>
             {item.div}
