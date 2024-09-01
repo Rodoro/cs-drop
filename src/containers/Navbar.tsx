@@ -50,15 +50,15 @@ const Navbar = () => {
               </div>
               {getTranslation('nav.cases')}
             </Link>
-            <Link href="/match" className={`flex flex-col items-center ${pathname === '/match' ? '' : 'opacity-40'} ` + (pathname === '/match' ? '' : 'py-[20px]')}>
+            <Link href="/match" className={`flex flex-col items-center ${pathname.startsWith('/match') ? '' : 'opacity-40'} ` + (pathname.startsWith('/match') ? '' : 'py-[20px]')}>
               <div className="relative flex flex-col items-center justify-center">
                 <Image
                   src="/img/interface/nav/match.png"
                   alt="Match"
-                  width={pathname === '/match' ? '100' : '60'}
-                  height={pathname === '/match' ? '100' : '60'}
+                  width={pathname.startsWith('/match') ? '100' : '60'}
+                  height={pathname.startsWith('/match') ? '100' : '60'}
                 />
-                {pathname === '/match' ? (
+                {pathname.startsWith('/match') ? (
                   <svg className="absolute -z-20 left-6" width={110} height={164} viewBox="0 0 110 164" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 0H58.5H87.75C88.5259 3.23672 89.2089 6.13758 89.8498 8.74989C94.9914 29.7098 110 49.9187 110 71.5V82.347C110 109.821 91.6204 136.8 87.75 164H58.5H0V0Z" fill="#0A0D1D" />
                   </svg>
