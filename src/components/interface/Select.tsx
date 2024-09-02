@@ -7,6 +7,7 @@ import { useLanguageStore, useTranslation } from '@/hook/useLanguageStore'
 import style from './Select.module.css'
 import { motion } from "framer-motion";
 import useMenuAnimation from '@/hook/animation/useMenuAnimation'
+import useSelectPage from '@/hook/animation/useSelectPage'
 
 export type SelectProps = {
   value: any;
@@ -258,4 +259,55 @@ const SelectCustom: React.FC<SelectCustomProps> = ({ value, setValue, items }) =
   )
 }
 
-export { SelectCustom, SelectLanguage, SelectTop, SelectPage, SelectMoneyValue, SelectContent, SelectCount }
+const SelectPages = ({ items }: { items: ListItemProps[] }) => {
+  const [value, setValue] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const scope = useSelectPage(isOpen);
+
+  return (
+    <div className='relative w-full' ref={scope}>
+      <motion.div
+        whileTap={{ scale: 0.97 }}
+        onClick={() => setIsOpen(!isOpen)}
+        className='select-none cursor-pointer h-[59px] flex items-center w-full max-w-[400px] shadow-[0_0_34px_0_rgba(139,50,252,0.75)] justify-between space-x-2 px-6 bg-[#7e50ff] rounded-[0.9375rem]'
+        style={{
+
+        }}
+      >
+        <div className='flex items-center justify-start gap-2'>
+          {items[value].div}
+        </div>
+        <svg width={18} height={19} viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g opacity="0.8">
+            <path d="M8.99988 3.5C8.80097 3.5 8.6102 3.57902 8.46955 3.71967C8.3289 3.86032 8.24988 4.05109 8.24988 4.25C8.24988 4.44891 8.3289 4.63968 8.46955 4.78033C8.6102 4.92098 8.80097 5 8.99988 5C9.19879 5 9.38956 4.92098 9.53021 4.78033C9.67086 4.63968 9.74988 4.44891 9.74988 4.25C9.74988 4.05109 9.67086 3.86032 9.53021 3.71967C9.38956 3.57902 9.19879 3.5 8.99988 3.5ZM8.99988 8.75C8.80097 8.75 8.6102 8.82902 8.46955 8.96967C8.3289 9.11032 8.24988 9.30109 8.24988 9.5C8.24988 9.69891 8.3289 9.88968 8.46955 10.0303C8.6102 10.171 8.80097 10.25 8.99988 10.25C9.19879 10.25 9.38956 10.171 9.53021 10.0303C9.67086 9.88968 9.74988 9.69891 9.74988 9.5C9.74988 9.30109 9.67086 9.11032 9.53021 8.96967C9.38956 8.82902 9.19879 8.75 8.99988 8.75ZM8.99988 14C8.80097 14 8.6102 14.079 8.46955 14.2197C8.3289 14.3603 8.24988 14.5511 8.24988 14.75C8.24988 14.9489 8.3289 15.1397 8.46955 15.2803C8.6102 15.421 8.80097 15.5 8.99988 15.5C9.19879 15.5 9.38956 15.421 9.53021 15.2803C9.67086 15.1397 9.74988 14.9489 9.74988 14.75C9.74988 14.5511 9.67086 14.3603 9.53021 14.2197C9.38956 14.079 9.19879 14 8.99988 14Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </g>
+        </svg>
+      </motion.div>
+      <ul
+        className={"select-none rounded-2xl cursor-pointer z-30 p-5 max-w-[400px] absolute inset-x-0 top-16 gap flex-col items-center space-y-4 justify-center bg-[#19192E]"}
+        style={{
+          background: "linear-gradient(150deg,rgba(25,25,46,1),rgba(25,25,46,1)) padding-box, linear-gradient(150deg,rgba(28,27,47,1),rgba(14,16,38,1)) border-box",
+          border: "2px solid transparent",
+          pointerEvents: isOpen ? "auto" : "none",
+          clipPath: "inset(10% 50% 90% 50% round 10px)",
+        }}
+      >
+        {items.map((item, index) => {
+          return <motion.li
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            key={index}
+            onClick={() => { setValue(index); setIsOpen(!isOpen) }}
+            className={(value == index ? "bg-[#7e50ff] shadow-[0_0_16px_0_rgba(139,50,252,0.75)]" : style.selectButton) + ' h-[59px] flex gap-2 items-center justify-center rounded-[12px] py-5'}
+          >
+            <Link href={item.value} className='flex gap-2 items-center justify-center'>
+              {item.div}
+            </Link>
+          </motion.li>
+        })}
+      </ul>
+    </div>
+  )
+}
+
+export { SelectPages, SelectCustom, SelectLanguage, SelectTop, SelectPage, SelectMoneyValue, SelectContent, SelectCount }
