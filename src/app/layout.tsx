@@ -23,7 +23,7 @@ export default async function RootLayout({
         <AppRouterCacheProvider>
           <Providers>
             <Navbar />
-            <div className="ml-4 lg:ml-8 xl:ml-40 mr-4 lg:mr-8 xl:mr-12">
+            <div className="ml-4 lg:ml-8 xl:ml-44 mr-4 lg:mr-8 xl:mr-12">
               {children}
               <Footer />
             </div>

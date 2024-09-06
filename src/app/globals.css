@@ -16,23 +16,19 @@ body {
 
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
-  width: 17px;
-  background: #1a114e;
+  display: none;
 }
 
 *::-webkit-scrollbar-track {
-  background: #1a114e;
-  border-radius: 5px;
+  display: none;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #11142C;
-  border-radius: 14px;
-  border: 3px solid #11142C;
+  display: none;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #0A0D1D;
+  display: none;
 }
 
 /* Chrome, Edge, and Safari */

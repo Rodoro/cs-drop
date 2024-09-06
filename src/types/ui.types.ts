@@ -20,3 +20,10 @@ export interface IBathe {
     title: string;
     lootCases: ICase[]
 }
+
+export interface IItemMathRating {
+    number: number;
+    title: string;
+    value?: number;
+    balance?: number;
+}

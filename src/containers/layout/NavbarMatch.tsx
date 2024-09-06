@@ -49,6 +49,7 @@ const NavbarMatch = () => {
             </div>
             <div className="flex xl:hidden w-full justify-between items-center">
                 <SelectPages
+                    url={pathname}
                     items={[
                         { value: '/match', div: <><IoFootballOutline className="text-[26px]" />All matches</> },
                         { value: '/match/rating', div: <><TbAwardFilled className="text-[26px]" />Rating</> },

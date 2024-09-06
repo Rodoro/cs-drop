@@ -5,3 +5,7 @@
         linear-gradient(170deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0)) border-box,
         linear-gradient(170deg, rgba(30, 33, 84, 1), rgba(30, 33, 84, 1)) border-box;
 }
+
+.selecttop[data-ison="true"] {
+    background-color: wheat;
+}

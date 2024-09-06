@@ -5,7 +5,7 @@ import { SelectTop } from './interface/Select'
 import { useTranslation } from '@/hook/useLanguageStore'
 
 const LiveDrops = () => {
-    const [valueLiveDrop, setValueLiveDrop] = useState("all");
+    const [valueLiveDrop, setValueLiveDrop] = useState(0);
     const { getTranslation } = useTranslation();
     return (
         <div>
