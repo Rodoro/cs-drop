@@ -9,7 +9,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         return (
             <button
                 ref={ref} 
-                className="max-w-[203px] min-h-[57px] rounded-2xl text-[#AABCF9] default:text-[#AABCF9]
+                className="flex items-center max-w-[203px] min-h-[57px] rounded-2xl text-[#AABCF9] default:text-[#AABCF9]
                     hover:text-[#D0DBFF] hover:bg-[#22276E] 
                     hover:border-[1.5px] hover:border-[#FFFFFF26] 
                     active:bg-[#7E50FF] active:text-[#FFFFFF] 
