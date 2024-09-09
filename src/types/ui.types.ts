@@ -27,3 +27,16 @@ export interface IItemMathRating {
     value?: number;
     balance?: number;
 }
+
+export interface IItemMathCard {
+    time: string;
+    teams: ITeameMath[];
+    isLive: boolean;
+    current: string;
+    yourBid: string;
+}
+
+export interface ITeameMath {
+    name: string;
+    iconUrl: string;
+}

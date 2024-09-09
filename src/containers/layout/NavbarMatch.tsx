@@ -61,7 +61,7 @@ const NavbarMatch = () => {
                     <span className="opacity-50 text-[12px]">Overall in pool</span>
                     <span>
                         <span
-                            className={"text-[18px] font-bold " + style.textGradient}
+                            className={"text-[18px] font-bold textRGBGradient"}
                         >12,425,832</span> <span className="font-bold">$</span>
                         {/* TODO:Откуда и куда это значение */}
                     </span>
