@@ -1,0 +1,26 @@
+.button {
+    padding: 13px 69px 13px 69px;
+    border-radius: 16px;
+    background: rgba(17, 22, 46, 0.3);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.25);
+}
+
+.button::before {
+    content: "";
+    position: absolute;
+    z-index: -10;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    border-radius: 16px;
+    padding: 2px;
+    background: linear-gradient(150deg, #1FA1FF, #6A12FA, #B8A6FF);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+}

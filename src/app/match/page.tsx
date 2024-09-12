@@ -1,9 +1,22 @@
 'use client'
+import Poster from "@/components/common/Poster"
 import { SelectTop } from "@/components/interface/Select"
 import { ItemCardMatch } from "@/containers/page/match/Item"
 import { IItemMathCard } from "@/types/ui.types"
+import { motion } from "framer-motion"
 import { useState } from "react"
 import { TbLayout2Filled } from "react-icons/tb"
+
+const variants = {
+    hidden: { opacity: 0, y: 50 },
+    show: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.4,
+        }
+    },
+}
 
 const matchs: IItemMathCard[] = [
     { time: "Apr. 15 - 23:00", teams: [{ name: '9 Pandas', iconUrl: '/img/example/panda.png' }, { name: 'Guild Esports', iconUrl: '/img/example/esports.png' }], isLive: false, current: '125,8', yourBid: "0" },
@@ -19,6 +32,7 @@ const matchs: IItemMathCard[] = [
 
 const MatchPage = () => {
     const [rating, setRating] = useState(0)
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
     return (
         <main>
@@ -31,15 +45,19 @@ const MatchPage = () => {
                 <SelectTop value={rating} setValue={setRating} />
                 {/* TODO: Фильтры */}
             </div>
-            <div className="grid grid-cols-4 h-full">
-                <ul className="col-span-3 h-full space-y-7">
+            <div className="grid grid-cols-3 lg:grid-cols-4 min-h-full">
+                <motion.ul initial='hidden' animate='show' variants={variants} className="col-span-3 flex flex-wrap h-max justify-around lg:justify-center gap-5 min-[1700px]:gap-x-16 min-[1700px]:gap-y-9">
                     {matchs.map((item, index) => {
-                        return <ItemCardMatch item={item} key={index} />
+                        return <ItemCardMatch
+                            item={item}
+                            key={index}
+                            scale={!hoveredIndex ? null : hoveredIndex !== null && hoveredIndex !== index + 1}
+                            onMouseEnter={() => setHoveredIndex(index + 1)}
+                            onMouseLeave={() => setHoveredIndex(null)}
+                        />
                     })}
-                </ul>
-                <div>
-                    Poster
-                </div>
+                </motion.ul>
+                <Poster className="hidden lg:flex" />
             </div>
         </main>
     )

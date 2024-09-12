@@ -1,16 +1,45 @@
 import { IItemMathCard } from "@/types/ui.types"
+import { motion } from "framer-motion"
 import Image from 'next/image'
+import { useEffect } from "react"
 import { FaRegCalendar } from "react-icons/fa"
 
 
-const ItemCardMatch = ({ item }: { item: IItemMathCard }) => {
+
+const ItemCardMatch = ({ item, scale, onMouseEnter, onMouseLeave, ...props }: { item: IItemMathCard, scale?: boolean | null, onMouseEnter: () => void, onMouseLeave: () => void }) => {
+    const itemVar = {
+        hidden: {
+            opacity: 0,
+            y: 100
+        },
+        show: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.3,
+                opacity: {
+                    duration: 0.3
+                }
+            }
+        }
+    }
+
     return (
-        <li
-            className="flex relative flex-col justify-between items-center max-w-[322px] max-h-[242px] w-full h-full rounded-[20px]"
+        <motion.li
+            // variants={itemVar}
+
+            className="cursor-pointer flex relative flex-col justify-between items-center max-w-[322px] h-[242px] w-full rounded-[20px]"
             style={{
+                zIndex: scale ? 0 : 1,
+                opacity: scale ? 0.15 : 1,
+                transform: scale === null ? 'scale(1)' : scale ? 'scale(1)' : 'scale(1.25)',
+                transition: 'transform 0.3s, opacity 0.3s',
                 border: '2px solid transparent',
                 background: 'linear-gradient(150deg,#1C2342,#1C2342) padding-box, linear-gradient(160deg,rgba(57,59,91,1),rgba(27,26,74,1)) border-box'
             }}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            {...props}
         >
             <Image src='/img/smoke_matche.png' alt='' width={379} height={200} className="absolute mix-blend-color-dodge bottom-0" />
             {item.isLive &&
@@ -92,7 +121,7 @@ const ItemCardMatch = ({ item }: { item: IItemMathCard }) => {
                     </div>
                 }
             </div>
-        </li>
+        </motion.li>
     )
 }
 
