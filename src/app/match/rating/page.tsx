@@ -31,7 +31,7 @@ const itemVar = {
   }
 }
 
-const page = () => {
+const MatchRatingPage = () => {
   const [rating, setRating] = useState(0)
 
   const ItemComponent = ({ isActive, item }: { isActive?: boolean, item?: IItemMathRating }) => {
@@ -101,4 +101,4 @@ const page = () => {
   )
 }
 
-export default page
+export default MatchRatingPage
