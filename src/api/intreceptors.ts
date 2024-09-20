@@ -4,7 +4,7 @@ import axios, { CreateAxiosDefaults } from "axios";
 
 const options: CreateAxiosDefaults = {
     // TODO:Вынести в env
-    baseURL: 'http://95.165.94.222:8090/api/v1',
+    baseURL: 'https://api.cs.rodoro.ru/api/v1',
     headers: {
         'Content-Type': 'application/json'
     },

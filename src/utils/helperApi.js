@@ -3,7 +3,7 @@ import axios from "axios";
 import { cookies } from 'next/headers'
 
 export const api = axios.create({
-    baseURL: 'http://95.165.94.222:8090'
+    baseURL: 'http://api.cs.rodoro.ru'
 })
 
 export const authSteam = async () => {

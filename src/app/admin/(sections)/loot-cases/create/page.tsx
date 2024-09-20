@@ -27,9 +27,9 @@ const LootCreate = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await axiosWithAuthAdmin.get('http://95.165.94.222:8090/api/v1/admin/games/get-all');
+            const res = await axiosWithAuthAdmin.get('/admin/games/get-all');
             setGames(res.data)
-            const res2 = await axiosWithAuthAdmin.get('http://95.165.94.222:8090/api/v1/admin/batches/get-all');
+            const res2 = await axiosWithAuthAdmin.get('/admin/batches/get-all');
             setBatches(res2.data)
             setLoading(false)
         }
