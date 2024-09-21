@@ -2,21 +2,26 @@ import React, { useState, ForwardedRef } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
 
-const ChooseRows = React.forwardRef<HTMLButtonElement>((props, ref: ForwardedRef<HTMLButtonElement>) => {
+interface ChooseRowsProps {
+    onChange: (value: number) => void;
+}
+
+
+const ChooseRows = React.forwardRef<HTMLButtonElement, ChooseRowsProps>((props, ref: ForwardedRef<HTMLButtonElement>) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedValue, setSelectedValue] = useState(10);
+    const [selectedValue, setSelectedValue] = useState(5);
 
     const toggleDropdown = () => {
-        setIsOpen((prev) => !prev);
+        setIsOpen(prev => !prev);
     };
 
     const handleSelect = (value: number) => {
         setSelectedValue(value);
-        setIsOpen(false); 
+        props.onChange(value); 
     };
 
     return (
-        <div className="relative inline-block text-left">
+        <div className="relative inline-block">
             <div>
                 <button
                     ref={ref}
@@ -29,15 +34,15 @@ const ChooseRows = React.forwardRef<HTMLButtonElement>((props, ref: ForwardedRef
             </div>
 
             {isOpen && (
-                <div className="absolute right-0 z-10 mt-2 w-56 rounded-md shadow-lg bg-[#22276E99] ring-1 ring-black ring-opacity-5">
-                    <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                        <a href="#" onClick={() => handleSelect(5)} className="block text-white hover:bg-[#22276E]" role="menuitem">
+                <div className="absolute right-0 z-10 mt-2 w-[47px] rounded-md shadow-lg bg-[#22276E99] ring-1 ring-black ring-opacity-5">
+                    <div className="py-1" role="menu" aria-orientation="vertical">
+                        <a href="#" onClick={() => handleSelect(5)} className="block text-white hover:bg-[#22276E] px-[19px]" role="menuitem">
                             5
                         </a>
-                        <a href="#" onClick={() => handleSelect(10)} className="block text-white hover:bg-[#22276E]" role="menuitem">
+                        <a href="#" onClick={() => handleSelect(10)} className="block text-white hover:bg-[#22276E]  px-[15px]" role="menuitem">
                             10
                         </a>
-                        <a href="#" onClick={() => handleSelect(20)} className="block text-white hover:bg-[#22276E]" role="menuitem">
+                        <a href="#" onClick={() => handleSelect(20)} className="block text-white hover:bg-[#22276E]  px-[15px]" role="menuitem">
                             20
                         </a>
                     </div>
@@ -47,5 +52,4 @@ const ChooseRows = React.forwardRef<HTMLButtonElement>((props, ref: ForwardedRef
     );
 });
 
-
-export default ChooseRows;
+export default ChooseRows 
