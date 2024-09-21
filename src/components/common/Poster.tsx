@@ -28,4 +28,26 @@ const Poster = ({ className }: { className?: string }) => {
     )
 }
 
-export default Poster
+const PosterMobile = ({ className }: { className?: string }) => {
+    return (
+        <div
+            className={className + " w-full h-[143px] rounded-2xl relative"}
+            style={{
+                background: 'linear-gradient(150deg,#1D2565,#5030CE,#7454F6)'
+            }}
+        >
+            <Image src='/img/interface/poster/smoke2.png' alt='smoke' fill className="object-contain object-right-bottom absolute mix-blend-color-dodge bottom-0 right-0" />
+            <Image src={"/img/interface/poster/items2.png"} alt={"tg-logo"} fill className="object-contain object-right-bottom rounded-br-[10px]" />
+            <div className="ml-[22px] mt-[11px] text-[18px] font-bold">
+                Promo code<br /> in our <span className="textRGBGradient">Telegram</span><br /> channel
+            </div>
+            <Link href={"/"} className={"absolute bottom-3 left-[22px] transition-all hover:scale-105 active:scale-95 " + style.buttonMob}>
+                <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1.55602 5.35159L11.7447 5.35159M11.7447 5.35159L7.28715 0.894043M11.7447 5.35159L7.28715 9.80914" stroke="white" strokeWidth="1.27358" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+            </Link>
+        </div>
+    )
+}
+
+export { Poster, PosterMobile } 
