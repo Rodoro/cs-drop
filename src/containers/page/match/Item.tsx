@@ -1,4 +1,4 @@
-import { IItemMathCard } from "@/types/ui.types"
+import { IItemMathCard, IItemMathPrev } from "@/types/ui.types"
 import { motion } from "framer-motion"
 import Image from 'next/image'
 import { useEffect } from "react"
@@ -32,7 +32,7 @@ const ItemCardMatch = ({ item, scale, onMouseEnter, onMouseLeave, ...props }: { 
             style={{
                 zIndex: scale ? 0 : 1,
                 opacity: scale ? 0.15 : 1,
-                transform: scale === null ? 'scale(1)' : scale ? 'scale(1)' : 'scale(1.25)',
+                transform: scale === null ? 'scale(1)' : scale ? 'scale(1)' : 'scale(1.2)',
                 transition: 'transform 0.3s, opacity 0.3s',
                 border: '2px solid transparent',
                 background: 'linear-gradient(150deg,#1C2342,#1C2342) padding-box, linear-gradient(160deg,rgba(57,59,91,1),rgba(27,26,74,1)) border-box'
@@ -125,4 +125,102 @@ const ItemCardMatch = ({ item, scale, onMouseEnter, onMouseLeave, ...props }: { 
     )
 }
 
-export { ItemCardMatch }
+const ItemCardMatchPrew = ({ item, scale, onMouseEnter, onMouseLeave, ...props }: { item: IItemMathPrev, scale?: boolean | null, onMouseEnter: () => void, onMouseLeave: () => void }) => {
+    return (
+        <motion.li
+            className="cursor-pointer flex relative flex-col justify-between items-center max-w-[322px] h-[242px] w-full rounded-[20px]"
+            style={{
+                zIndex: scale ? 0 : 1,
+                opacity: scale ? 0.15 : 1,
+                transform: scale === null ? 'scale(1)' : scale ? 'scale(1)' : 'scale(1.2)',
+                transition: 'transform 0.3s, opacity 0.3s',
+                border: '2px solid transparent',
+                background: 'linear-gradient(150deg,#1C2342,#1C2342) padding-box, linear-gradient(160deg,rgba(57,59,91,1),rgba(27,26,74,1)) border-box'
+            }}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            {...props}
+        >
+            <Image src='/img/smoke_matche.png' alt='' width={379} height={200} className="absolute mix-blend-color-dodge bottom-0" />
+            <div className="mt-4 flex items-center justify-center text-xs gap-2">
+                <FaRegCalendar className="text-[16px] mb-0.5" />
+                {item.time}
+            </div>
+            <div className="flex z-[2] text-xs items-center w-full">
+                <div className="flex-1 flex flex-col gap-2 items-center justify-center">
+                    <div
+                        style={{
+                            border: '2px solid transparent',
+                            background: 'linear-gradient(150deg,#263056,#263056) padding-box, linear-gradient(130deg,#52576C,#2B2F60) border-box'
+                        }}
+                        className="p-3 rounded-full"
+                    >
+                        <Image
+                            className="object-contain max-w-[40px] max-h-[40px]"
+                            src={item.teams[0].iconUrl}
+                            alt={item.teams[0].name}
+                            width={'40'}
+                            height={'40'}
+                        />
+                    </div>
+                    {item.teams[0].name}
+                    <div className="text-[23px] font-bold mb-2">
+                        {item.teams[0].count}
+                    </div>
+                </div>
+                <div className="text-[27px] font-bold">VS</div>
+                <div className="flex-1 flex flex-col gap-2 items-center justify-center">
+                    <div
+                        style={{
+                            border: '2px solid transparent',
+                            background: 'linear-gradient(150deg,#263056,#263056) padding-box, linear-gradient(130deg,#52576C,#2B2F60) border-box'
+                        }}
+                        className="p-3 rounded-full"
+                    >
+                        <Image
+                            className="object-contain max-w-[40px] max-h-[40px]"
+                            src={item.teams[1].iconUrl}
+                            alt={item.teams[1].name}
+                            width={'40'}
+                            height={'40'}
+                        />
+                    </div>
+                    {item.teams[1].name}
+                    <div className="text-[23px] font-bold mb-2">
+                        {item.teams[1].count}
+                    </div>
+                </div>
+            </div>
+            <div
+                style={{
+                    filter: 'drop-shadow(0 -20px 70px #472DE5)',
+                    border: '2px solid transparent',
+                    background: 'linear-gradient(150deg,#1F1954,#1F1954) padding-box, linear-gradient(90deg,#1FA1FF,#6A12FA,#B8A6FF) border-box'
+                }}
+                className="max-h-[79px] w-[322px] flex-1 rounded-[20px] flex items-center justify-center gap-9 z-[1]"
+            >
+                <div className="flex flex-col items-center justify-center text-[10px]">
+                    <span className="opacity-50">Currently in pool</span>
+                    <span className="text-xs mt-1.5 opacity-100"><span className="text-[23px] font-extrabold textRGBGradient">{item.current}</span> $</span>
+                </div>
+                {item.yourBid != '0' &&
+                    <div className="flex flex-col items-center justify-center">
+                        <span className="opacity-50 text-[10px]">Your bid</span>
+                        <div
+                            style={{
+                                border: '2px solid transparent',
+                                background: 'linear-gradient(150deg,#283053,#283053) padding-box, linear-gradient(90deg,#497D52,#2D3A53) border-box'
+                            }}
+                            className="text-[#7FFF52] flex items-center justify-center gap-2 px-3 py-0.5 rounded-lg"
+                        >
+                            <div className="h-2 w-2 bg-[#7FFF52] rounded-full" />
+                            <span className="font-bold">{item.yourBid}<span className="text-[10px]">$</span></span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </motion.li>
+    )
+}
+
+export { ItemCardMatch, ItemCardMatchPrew }

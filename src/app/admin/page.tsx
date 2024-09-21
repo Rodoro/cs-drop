@@ -7,7 +7,7 @@ import { BsListNested } from "react-icons/bs";
 
 const page = () => {
     return (
-        <div className="flex flex-row xl:justify-end m-6 mt-20 md:mt-8">
+        <div className="flex flex-row xl:justify-end  ">
             <div className = "flex justify-end">
                 <Button className='max-md:hidden' onClick={() => { authService.logout(); window.location.reload(); }}>
                     <p className='mr-[10px]'>Exit</p>

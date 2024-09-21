@@ -1,16 +1,14 @@
 import React from "react";
 import { IoMdSettings } from "react-icons/io";
+import Link from 'next/link'
 
 
-type SettingProps = {
-    onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-};
 
-const Setting: React.FC<SettingProps> = ({ onClick }) => {
+const Setting: React.FC = () => {
     return (
-        <button onClick={onClick}>
+        <Link href="/">
             <IoMdSettings className=" text-[20px]" />
-        </button>
+        </Link>
     );
 }
 

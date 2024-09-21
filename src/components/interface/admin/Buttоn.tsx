@@ -14,7 +14,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     active:text-[#FFFFFF] 
                     active:shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)]
                     disabled:text-[#AABCF9] ${className} 
-                    transition-all duration-300 ease-in-out`} // Добавлено свойство transition
+                    transition-all duration-300 ease-in-out`} 
                 {...props}
             >
                 {children}

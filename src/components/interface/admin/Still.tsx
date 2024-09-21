@@ -17,7 +17,7 @@ const Still: React.FC<Settingprops> = ({ onClick1, onClick2 }) => {
             setTimeout(() => {
                 setIsOpen(false);
                 setIsExiting(false);
-            }, 300); // Длительность должна совпадать с `duration-300`
+            }, 300); 
         } else {
             setIsOpen(true);
         }
@@ -31,16 +31,12 @@ const Still: React.FC<Settingprops> = ({ onClick1, onClick2 }) => {
             {isOpen && (
                 <div 
                     className={`shadow-[4px_4px_34px_0_rgba(139,50,252,0.2) 
-                                bg-[#171741] w-[148px] h-[99px] 
+                                bg-[#22276E33] w-[148px] h-[99px] 
                                 absolute left-0 top-full z-50 rounded-[18px] 
                                 border border-[#FFFFFF26] 
                                 transition-all 
                                 duration-300 py-[17px] px-[10px]
                                 ${isExiting ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}
-                    style={{
-                        border:'2px solid transparent',
-                        background: 'linear-gradient(to right, #2B2162, #171741) padding-box, linear-gradient(to right, #FFFFFF26, #FFFFFF01) border-box',
-                    }}
                 >
                     <div>
                         {/* //FIX: Больше гибкости окну. Сделать где нужно кнопки, где нужно ссылки */}

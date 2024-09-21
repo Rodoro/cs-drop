@@ -218,8 +218,8 @@ const LootCreate = (checked: boolean) => {
                 </tbody>
             </table>
             <div className="mt-4 flex flex-row justify-end">
-                <Button onClick={() => router.push("/admin/loot-cases")}>Cancel</Button>
-                <Button onClick={() => handleSubmit()} className="bg-[#7E50FF] ml-[25px] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] justify-center px-[30px]">Create</Button>
+                <Button onClick={() => router.push("/admin/loot-cases")} className="h-[45px]">Cancel</Button>
+                <Button onClick={() => handleSubmit()} className="bg-[#7E50FF] ml-[25px] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] justify-center px-[30px] h-[45px]">Create</Button>
             </div>
         </div>
     )

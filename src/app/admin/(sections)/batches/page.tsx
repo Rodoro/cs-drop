@@ -33,16 +33,27 @@ const BatchesPage = () => {
     fetchData();
   }, []);
 
-  // Если массив batches не пуст, берем первый элемент для title и sort
+  const deleteBatche = React.useCallback(
+    async (id: number) => {
+      await axiosWithAuthAdmin.get('/admin/batches/delete/' + id).then(() => {
+        setBatches((prevRows) => prevRows.filter((row) => row.id !== id));
+      });
+    },
+    [],
+  );
+  const handleDelete = (id: number) => {
+    deleteBatche(id);
+};
+
   const defaultTitle = batches.length > 0 ? batches[0].title : '';
   const defaultSort = batches.length > 0 ? batches[0].sort : '';
+  const defaultGame = games.length > 0 ? games[0].name : '';
 
-  // Объединяем данные
-  const finalData = games.map(game => ({
+  const finalData = batches.map(game => ({
     id: game.id,
-    name: game.name,
-    title: defaultTitle,  // Используем title из первого элемента batches
-    sort: defaultSort,    // Используем sort из первого элемента batches
+    name: defaultGame,
+    title: defaultTitle, 
+    sort: defaultSort,    
   }));
 
   const columns = [
@@ -53,20 +64,21 @@ const BatchesPage = () => {
   ];
 
   return (
-    <div style={{ height: games.length === 0 ? 400 : undefined }} className="mt-20 mr-8 ml-8 md:ml-60 lg:ml-[270px] max-md:ml-[0px] md:mt-8 mb-8">
-      <div className="md:flex md:justify-between max-md:w-full">
-        <Button2 className="px-2 mb-6 max-md:w-full" onClick={() => router.push("/admin/batches/create")}>+ Create Batch</Button2>
+    <div style={{ height: games.length === 0 ? 400 : undefined }} className="mt-20 mr-8 ml-8 md:ml-60 lg:ml-[150px] max-md:ml-[0px] md:mt-8 mb-8 ">
+      <div className="md:flex md:justify-between max-md:w-full mb-6">
+        <Button2 className="px-2  md:w-[177px]" onClick={() => router.push("/admin/batches/create")}>+ Create Batch</Button2>
         <Button className='max-md:hidden' onClick={() => { authService.logout(); window.location.reload(); }}>
           <p className='mr-[10px]'>Exit</p>
           <FaDoorOpen className='' />
         </Button>
       </div>
       <DataGrid
-        data={finalData}  // Используем финальный массив
+        data={finalData}  
         columns={columns}
         showDeleteButton={true} 
         showSettingsButton={true}
         showStillButton={true}
+        onDelete={handleDelete}
       />
     </div>
   );

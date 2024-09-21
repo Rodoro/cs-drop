@@ -25,7 +25,12 @@ interface DataGridProps<T> {
     showDeleteButton?: boolean; 
     showSettingsButton?: boolean; 
     showStillButton?: boolean;
+    onDelete?: (id: number) => void;
+    onSettings?: (id: string | number) => void;
+    onStillAction1?: (id: string | number) => void;
+    onStillAction2?: (id: number) => void;
 }
+
 
 // interface Column<T> {
 //     key: keyof T | string; 
@@ -33,7 +38,17 @@ interface DataGridProps<T> {
 //     render?: (row: T) => React.ReactNode; 
 // }
 
-const DataGrid = <T extends DataRow>({ data, columns, showDeleteButton = false, showStillButton = false, showSettingsButton = false }: DataGridProps<T>) => {
+const DataGrid = <T extends DataRow>({
+    data,
+    columns,
+    showDeleteButton = false,
+    showStillButton = false,
+    showSettingsButton = false,
+    onDelete,
+    onSettings,
+    onStillAction1,
+    onStillAction2
+}: DataGridProps<T>) => {
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: string } | null>(null);
     const [selectedRows, setSelectedRows] = useState(new Set());
     const [rowsPerPage, setRowsPerPage] = useState<number>(5);
@@ -106,23 +121,22 @@ const DataGrid = <T extends DataRow>({ data, columns, showDeleteButton = false, 
                     gridTemplateColumns: `repeat(${columns.length + 2}, 1fr)`,
                     gridTemplateRows: `repeat(${displayedData.length + 1}, 1fr)`,
                 }}>
-                    <div className={`h-[60px] flex items-center pl-[12px] mb-[10px] rounded-l-[15px] bg-[#1B1E4F] border-l-[1px] border-[#3A3269] border-b-[1px] border-t-[1px]`}>
+                    <div className={`h-[60px] flex items-center  pl-[12px] mb-[10px] rounded-l-[15px] bg-[#1B1E4F] border-l-[1px] border-[#3A3269] border-b-[1px] border-t-[1px]`}>
                         <Select onChange={handleSelectAll} />
                     </div>
                     {columns.map(({ key, label }, colIndex) => (
                         <div
                             key={key.toString()}
-                            className={`h-[60px] flex items-center mb-[10px] bg-[#1B1E4F] border-b-[1px] border-t-[1px] border-[#3A3269] ${colIndex === columns.length - 1 ? ' border-b-[1px] border-t-[1px]' : ''}`}
+                            className={`h-[60px]   flex items-center mb-[10px] bg-[#1B1E4F] border-b-[1px] border-t-[1px] border-[#3A3269] ${colIndex === columns.length - 1 ? ' border-b-[1px] border-t-[1px]' : ''}`}
                         >
                             {label}
                         </div>
                     ))}
                     <div className={`h-[60px] flex items-center mb-[10px] bg-[#1B1E4F] border-b-[1px] border-t-[1px] border-[#3A3269] rounded-r-[15px]`}>
                     </div>
-
-                    {displayedData.map((row, rowIndex) => (
+                    {displayedData.map((row) => (
                         <React.Fragment key={row.id}>
-                            <div className={`h-[60px] flex items-center mb-[10px] pl-[12px] rounded-l-[15px] border-[#3A3269] ${selectedRows.has(row.id) ? 'bg-[#7E50FF33]' : ''}`}>
+                            <div className={`h-[60px] flex items-center mb-[10px] pl-[12px] rounded-l-[15px] border-[#3A3269]  ${selectedRows.has(row.id) ? 'bg-[#7E50FF33]' : ''}`}>
                                 <Select
                                     checked={selectedRows.has(row.id)}
                                     onChange={() => handleSelectRow(row.id)}
@@ -134,7 +148,7 @@ const DataGrid = <T extends DataRow>({ data, columns, showDeleteButton = false, 
                                     className={`h-[60px] flex items-center mb-[10px]  ${selectedRows.has(row.id) ? 'bg-[#7E50FF33]' : ''}`}
                                 >
                                     {key === 'imageUrl' ? (
-                                        <img
+                                        <img 
                                             src={row[key].replace(/ /g, '%20')}
                                             alt={row.title}
                                             style={{ width: '50px', height: '50px', objectFit: 'cover' }}
@@ -157,11 +171,19 @@ const DataGrid = <T extends DataRow>({ data, columns, showDeleteButton = false, 
                                     )}
                                 </div>
                             ))}
-
-                            <div className={`h-[60px] flex items-center mb-[10px] rounded-r-[15px] ${selectedRows.has(row.id) ? 'bg-[#7E50FF33]' : ''}`}>
-                                {showDeleteButton && <Delete onClick={() => console.log('Удалить', row.id)} />}
-                                {showSettingsButton && <Setting onClick={() => console.log('Настройка действие 1', row.id)} />}
-                                {showStillButton && <Still onClick1={() => console.log('Настройка действие 1', row.id)} onClick2={() => console.log('Настройка действие 2', row.id)} />}
+                            <div className={`h-[60px] flex items-center mb-[10px] rounded-r-[15px]  ${selectedRows.has(row.id) ? 'bg-[#7E50FF33]' : ''}`}>
+                            {showDeleteButton && onDelete && (
+                            <Delete onClick={() => onDelete(row.id)} />
+                            )}
+                            {showSettingsButton && onSettings && (
+                                <Setting />
+                            )}
+                            {showStillButton && (
+                                <Still 
+                                    onClick1={() => onStillAction1?.(row.id)} 
+                                    onClick2={() => onStillAction2?.(row.id)} 
+                                />
+                            )}
                             </div>
                         </React.Fragment>
                     ))}

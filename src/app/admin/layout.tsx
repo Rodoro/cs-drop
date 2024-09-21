@@ -2,11 +2,10 @@
 import Navbar from '@/containers/admin/Navbar'
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState} from 'react'
-import Button from '@/components/interface/Button'
-import { authService } from '@/services/auth/auth.services';
-import { FaDoorOpen } from "react-icons/fa6";
+import Logo from '@/components/icons/Logo';
 import { RxCross2 } from "react-icons/rx"
 import { BsListNested } from "react-icons/bs";
+
 
 export default function DashboardLayout({
     children,
@@ -42,11 +41,10 @@ export default function DashboardLayout({
                     {isNavVisible && <Navbar isVisible={isNavVisible} onClose={toggleNavbar} className='max-lg:w-[240px] items-end' />}
                 </div>
                 <div>
-                    <div className="flex flex-row md:justify-end mt-[40px]">
+                    <div className="flex flex-row md:justify-end ">
                         <div className='flex justify-between w-full'>
                             <div className='inline-block md:hidden'>
-                                <img src='/img/interface/nav/logo.png' alt="Логотип" width={'39px'} height={'41px'} />
-                                {/* //FIX: В отдельный компонент и использовать от next */}
+                                <Logo/>
                             </div>
                             <div className='inline-block'>
                                 <button onClick={toggleNavbar} className={`transition-transform duration-300`}>

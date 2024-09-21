@@ -40,3 +40,17 @@ export interface ITeameMath {
     name: string;
     iconUrl: string;
 }
+
+export interface IItemMathPrev {
+    time: string;
+    teams: ITeameMathPrev[];
+    isLive: boolean;
+    current: string;
+    yourBid: string;
+}
+
+export interface ITeameMathPrev {
+    name: string;
+    iconUrl: string;
+    count: number;
+}
