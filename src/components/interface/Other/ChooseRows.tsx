@@ -52,4 +52,6 @@ const ChooseRows = React.forwardRef<HTMLButtonElement, ChooseRowsProps>((props, 
     );
 });
 
+ChooseRows.displayName = 'ChooseRows'; 
+
 export default ChooseRows 
