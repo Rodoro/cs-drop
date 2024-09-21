@@ -102,11 +102,13 @@ const Navbar = () => {
               <div className='flex flex-row gap-7 items-center'>
                 <SelectLanguage />
                 {user ?
-                  <Profile images={user.image} /> :
+                  <>
+                    <Profile images={user.image} />
+                    <SettingsButton />
+                    <EarnMoneyButton />
+                  </> :
                   <AuthButton />
                 }
-                <SettingsButton />
-                <EarnMoneyButton />
               </div>
             </div>
           </nav>
