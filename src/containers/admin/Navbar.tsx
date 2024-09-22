@@ -1,18 +1,16 @@
 "use client"
 import Link from 'next/link'
-import AppBar from '@mui/material/AppBar';
 import React from 'react'
 import Image from 'next/image'
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Box from '@mui/material/Box';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
+import Button from '@/components/interface/admin/Buttоn';
 import { usePathname } from 'next/navigation'
+import { GoHomeFill } from "react-icons/go";
+import { IoIosDocument } from "react-icons/io";
+import { FaGamepad } from "react-icons/fa6";
+import { HiMiniBriefcase } from "react-icons/hi2";
+import { GiTrophyCup } from "react-icons/gi";
+import { BiSupport } from "react-icons/bi";
+import { FaUsers } from "react-icons/fa";
 
 const drawerWidth = 240;
 
@@ -37,128 +35,73 @@ const Navbar = ({ ...props }) => {
         }
     };
 
-    const drawer = (
-        <Box>
-            <List sx={{ paddingLeft: 1 }}>
-                <ListItem>
-                    <ListItemButton component={Link} href="/">
-                        <Image
-                            src="/img/interface/nav/logo+text.png"
-                            alt="Логотип"
-                            width={180}
-                            height={40}
-                        />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem>
-                    <ListItemButton component={Link} href="/admin" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }, ...(pathname === '/admin' && { background: 'rgb(59,130,246)', borderRadius: '15px' })}}>
-                        <ListItemText primary={'Main'} />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem>
-                    <ListItemButton component={Link} href="/admin/batches" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }, ...(pathname === '/admin/batches' && { background: 'rgb(59,130,246)', borderRadius: '15px' })}}>
-                        <ListItemText primary={'Batches'} />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem>
-                    <ListItemButton component={Link} href="/admin/games" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }, ...(pathname === '/admin/games' && { background: 'rgb(59,130,246)', borderRadius: '15px' })}}>
-                        <ListItemText primary={'Games'} />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem>
-                    <ListItemButton component={Link} href="/admin/items" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }, ...(pathname === '/admin/items' && { background: 'rgb(59,130,246)', borderRadius: '15px' })}}>
-                        <ListItemText primary={'Items'} />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem>
-                    <ListItemButton component={Link} href="/admin/loot-cases" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }, ...(pathname === '/admin/loot-cases' && { background: 'rgb(59,130,246)', borderRadius: '15px' })}}>
-                        <ListItemText primary={'Loot cases'} />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem>
-                    <ListItemButton component={Link} href="/admin/staff" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }, ...(pathname === '/admin/staff' && { background: 'rgb(59,130,246)', borderRadius: '15px' })}}>
-                        <ListItemText primary={'Staff'} />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem>
-                    <ListItemButton component={Link} href="/admin/users" sx={{ '&:hover': { background: 'rgb(59,130,246)', borderRadius: '15px' }, ...(pathname === '/admin/users' && { background: 'rgb(59,130,246)', borderRadius: '15px' })}}>
-                        <ListItemText primary={'Users'} />
-                    </ListItemButton>
-                </ListItem>
-            </List>
-        </Box>
-    );
 
     const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
-        <Box>
-            <AppBar
-                position="fixed"
-                sx={{
-                    width: { sm: `calc(100% - ${drawerWidth}px)` },
-                    ml: { sm: `${drawerWidth}px` },
-                }}
-            >
-                <Toolbar sx={{ display: { sm: 'none' } }}>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        edge="start"
-                        onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { sm: 'none' } }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Image
-                        src="/img/interface/nav/logo+text.png"
+        <div className='w-[273px] bg-[#0A0D1D33] h-full fixed left-[0px] top-[0px] px-[40px] py-[35px]'>
+            <div className='mb-[40px]'>
+                <Link href="/">
+                    <Image 
+                        src='/img/interface/nav/logo+text.png' 
                         alt="Логотип"
                         width={180}
-                        height={40}
+                        height={40} 
                     />
-                </Toolbar>
-            </AppBar>
-            <Box
-                component="nav"
-                sx={{
-                    width: { sm: drawerWidth }, flexShrink: { sm: 0 },
-                    '& .MuiDrawer-paper': { background: '#0A0D1D' },
-                    '& .MuiDrawer-paperAnchorDockedLeft': { background: '#0A0D1D', color: '#FFFF' },
-                }}
-                aria-label="mailbox folders"
-            >
-                <Drawer
-                    container={container}
-                    variant="temporary"
-                    open={mobileOpen}
-                    onTransitionEnd={handleDrawerTransitionEnd}
-                    onClose={handleDrawerClose}
-                    ModalProps={{
-                        keepMounted: true, // Better open performance on mobile.
-                    }}
-                    sx={{
-                        display: { xs: 'block', sm: 'none' },
-                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, background: '#0A0D1D', color: '#FFFF' },
-                        '& .MuiDrawer-paperAnchorDockedLeft': { background: '#000' },
-                    }}
-                >
-                    {drawer}
-                </Drawer>
-                <Drawer
-                    variant="permanent"
-                    sx={{
-                        display: { xs: 'none', sm: 'block' },
-                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-                        '& .MuiDrawer-paperAnchorDockedLeft': { background: '#000' },
-                    }}
-                    open
-                >
-                    {drawer}
-                </Drawer>
-            </Box>
-        </Box>
-
-
+                </Link>
+            </div>
+            <div>
+                <div className='mb-[10px]'>
+                    <Link href="/admin">
+                        <Button className={pathname === '/admin' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}>
+                            <GoHomeFill /><p className='ml-[10px]'>Main</p>
+                        </Button>
+                    </Link>
+                </div>
+                <div className='mb-[10px]'>
+                    <Link href="/admin/batches">
+                        <Button className={pathname === '/admin/batches' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}>
+                            <IoIosDocument /><p className='ml-[10px]'>Batches</p>
+                        </Button>
+                    </Link>
+                </div>
+                <div className='mb-[10px]'>
+                    <Link href="/admin/games">
+                        <Button className={pathname === '/admin/games' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}>
+                            <FaGamepad /><p className='ml-[10px]'>Games</p>
+                        </Button>
+                    </Link>
+                </div>
+                <div className='mb-[10px]'>
+                    <Link href="/admin/items">
+                        <Button className={pathname === '/admin/items' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}>
+                            <HiMiniBriefcase /><p className='ml-[10px]'>Items</p>
+                        </Button>
+                    </Link>
+                </div>
+                <div className='mb-[10px]'>
+                    <Link href="/admin/loot-case">
+                        <Button className={pathname === '/admin/loot-case' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}>
+                            <GiTrophyCup /><p className='ml-[10px]'>Loot case</p>
+                        </Button>
+                    </Link>
+                </div>
+                <div className='mb-[10px]'>
+                    <Link href="/admin/staff">
+                        <Button className={pathname === '/admin/staff' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}>
+                            <BiSupport /><p className='ml-[10px]'>Staff</p>
+                        </Button>
+                    </Link>
+                </div>
+                <div className='mb-[10px]'>
+                    <Link href="/admin/users">
+                        <Button className={pathname === '/admin/users' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}>
+                            <FaUsers /><p className='ml-[10px]'>Users</p>
+                        </Button>
+                    </Link>
+                </div>
+            </div>
+        </div>
         // <div className="fixed flex flex-col justify-start top-0 left-0 bottom-0 items-start pt-28 pl-6 pr-6 bg-[#0A0D1D] space-y-6">
         //     <div className="mb-6">
         //         <Link href='/'>

@@ -1,7 +1,7 @@
 "use client"
 import { axiosWithAuthAdmin } from '@/api/intreceptors';
 import ErrorModal from '@/components/common/ErrorModal';
-import Button from '@/components/interface/Button';
+import Button from '@/components/interface/admin/Buttоn';
 import { Game } from '@/types/admin.interface';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
@@ -165,8 +165,8 @@ const CreateBatches = () => {
             </table>
             <div className='flex flex-row justify-end space-x-3 mt-4'>
                 <button onClick={() => router.push("/admin/batches")}>Cancel</button>
-                <Button onClick={() => handleSubmitAndMain()}>Create</Button>
-                <Button onClick={handleSubmitAndNew}>Create and Open New</Button>
+                <Button className='bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] justify-center w-[115px]' onClick={() => handleSubmitAndMain()}>Create</Button>
+                <Button className='bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] justify-center w-[233px]' onClick={handleSubmitAndNew}>Create and Open New</Button>
             </div>
         </div>
     )
