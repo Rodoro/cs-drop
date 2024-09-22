@@ -1,5 +1,6 @@
 "use client"
 import Navbar from '@/containers/admin/Navbar'
+//import Navbar from '@/containers/Navbar';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 
@@ -20,6 +21,8 @@ export default function DashboardLayout({
 
     return (
         <section>
+            <div className = 'w-[511px] h-[511px] rounded-full bg-[#821FFF] absolute z-[-1] top-[585px] left-[1181px] blur-[130px] opacity-25'></div>
+            <div className = 'w-[511px] h-[511px] rounded-full bg-[#C51FFF] absolute z-[-1] top-[-114px] left-[-76px] blur-[130px] opacity-25'></div>
             <Navbar />
             {children}
         </section >

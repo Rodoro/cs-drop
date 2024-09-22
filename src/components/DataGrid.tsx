@@ -1,8 +1,8 @@
 import React, { useState} from 'react';
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
-import Select from './interface/Other/Select';
-import ChooseRows  from  './interface/Other/ChooseRows'
+import Select from './interface/admin/Select';
+import ChooseRows  from  './interface/admin/ChooseRows'
 
 
 type DataRow = { 

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import { LootCases } from '@/types/admin.interface';
-import Button from '@/components/interface/Button';
+import Button from '@/components/interface/admin/Button2';
 import { useRouter } from 'next/navigation';
 import {
     GridActionsCellItem,
@@ -166,7 +166,7 @@ const LootsPage = () => {
 
     return (
         <Box style={{ height: loots.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
-            <Button className="px-2 mb-6" onClick={() => router.push("/admin/loot-cases/create")}>Create Loot Cases</Button>
+            <Button className="px-2 mb-6 w-[177px] h-[56px]" onClick={() => router.push("/admin/loot-cases/create")}>+ Create Loot Cases</Button>
             <DataGrid
                 rows={loots}
                 columns={columns}

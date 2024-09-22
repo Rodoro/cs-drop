@@ -15,7 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SettingsIcon from '@mui/icons-material/Settings';
-import Button from '@/components/interface/Button';
+import Button from '@/components/interface/admin/Button2';
 import { useRouter } from 'next/navigation';
 import { axiosWithAuthAdmin } from '@/api/intreceptors';
 
@@ -150,7 +150,7 @@ const BatchesPage = () => {
 
   return (
     <Box style={{ height: batches.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
-      <Button className="px-2 mb-6" onClick={() => router.push("/admin/batches/create")}>Create Batche</Button>
+      <Button className="px-2 mb-6 w-[177px] h-[56px]" onClick={() => router.push("/admin/batches/create")}> + Create Batche</Button>
       <DataGrid
         rows={batches}
         columns={columns}
