@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { IoIosCheckmark } from "react-icons/io";
 
 const Select = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
