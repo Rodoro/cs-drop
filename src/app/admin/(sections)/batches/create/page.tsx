@@ -101,72 +101,105 @@ const CreateBatches = () => {
 
 
     return (
-        <div className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
+        <div className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8" >
             <ErrorModal status={status} message={message} visible={open} setVisible={setOpen} />
-            <table className="table-auto w-full">
-                <tbody>
-                    <tr className="bg-[#272B35] border-gray-700 border-b">
-                        <td className="px-6 py-4 whitespace-nowrap">Title *</td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                            <input value={title} onChange={e => setTitle(e.target.value)} required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
-                        </td>
-                    </tr>
-                    <tr className="bg-[#272B35] border-gray-700 border-b">
-                        <td className="px-6 py-4 whitespace-nowrap">Game *</td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                            <select value={selectGame} onChange={e => setSelectGame(e.target.value)} required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
-                                <option value='' disabled selected>-/-</option>
-                                {games.map((game) => (
-                                    <option key={game.id} value={game.id}>
-                                        {game.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </td>
-                    </tr>
-                    <tr className="bg-[#272B35] border-gray-700 border-b">
-                        <td className="px-6 py-4 whitespace-nowrap">Sort *</td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                            <input type="number" value={sort} onChange={e => setSort(e.target.value)} required className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
-                        </td>
-                    </tr>
-                    <tr className="bg-[#272B35] border-gray-700 border-b">
-                        <td className="px-6 py-4 whitespace-nowrap">Title locales *</td>
-                        <td className="px-6 py-4 whitespace-nowrap flex flex-col space-y-3">
-                            <table className="w-full">
-                                <thead>
-                                    <tr>
-                                        <th>Language</th>
-                                        <th>Title</th>
+            <table className="table-auto w-full bg-[#0A0D1D4D]  border-[#FFFFFF26] rounded-lg overflow-hidden"> 
+            <tbody className='rounded-lg'>
+                <tr className="bg-[#0A0D1D4D]">
+                    <td className="px-6 py-4 whitespace-nowrap">Title *</td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                        <input 
+                            value={title} 
+                            onChange={e => setTitle(e.target.value)} 
+                            required 
+                            className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                        />
+                    </td>
+                </tr>
+                <tr className="bg-[#0A0D1D4D]  ">
+                    <td className="px-6 py-4 whitespace-nowrap">Game *</td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                        <select 
+                            value={selectGame} 
+                            onChange={e => setSelectGame(e.target.value)} 
+                            required 
+                            className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] focus:text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                        >
+                            <option className='bg-[#191434' value='' disabled>-/-</option>
+                            {games.map((game) => (
+                                <option className='bg-[#191434]' key={game.id} value={game.id}>
+                                    {game.name}
+                                </option>
+                            ))}
+                        </select>
+                    </td>
+                </tr>
+                <tr className="bg-[#0A0D1D4D] ">
+                    <td className="px-6 py-4 whitespace-nowrap">Sort *</td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                        <input 
+                            type="number" 
+                            value={sort} 
+                            onChange={e => setSort(e.target.value)} 
+                            required 
+                            className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                        />
+                    </td>
+                </tr>
+                <tr className="bg-[#0A0D1D4D] ">
+                    <td className="px-6 py-4 whitespace-nowrap">Title locales *</td>
+                    <td className="px-6 py-4 whitespace-nowrap flex flex-col space-y-3">
+                        <table className="w-full">
+                            <thead>
+                                <tr>
+                                    <th>Language</th>
+                                    <th>Title</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {locales.map((locale, index) => (
+                                    <tr key={index}>
+                                        <td>
+                                            <input 
+                                                value={locale.title} 
+                                                onChange={e => handleChangeTitle(index, e.target.value)} 
+                                                required 
+                                                className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                                            />
+                                        </td>
+                                        <td>
+                                            <input 
+                                                value={locale.text} 
+                                                onChange={e => handleChangeText(index, e.target.value)} 
+                                                required 
+                                                className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                                            />
+                                        </td>
+                                        <td>
+                                        <button 
+                                            onClick={() => handleDeleteRow(index)} 
+                                            className='text-red-700 ml-3 p-1 px-3 rounded-full border-2'
+                                            style={{
+                                                border: '1px solid transparent',
+                                                background: 'linear-gradient(#2A1B36, #2A1B36) padding-box, linear-gradient(to right, #6A3B4D, #38223C) border-box',
+                                            }}
+                                        >
+                                            <b>-</b>
+                                        </button>
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    {locales.map((locale, index) => (
-                                        <tr key={index}>
-                                            <td>
-                                                <input value={locale.title} onChange={e => handleChangeTitle(index, e.target.value)} required className="flex flex-row border rounded-l-lg text-sm w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
-                                            </td>
-                                            <td>
-                                                <input value={locale.text} onChange={e => handleChangeText(index, e.target.value)} required className="flex flex-row border rounded-r-lg text-sm w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" />
-                                            </td>
-                                            <td>
-                                                <button onClick={() => handleDeleteRow(index)} className='text-red-700 ml-3 border-red-700 p-1 px-3 rounded-full border-2'>
-                                                    <b>-</b>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                            <button onClick={handleAddRow} className='text-cyan-500'>+ Add Row</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                                ))}
+                            </tbody>
+                        </table>
+                        <button onClick={handleAddRow} className='text-[#F9FAFB]'>+ Add Row</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
             <div className='flex flex-row justify-end space-x-3 mt-4'>
                 <button onClick={() => router.push("/admin/batches")}>Cancel</button>
-                <Button className='bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] justify-center w-[115px]' onClick={() => handleSubmitAndMain()}>Create</Button>
-                <Button className='bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] justify-center w-[233px]' onClick={handleSubmitAndNew}>Create and Open New</Button>
+                <Button className='bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] justify-center w-[110px]' onClick={() => handleSubmitAndMain()}>Create</Button>
+                <Button className='bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] justify-center w-[203px]' onClick={handleSubmitAndNew}>Create and Open New</Button>
             </div>
         </div>
     )
