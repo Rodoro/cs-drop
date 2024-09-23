@@ -1,7 +1,6 @@
 import { IItemMathCard, IItemMathPrev } from "@/types/ui.types"
 import { motion } from "framer-motion"
 import Image from 'next/image'
-import { useEffect } from "react"
 import { FaRegCalendar } from "react-icons/fa"
 
 

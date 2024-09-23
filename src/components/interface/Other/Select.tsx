@@ -25,6 +25,6 @@ const Select = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTML
     }
 );
 
-Select.displayName = 'Select'; 
+Select.displayName = 'Select';
 
-export default Select 
+export { Select } 
