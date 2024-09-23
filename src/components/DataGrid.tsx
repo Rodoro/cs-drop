@@ -1,8 +1,9 @@
+'use client'
 import React, { useState} from 'react'
 import { IoIosArrowBack } from "react-icons/io"
 import { IoIosArrowForward } from "react-icons/io"
 import { Select } from './interface/admin/Select'
-import ChooseRows  from  './interface/other/ChooseRows'
+import ChooseRows  from  './interface/admin/ChooseRows'
 
 
 type DataRow = { 
@@ -17,17 +18,6 @@ interface DataGridProps<T> {
         label: string;
     }[];
 }
-
-interface ChooseRowsProps {
-    onChange: (value: number) => void;
-}
-
-type PaginationProps = {
-    totalItems: number;
-    itemsPerPage: number;
-};
-
-
 
 const DataGrid = <T extends DataRow>({ data, columns }: DataGridProps<T>) => {
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: string } | null>(null);
