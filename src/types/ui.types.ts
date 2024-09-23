@@ -54,3 +54,16 @@ export interface ITeameMathPrev {
     iconUrl: string;
     count: number;
 }
+
+export interface IItemMatchMy {
+    time: string;
+    teams: ITeameMath[];
+    current: number;
+    bets: IBet[]
+}
+
+export interface IBet {
+    count: string
+    ountcome: string
+    win: string
+}
