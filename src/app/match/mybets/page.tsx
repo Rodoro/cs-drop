@@ -5,6 +5,33 @@ import { FaPiggyBank, FaRegCalendar } from "react-icons/fa"
 import Image from 'next/image'
 import { IoIosArrowDown } from "react-icons/io";
 import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
+import { GoArrowUpRight } from "react-icons/go";
+import style from './page.module.css'
+
+const variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    }
+  },
+}
+
+const itemVar = {
+  hidden: {
+    opacity: 0,
+    y: 50
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.3
+    }
+  }
+}
 
 const items: IItemMatchMy[] = [
   {
@@ -59,18 +86,45 @@ const MatchMyBetsPage = () => {
           {/* TODO: 2 кнопки, надо понять что они делать и зачем */}
         </div>
       </div>
-      <ul className="flex flex-col gap-5">
+      <motion.ul
+        animate='show'
+        variants={variants}
+        initial='hidden'
+        className="flex flex-col gap-5"
+      >
         {items.map((item, index) => {
           return (
-            <li
+            <motion.li
+              variants={itemVar}
               key={index}
-              className="cursor-pointer"
-              onClick={() => toggleItem(index)}
+              style={{
+                // border: '1px solid transparent',
+                // transition: ' opacity 0.3s',
+                // background: 'linear-gradient(#231C50,#231C50) padding-box, linear-gradient(130deg,#433D69,#231C50) border-box'
+              }}
+              className={"cursor-pointer py-4 px-7 rounded-[20px] relative"}
             >
               <div
-                className="flex justify-between items-center"
+                style={{ background: 'linear-gradient(#231C50,#231C50) padding-box, linear-gradient(130deg,#433D69,#231C50) border-box', border: '2px solid transparent', }}
+                className="absolute rounded-[20px] w-full h-full bg-red-600 top-0 left-0 -z-[1]" />
+              <div
+                style={{ opacity: expandedItemId === index ? 1 : 0, background: 'linear-gradient(#22276E,#22276E) padding-box, linear-gradient(130deg,#1FA1FF,#6A12FA,#B8A6FF) border-box', border: '2px solid transparent', }}
+                className="absolute rounded-[20px] w-full h-full bg-red-600 top-0 left-0 -z-[1] transition-all duration-500" />
+              <div
+                onClick={() => toggleItem(index)}
+                className="flex justify-between items-center z-[1]"
               >
-                <div>Match</div>
+                <Link
+                  style={{
+                    border: '2px solid transparent',
+                    background: 'linear-gradient(#383160,#383160) padding-box, linear-gradient(130deg,#8386AD,#414582) border-box'
+                  }}
+                  className="py-2 pl-6 pr-4 rounded-lg transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
+                  href={"/match/" + index}
+                >
+                  Match
+                  <GoArrowUpRight />
+                </Link>
                 <div className="flex items-center gap-2">
                   {item.teams[0].name}
                   <div
@@ -78,30 +132,30 @@ const MatchMyBetsPage = () => {
                       border: '2px solid transparent',
                       background: 'linear-gradient(150deg,#263056,#263056) padding-box, linear-gradient(130deg,#52576C,#2B2F60) border-box'
                     }}
-                    className="p-2 rounded-full"
+                    className="p-2 rounded-full mr-2"
                   >
                     <Image
-                      className="object-contain max-w-[21px] max-h-[21px]"
+                      className="object-contain max-w-[26px] max-h-[26px]"
                       src={item.teams[0].iconUrl}
                       alt={item.teams[0].name}
-                      width={'21'}
-                      height={'21'}
+                      width={'26'}
+                      height={'26'}
                     />
                   </div>
-                  VS
+                  <span className="opacity-30">VS</span>
                   <div
                     style={{
                       border: '2px solid transparent',
                       background: 'linear-gradient(150deg,#263056,#263056) padding-box, linear-gradient(130deg,#52576C,#2B2F60) border-box'
                     }}
-                    className="p-2 rounded-full"
+                    className="p-2 rounded-full ml-2"
                   >
                     <Image
-                      className="object-contain max-w-[21px] max-h-[21px]"
+                      className="object-contain max-w-[26px] max-h-[26px]"
                       src={item.teams[1].iconUrl}
                       alt={item.teams[1].name}
-                      width={'21'}
-                      height={'21'}
+                      width={'26'}
+                      height={'26'}
                     />
                   </div>
                   {item.teams[1].name}
@@ -110,9 +164,9 @@ const MatchMyBetsPage = () => {
                   <FaRegCalendar className="text-[16px] mb-0.5" />
                   {item.time}
                 </div>
-                <div className='flex gap-3 items-center'>
-                  <span>${item.current}</span>
-                  <span>Bet {item.bets.length}</span>
+                <div className='flex gap-6 items-center'>
+                  <span className="font-bold text-[#AABCF9]">${item.current}</span>
+                  <span className="text-xl text-white/[.60]">Bet <span className="font-bold text-white">{item.bets.length}</span></span>
                   <IoIosArrowDown
                     style={{
                       transition: 'transform 0.5s',
@@ -124,33 +178,54 @@ const MatchMyBetsPage = () => {
               <AnimatePresence initial={false}>
                 {expandedItemId === index && (
                   <motion.ul
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
-                    className="flex"
+                    initial={{ height: 0 }}
+                    animate={{ height: 'auto' }}
+                    exit={{ height: 0 }}
+                    transition={{ duration: 0.6, ease: [0.04, 0.62, 0.23, 0.98] }}
+                    className="flex gap-2 overflow-y-hidden mp-4 z-[1] overflow-x-auto"
                   >
                     {item.bets.map((item, index) => {
-                      return <li key={index} className="flex justify-between px-[22px] pt-[22px] pb-4 gap-10">
-                        <div className="opacity-60">
+                      return <li
+                        key={index}
+                        style={{
+                          // border: '2px solid transparent',
+                          // background: 'linear-gradient(#1D225E,#1D225E) padding-box, linear-gradient(130deg,#3E4276,#1D225E) border-box'
+                        }}
+                        className={"select-none group opacity-100 flex rounded-2xl justify-between px-[22px] pt-[22px] pb-4 gap-8 mt-4 relative"}
+                      >
+                        <div
+                          style={{ background: 'linear-gradient(#1D225E,#1D225E) padding-box, linear-gradient(130deg,#3E4276,#1D225E) border-box', border: '2px solid transparent', }}
+                          className="group-hover:opacity-0 absolute rounded-[20px] w-full h-full bg-red-600 top-0 left-0 -z-[1] duration-300" />
+                        <div
+                          style={{ background: 'linear-gradient(#14183D,#14183D) padding-box, linear-gradient(130deg,#444765,#14183D) border-box', border: '2px solid transparent', }}
+                          className="opacity-0 group-hover:opacity-100 absolute rounded-[20px] w-full h-full bg-red-600 top-0 left-0 -z-[1] transition-all duration-300" />
+                        <div className="opacity-60 whitespace-nowrap leading-8">
                           Bid 1:<br />
                           Outcome:<br />
                           Possible win:<br />
                         </div>
-                        <div className="text-right">
+                        <div className="text-right font-bold whitespace-nowrap leading-8">
                           {item.count}$<br />
                           {item.ountcome}<br />
-                          <span>{item.win}$</span>
+                          <span
+                            style={{
+                              border: '2px solid transparent',
+                              background: 'linear-gradient(#33355D,#33355D) padding-box, linear-gradient(130deg,#7F7259,#33355D) border-box'
+                            }}
+                            className="text-[#FFD952] py-1 px-3 rounded-md"
+                          >
+                            {item.win}$
+                          </span>
                         </div>
                       </li>
                     })}
                   </motion.ul>
                 )}
               </AnimatePresence>
-            </li>
+            </motion.li>
           )
         })}
-      </ul>
+      </motion.ul>
     </main >
   )
 }

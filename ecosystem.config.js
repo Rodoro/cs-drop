@@ -13,7 +13,7 @@ module.exports = {
     deploy: {
         production: {
             "user": 'rodoro',
-            "host": '192.168.1.10',
+            "host": '127.0.0.1',
             "ref": "origin/master",
             "repo" : "git@github.com:Rodoro/cs-drop.git",
             "path" : "/home/rodoro/front/cs-drop",
