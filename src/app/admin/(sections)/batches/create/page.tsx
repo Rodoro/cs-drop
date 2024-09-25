@@ -1,10 +1,13 @@
 "use client"
 import { axiosWithAuthAdmin } from '@/api/intreceptors';
 import ErrorModal from '@/components/common/ErrorModal';
-import Button from '@/components/interface/admin/Buttоn';
+import Button3 from '@/components/interface/admin/Buttоn';
 import { Game } from '@/types/admin.interface';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
+import Button from '@/components/interface/Button'
+import { authService } from '@/services/auth/auth.services';
+import { FaDoorOpen } from "react-icons/fa6";
 
 const CreateBatches = () => {
     const [loading, setLoading] = useState(true)
@@ -102,6 +105,9 @@ const CreateBatches = () => {
 
     return (
         <div className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8" >
+            <div className="flex flex-row justify-end m-6 mt-20 md:mt-8 align-middle">
+                <Button onClick={() => { authService.logout(); window.location.reload() }}><p className = 'mr-[10px]'>Exit</p><FaDoorOpen/></Button>
+            </div>
             <ErrorModal status={status} message={message} visible={open} setVisible={setOpen} />
             <table className="table-auto w-full bg-[#0A0D1D4D]  border-[#FFFFFF26] rounded-lg overflow-hidden"> 
             <tbody className='rounded-lg'>
@@ -198,8 +204,8 @@ const CreateBatches = () => {
         </table>
             <div className='flex flex-row justify-end space-x-3 mt-4'>
                 <button onClick={() => router.push("/admin/batches")}>Cancel</button>
-                <Button className='bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] justify-center w-[110px]' onClick={() => handleSubmitAndMain()}>Create</Button>
-                <Button className='bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] justify-center w-[203px]' onClick={handleSubmitAndNew}>Create and Open New</Button>
+                <Button3 className='bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] justify-center w-[110px]' onClick={() => handleSubmitAndMain()}>Create</Button3>
+                <Button3 className='bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] justify-center w-[203px]' onClick={handleSubmitAndNew}>Create and Open New</Button3>
             </div>
         </div>
     )

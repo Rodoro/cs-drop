@@ -1,8 +1,10 @@
-import React, { useState} from 'react';
+import React, { useState, ForwardedRef } from 'react';
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
+import { RxCross2 } from "react-icons/rx";
+import { IoCheckmarkSharp } from "react-icons/io5";
 import Select from './interface/admin/Select';
-import ChooseRows  from  './interface/admin/ChooseRows'
+import ChooseRows from './interface/admin/ChooseRows';
 
 
 type DataRow = { 
@@ -17,16 +19,6 @@ interface DataGridProps<T> {
         label: string;
     }[];
 }
-
-interface ChooseRowsProps {
-    onChange: (value: number) => void;
-}
-
-type PaginationProps = {
-    totalItems: number;
-    itemsPerPage: number;
-};
-
 
 
 const DataGrid = <T extends DataRow>({ data, columns }: DataGridProps<T>) => {
@@ -114,29 +106,41 @@ const DataGrid = <T extends DataRow>({ data, columns }: DataGridProps<T>) => {
                     </div>
                 ))}
             </div>
-            {displayedData.map((row, index, rowIndex) => (
-                <div
-                    key={row.id}
-                    className={`grid min-h-[60px] py-[16px] my-[20px] px-[10px] text-white p-2 rounded-2xl ${selectedRows.has(rowIndex) ? 'bg-[#7E50FF33]' : ''}`}
-                    style={{
-                        gridTemplateColumns: `repeat(${columns.length + 1}, 1fr)`,
-                        border: '1px solid transparent',
-                        background: hoveredIndex === index
-                            ? 'linear-gradient(to right, #2A1F61, #1B1E52) padding-box, linear-gradient(to right, #FFFFFF26, #FFFFFF01) border-box'
-                            : 'transparent',
-                    }}
-                    onMouseEnter={() => setHoveredIndex(index)}
-                    onMouseLeave={() => setHoveredIndex(null)}
-                >
-                    <Select
-                        checked={selectedRows.has(index)} 
-                        onChange={() => handleSelectRow(index)} 
-                    />
-                    {columns.map(({ key }) => (
-                        <div key={key.toString()}>{row[key]}</div>
-                    ))}
-                </div>
-            ))}
+            {displayedData.map((row, index) => (
+            <div
+                key={row.id}
+                className={`grid h-[60px] py-[16px] my-[20px] px-[10px] text-white p-2 rounded-2xl ${selectedRows.has(index) ? 'bg-[#7E50FF33]' : ''}`}
+                style={{
+                    gridTemplateColumns: `repeat(${columns.length + 1}, 1fr)`,
+                    border: '1px solid transparent',
+                    background: hoveredIndex === index
+                        ? 'linear-gradient(to right, #2A1F61, #1B1E52) padding-box, linear-gradient(to right, #FFFFFF26, #FFFFFF01) border-box'
+                        : 'transparent',
+                }}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+            >
+                <Select
+                    checked={selectedRows.has(index)} 
+                    onChange={() => handleSelectRow(index)} 
+                />
+                {columns.map(({ key }) => (
+                    <div key={key.toString()}>
+                        {typeof row[key] === 'boolean' ? (  
+                            row[key] === true ? 
+                            <div className='w-[30px] h-[30px] text-[#7FFF52] flex justify-center items-center rounded-lg bg-[#1E2E35] border border-[#7FFF52A6]'>
+                                <IoCheckmarkSharp/>
+                            </div> : 
+                            <div className='w-[30px] h-[30px] text-[#FF8585] flex justify-center items-center rounded-lg bg-[#2B1B36] border border-[#FF8585A6]'>
+                                <RxCross2 />
+                            </div>
+                        ) : (
+                            row[key]
+                        )}
+                    </div>
+                ))}
+            </div>
+        ))}
         </div>
             <div className='h-[1px] w-[100%] bg-[#aabcf977]'></div>
             <div className="flex justify-between items-center h-[32px] my-[20px]">

@@ -6,6 +6,10 @@ import Box from '@mui/material/Box';
 import { User } from '@/types/admin.interface';
 import Link from 'next/link';
 import { axiosWithAuthAdmin } from '@/api/intreceptors';
+import { authService } from '@/services/auth/auth.services';
+import { FaDoorOpen } from "react-icons/fa6";
+import Button from '@/components/interface/Button'
+
 
 const UsersPage = () => {
     const [users, setUsers] = useState<User[]>([]);
@@ -68,6 +72,9 @@ const UsersPage = () => {
 
     return (
         <Box style={{ height: users.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
+            <div className="flex flex-row justify-end m-6 mt-20 md:mt-8 align-middle">
+                <Button onClick={() => { authService.logout(); window.location.reload() }}><p className = 'mr-[10px]'>Exit</p><FaDoorOpen/></Button>
+            </div>
             <DataGrid
                 rows={users}
                 columns={columns}

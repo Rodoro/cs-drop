@@ -13,6 +13,9 @@ import {
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useRouter } from 'next/navigation';
 import { axiosWithAuthAdmin } from '@/api/intreceptors';
+import { authService } from '@/services/auth/auth.services';
+import { FaDoorOpen } from "react-icons/fa6";
+import Button from '@/components/interface/Button'
 
 const GamesPage = () => {
     const [games, setGames] = useState<Game[]>([]);
@@ -84,6 +87,9 @@ const GamesPage = () => {
 
     return (
         <Box style={{ height: games.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
+            <div className="flex flex-row justify-end m-6 mt-20 md:mt-8 align-middle">
+                <Button onClick={() => { authService.logout(); window.location.reload() }}><p className = 'mr-[10px]'>Exit</p><FaDoorOpen/></Button>
+            </div>
             <DataGrid
                 rows={games}
                 columns={columns}

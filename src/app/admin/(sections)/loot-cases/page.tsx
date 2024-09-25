@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import { LootCases } from '@/types/admin.interface';
-import Button from '@/components/interface/admin/Button2';
+import Button2 from '@/components/interface/admin/Button2';
 import { useRouter } from 'next/navigation';
 import {
     GridActionsCellItem,
@@ -17,6 +17,10 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { axiosWithAuthAdmin } from '@/api/intreceptors';
 import { useQueries, useQuery } from '@tanstack/react-query';
+import { authService } from '@/services/auth/auth.services';
+import { FaDoorOpen } from "react-icons/fa6";
+import Button from '@/components/interface/Button'
+
 
 const getData = async () => {
     return await axiosWithAuthAdmin.get('/admin/lootcases/get-cases');
@@ -166,7 +170,10 @@ const LootsPage = () => {
 
     return (
         <Box style={{ height: loots.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
-            <Button className="px-2 mb-6 w-[177px] h-[56px]" onClick={() => router.push("/admin/loot-cases/create")}>+ Create Loot Cases</Button>
+            <div className="flex flex-row justify-between m-6 mt-20 md:mt-8 align-middle">
+                <Button2 className="px-2 mb-6 w-[177px] h-[56px]" onClick={() => router.push("/admin/loot-cases/create")}>+ Create Loot Cases</Button2>
+                <Button onClick={() => { authService.logout(); window.location.reload() }}><p className = 'mr-[10px]'>Exit</p><FaDoorOpen/></Button>
+            </div>
             <DataGrid
                 rows={loots}
                 columns={columns}

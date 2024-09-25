@@ -15,9 +15,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SettingsIcon from '@mui/icons-material/Settings';
-import Button from '@/components/interface/admin/Button2';
+import Button2 from '@/components/interface/admin/Button2';
+import Button from '@/components/interface/Button'
 import { useRouter } from 'next/navigation';
 import { axiosWithAuthAdmin } from '@/api/intreceptors';
+import { authService } from '@/services/auth/auth.services';
+import { FaDoorOpen } from "react-icons/fa6";
 
 const BatchesPage = () => {
   const [batches, setBatches] = useState<Batch[]>([]);
@@ -150,7 +153,10 @@ const BatchesPage = () => {
 
   return (
     <Box style={{ height: batches.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
-      <Button className="px-2 mb-6 w-[177px] h-[56px]" onClick={() => router.push("/admin/batches/create")}> + Create Batche</Button>
+      <div className="flex flex-row justify-between m-6 mt-20 md:mt-8 align-middle">
+        <Button2 className="px-2 mb-6 w-[177px] h-[56px]" onClick={() => router.push("/admin/batches/create")}> + Create Batche</Button2>
+        <Button onClick={() => { authService.logout(); window.location.reload() }}><p className = 'mr-[10px]'>Exit</p><FaDoorOpen/></Button>
+      </div>
       <DataGrid
         rows={batches}
         columns={columns}

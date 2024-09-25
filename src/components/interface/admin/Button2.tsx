@@ -3,7 +3,7 @@ import React, { ButtonHTMLAttributes, ForwardedRef } from "react";
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> { 
     className?: string;
 }
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const Button2 = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ({ children, className, ...props }, ref: ForwardedRef<HTMLButtonElement>) => {
         return (
             <button
@@ -21,5 +21,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     }
 );
 
+Button2.displayName = 'Button2'
 
-export default Button
+export default Button2

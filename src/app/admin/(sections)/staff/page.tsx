@@ -5,6 +5,9 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import { Staff } from '@/types/admin.interface';
 import { axiosWithAuthAdmin } from '@/api/intreceptors';
+import { authService } from '@/services/auth/auth.services';
+import { FaDoorOpen } from "react-icons/fa6";
+import Button from '@/components/interface/Button'
 
 const StafsPage = () => {
     const [stafs, setStafs] = useState<Staff[]>([]);
@@ -53,6 +56,9 @@ const StafsPage = () => {
 
     return (
         <Box style={{ height: stafs.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
+            <div className="flex flex-row justify-end m-6 mt-20 md:mt-8 align-middle">
+                <Button onClick={() => { authService.logout(); window.location.reload() }}><p className = 'mr-[10px]'>Exit</p><FaDoorOpen/></Button>
+            </div>
             <DataGrid
                 getRowId={(row) => row.guid}
                 rows={stafs}

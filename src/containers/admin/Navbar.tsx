@@ -53,49 +53,49 @@ const Navbar = ({ ...props }) => {
             <div>
                 <div className='mb-[10px]'>
                     <Link href="/admin">
-                        <Button className={pathname === '/admin' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}>
+                        <Button className={`w-full ${pathname === '/admin' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}`}>
                             <GoHomeFill /><p className='ml-[10px]'>Main</p>
                         </Button>
                     </Link>
                 </div>
                 <div className='mb-[10px]'>
                     <Link href="/admin/batches">
-                        <Button className={pathname === '/admin/batches' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}>
+                        <Button className={`w-full ${pathname === '/admin/batches' || pathname === '/admin/batches/create' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}`}>
                             <IoIosDocument /><p className='ml-[10px]'>Batches</p>
                         </Button>
                     </Link>
                 </div>
                 <div className='mb-[10px]'>
                     <Link href="/admin/games">
-                        <Button className={pathname === '/admin/games' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}>
+                        <Button className={`w-full ${pathname === '/admin/games' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}`}>
                             <FaGamepad /><p className='ml-[10px]'>Games</p>
                         </Button>
                     </Link>
                 </div>
                 <div className='mb-[10px]'>
                     <Link href="/admin/items">
-                        <Button className={pathname === '/admin/items' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}>
+                        <Button className={`w-full ${pathname === '/admin/items' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}`}>
                             <HiMiniBriefcase /><p className='ml-[10px]'>Items</p>
                         </Button>
                     </Link>
                 </div>
                 <div className='mb-[10px]'>
-                    <Link href="/admin/loot-case">
-                        <Button className={pathname === '/admin/loot-case' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}>
+                    <Link href="/admin/loot-cases">
+                        <Button className={`w-full ${pathname === '/admin/loot-cases' || pathname === '/admin/loot-cases/create' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}`}>
                             <GiTrophyCup /><p className='ml-[10px]'>Loot case</p>
                         </Button>
                     </Link>
                 </div>
                 <div className='mb-[10px]'>
                     <Link href="/admin/staff">
-                        <Button className={pathname === '/admin/staff' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}>
+                        <Button className={`w-full ${pathname === '/admin/staff' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}`}>
                             <BiSupport /><p className='ml-[10px]'>Staff</p>
                         </Button>
                     </Link>
                 </div>
                 <div className='mb-[10px]'>
                     <Link href="/admin/users">
-                        <Button className={pathname === '/admin/users' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}>
+                        <Button className={`w-full ${pathname === '/admin/users' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}`}>
                             <FaUsers /><p className='ml-[10px]'>Users</p>
                         </Button>
                     </Link>
