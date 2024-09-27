@@ -112,21 +112,28 @@ const MatchMyBetsPage = () => {
                 className="absolute rounded-[20px] w-full h-full bg-red-600 top-0 left-0 -z-[1] transition-all duration-500" />
               <div
                 onClick={() => toggleItem(index)}
-                className="flex justify-between items-center z-[1]"
+                className="flex flex-col lg:flex-row gap-3 lg:gap-0 justify-between items-center z-[1]"
               >
-                <Link
-                  style={{
-                    border: '2px solid transparent',
-                    background: 'linear-gradient(#383160,#383160) padding-box, linear-gradient(130deg,#8386AD,#414582) border-box'
-                  }}
-                  className="py-2 pl-6 pr-4 rounded-lg transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
-                  href={"/match/" + index}
-                >
-                  Match
-                  <GoArrowUpRight />
-                </Link>
-                <div className="flex items-center gap-2">
-                  {item.teams[0].name}
+                <div className="w-full lg:w-auto flex max-w-96 justify-between items-center">
+                  <Link
+                    style={{
+                      border: '2px solid transparent',
+                      background: 'linear-gradient(#383160,#383160) padding-box, linear-gradient(130deg,#8386AD,#414582) border-box'
+                    }}
+                    className="py-2 pl-6 pr-4 text-xs lg:text-base rounded-lg transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
+                    href={"/match/" + index}
+                  >
+                    Match
+                    <GoArrowUpRight />
+                  </Link>
+                  <div style={{ opacity: expandedItemId === index ? '100%' : '60%' }} className="flex transition-opacity duration-500 lg:hidden items-center justify-center text-xs gap-2">
+                    <FaRegCalendar className="text-[16px] mb-0.5" />
+                    {item.time}
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between gap-2">
+                  <span className="flex-1 lg:flex-none">{item.teams[0].name}</span>
                   <div
                     style={{
                       border: '2px solid transparent',
@@ -158,9 +165,9 @@ const MatchMyBetsPage = () => {
                       height={'26'}
                     />
                   </div>
-                  {item.teams[1].name}
+                  <span className="flex-1 lg:flex-none">{item.teams[1].name}</span>
                 </div>
-                <div style={{ opacity: expandedItemId === index ? '100%' : '60%' }} className="transition-opacity duration-500 flex items-center justify-center text-xs gap-2">
+                <div style={{ opacity: expandedItemId === index ? '100%' : '60%' }} className="hidden transition-opacity duration-500 lg:flex items-center justify-center text-xs gap-2">
                   <FaRegCalendar className="text-[16px] mb-0.5" />
                   {item.time}
                 </div>
