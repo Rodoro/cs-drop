@@ -1,28 +1,37 @@
 "use client"
 import Link from 'next/link'
-import React from 'react'
+import React, {ForwardRefRenderFunction , ForwardedRef, useImperativeHandle, forwardRef, useRef} from 'react'
 import Image from 'next/image'
 import Button from '@/components/interface/admin/Buttоn';
+import Button1 from '@/components/interface/Button'
 import { usePathname } from 'next/navigation'
 import { GoHomeFill } from "react-icons/go";
 import { IoIosDocument } from "react-icons/io";
-import { FaGamepad } from "react-icons/fa6";
 import { HiMiniBriefcase } from "react-icons/hi2";
 import { GiTrophyCup } from "react-icons/gi";
 import { BiSupport } from "react-icons/bi";
 import { FaUsers } from "react-icons/fa";
+import { RxCross2 } from "react-icons/rx"
+import { FaDoorOpen } from "react-icons/fa6";
+import { authService } from '@/services/auth/auth.services';
 
 const drawerWidth = 240;
 
-const Navbar = ({ ...props }) => {
-    const { window } = props;
-    const pathname = usePathname()
+interface NavbarProps {
+    isVisible: boolean;
+    onClose: () => void;
+    className?: string;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ isVisible, onClose, className }) => {
+    const pathname = usePathname();
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [isClosing, setIsClosing] = React.useState(false);
 
     const handleDrawerClose = () => {
         setIsClosing(true);
         setMobileOpen(false);
+        onClose(); // Закрываем компонент через onClose при закрытии
     };
 
     const handleDrawerTransitionEnd = () => {
@@ -35,40 +44,40 @@ const Navbar = ({ ...props }) => {
         }
     };
 
-
-    const container = window !== undefined ? () => window().document.body : undefined;
-
     return (
-        <div className='w-[273px] bg-[#0A0D1D33] h-full fixed left-[0px] top-[0px] px-[40px] py-[35px]'>
-            <div className='mb-[40px]'>
+        <div
+            className={`w-[273px] max-md:w-full bg-[#0A0D1D33] z-[2] h-full fixed left-0 top-0 px-[40px] py-[35px] transition-transform duration-300 ${isVisible ? 'translate-x-0' : '-translate-x-full'} ${className}`}
+        >
+            <div className='flex justify-between items-center mb-[40px] max-md:hidden'>
                 <Link href="/">
-                    <Image 
-                        src='/img/interface/nav/logo+text.png' 
+                    <Image
+                        src='/img/interface/nav/logo+text.png'
                         alt="Логотип"
                         width={180}
-                        height={40} 
+                        height={40}
                     />
                 </Link>
+            </div>
+            <div className='md:hidden flex justify-between mb-[50px]'>
+                <div><img src='/img/interface/nav/logo.png' alt="Логотип" width={'39px'} height={'41px'}/></div>
+                <div>
+                    <button onClick={onClose}>
+                        <RxCross2 className='text-white text-[32px]' />
+                    </button>
+                </div>
             </div>
             <div>
                 <div className='mb-[10px]'>
                     <Link href="/admin">
-                        <Button className={`w-full ${pathname === '/admin' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}`}>
+                        <Button className={`w-full ${pathname === '/admin' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)]' : 'bg-transparent'}`}>
                             <GoHomeFill /><p className='ml-[10px]'>Main</p>
                         </Button>
                     </Link>
                 </div>
                 <div className='mb-[10px]'>
                     <Link href="/admin/batches">
-                        <Button className={`w-full ${pathname === '/admin/batches' || pathname === '/admin/batches/create' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}`}>
+                        <Button className={`w-full ${pathname === '/admin/batches' || pathname === '/admin/batches/create' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)]' : 'bg-transparent'}`}>
                             <IoIosDocument /><p className='ml-[10px]'>Batches</p>
-                        </Button>
-                    </Link>
-                </div>
-                <div className='mb-[10px]'>
-                    <Link href="/admin/games">
-                        <Button className={`w-full ${pathname === '/admin/games' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}`}>
-                            <FaGamepad /><p className='ml-[10px]'>Games</p>
                         </Button>
                     </Link>
                 </div>
@@ -93,12 +102,18 @@ const Navbar = ({ ...props }) => {
                         </Button>
                     </Link>
                 </div>
-                <div className='mb-[10px]'>
+                <div className='mb-[20px]'>
                     <Link href="/admin/users">
                         <Button className={`w-full ${pathname === '/admin/users' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}`}>
                             <FaUsers /><p className='ml-[10px]'>Users</p>
                         </Button>
                     </Link>
+                </div>
+                <div className='md:hidden'>
+                    <Button1 className='w-full' onClick={() => { authService.logout(); window.location.reload(); }}>
+                        <p className='mr-[10px]'>Exit</p>
+                        <FaDoorOpen className=''/>
+                    </Button1>
                 </div>
             </div>
         </div>

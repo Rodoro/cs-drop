@@ -23,6 +23,8 @@ const CreateBatches = () => {
     const [status, setStatus] = React.useState('200');
     const [message, setMessage] = React.useState('Ok!')
 
+    
+
     useEffect(() => {
         const fetchData = async () => {
             const res = await axiosWithAuthAdmin.get('/admin/games/get-all');
@@ -105,9 +107,6 @@ const CreateBatches = () => {
 
     return (
         <div className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8" >
-            <div className="flex flex-row justify-end m-6 mt-20 md:mt-8 align-middle">
-                <Button onClick={() => { authService.logout(); window.location.reload() }}><p className = 'mr-[10px]'>Exit</p><FaDoorOpen/></Button>
-            </div>
             <ErrorModal status={status} message={message} visible={open} setVisible={setOpen} />
             <table className="table-auto w-full bg-[#0A0D1D4D]  border-[#FFFFFF26] rounded-lg overflow-hidden"> 
             <tbody className='rounded-lg'>

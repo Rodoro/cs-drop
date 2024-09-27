@@ -172,7 +172,6 @@ const LootsPage = () => {
         <Box style={{ height: loots.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
             <div className="flex flex-row justify-between m-6 mt-20 md:mt-8 align-middle">
                 <Button2 className="px-2 mb-6 w-[177px] h-[56px]" onClick={() => router.push("/admin/loot-cases/create")}>+ Create Loot Cases</Button2>
-                <Button onClick={() => { authService.logout(); window.location.reload() }}><p className = 'mr-[10px]'>Exit</p><FaDoorOpen/></Button>
             </div>
             <DataGrid
                 rows={loots}
