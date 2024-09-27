@@ -8,7 +8,7 @@ import { TgLink } from '@/components/icons/tg'
 import { YtLink } from '@/components/icons/yt'
 import LogoText from '@/components/icons/LogoText'
 
-import { AuthButton, EarnMoneyButton, PurpurButonNav } from '@/components/interface/Buttons'
+import { AuthButton, EarnMoneyButton, PurpurButon2, PurpurButonNav } from '@/components/interface/Buttons'
 import { SettingsButton } from '@/components/icons/setting'
 import { SelectLanguage, SelectPage } from '@/components/interface/Select'
 import ChatIcon from '@/components/icons/chat'
@@ -17,6 +17,7 @@ import { useTranslation } from '@/hook/useLanguageStore'
 import SupportVidget from '@/components/SupportVidget'
 import useProfile from '@/hook/useProfile'
 import Profile from '@/components/common/Profile'
+import { HiMiniPlus } from 'react-icons/hi2'
 
 
 const Navbar = () => {
@@ -104,6 +105,10 @@ const Navbar = () => {
                 {/* TODO: Вернуть навбар в обратное состояние */}
                 {!user ?
                   <>
+                    <PurpurButon2 href='/payment'>
+                      <span className='text-xl font-bold'>+</span>
+                      Deposti
+                    </PurpurButon2>
                     {/* <Profile images={user.image} /> */}
                     <SettingsButton />
                     <EarnMoneyButton />

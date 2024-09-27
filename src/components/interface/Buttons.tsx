@@ -35,6 +35,17 @@ const EarnMoneyButton = () => {
     )
 }
 
+
+const PurpurButon2 = ({ href, children, ...props }: any) => {
+    return (
+        <Link href={href} className='shadow-[0_0_24px_0_rgba(139,50,252,0.75)] group hover:shadow-none hover:bg-[#3D4768] transition-all active:scale-95 select-none h-auto flex flex-row justify-center items-center rounded-2xl p-0.5 bg-[#7E50FF]'>
+            <span className='flex flex-row justify-center items-center group-hover:bg-[#242F54] transition-all rounded-[14px] bg-[#7E50FF] gap-2 px-6 py-3 w-full h-full'>
+                {children}
+            </span>
+        </Link>
+    )
+}
+
 const GradientButton = ({ children, ...props }: any) => {
     return (
         <div className='w-full h-full flex flex-row justify-center items-center rounded-lg lg:rounded-2xl p-0.5 shadow-[0_10px_79px_0_rgba(146,105,213,0.20)] bg-gradient-to-r from-[#1F79FF] via-[#6A12FA] to-[#B8A6FF]'>
@@ -79,4 +90,4 @@ const PurpurButonNav = ({ children, ...props }: any) => {
     )
 }
 
-export { AuthButton, EarnMoneyButton, GradientButton, PurpurButon, PurpurButonNav, GradientButton2 }
+export { AuthButton, EarnMoneyButton, GradientButton, PurpurButon, PurpurButonNav, GradientButton2, PurpurButon2 }
