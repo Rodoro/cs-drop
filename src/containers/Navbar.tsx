@@ -101,9 +101,10 @@ const Navbar = () => {
               </div>
               <div className='flex flex-row gap-7 items-center'>
                 <SelectLanguage />
-                {user ?
+                {/* TODO: Вернуть навбар в обратное состояние */}
+                {!user ?
                   <>
-                    <Profile images={user.image} />
+                    {/* <Profile images={user.image} /> */}
                     <SettingsButton />
                     <EarnMoneyButton />
                   </> :

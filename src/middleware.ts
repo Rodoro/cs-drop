@@ -14,5 +14,6 @@ export async function middleware(request: NextRequest, response: NextResponse) {
     }
 }
 
-export const configUser = ['/profile']
+// TODO:добавить в мидлвару профили, реферальную систему и пополнение
+export const configUser = []
 export const configAdmin = ['/admin', '/admin/:path']
