@@ -24,7 +24,7 @@ const AuthButton = () => {
 const EarnMoneyButton = () => {
     const { getTranslation } = useTranslation();
     return (
-        <Link href={'#'} className='hover:scale-105 transition-all active:scale-95 select-none h-auto flex flex-row justify-center items-center rounded-2xl p-0.5 shadow-[0_10px_79px_0_rgba(146,105,213,0.20)] bg-gradient-to-r from-[#1F79FF] via-[#6A12FA] to-[#B8A6FF]'>
+        <Link href={'/referral'} className='hover:scale-105 transition-all active:scale-95 select-none h-auto flex flex-row justify-center items-center rounded-2xl p-0.5 shadow-[0_10px_79px_0_rgba(146,105,213,0.20)] bg-gradient-to-r from-[#1F79FF] via-[#6A12FA] to-[#B8A6FF]'>
             <span className='flex flex-row justify-center items-center rounded-2xl bg-[#1E1C41] gap-2 px-8 py-4 w-full h-full'>
                 <div className="text-gray-50 text-center text-sm font-semibold leading-[normal]">{getTranslation('components.interface.button.earnMoney')}</div>
                 <svg width={11} height={11} viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">

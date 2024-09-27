@@ -12,7 +12,7 @@ const SettingsIcon = () => {
 const SettingsButton = () => {
     return (
         <Link
-            href={'#'}
+            href={'/profile'}
             className='flex justify-center items-center gap-2.5 rounded-[15px] hover:scale-105 transition-all active:scale-95 select-none'
             style={{
                 width: '56px',
