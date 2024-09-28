@@ -2,10 +2,10 @@
 /* eslint-disable react/jsx-key */
 "use client"
 import React, { useEffect, useState } from 'react'
-import Box from '@mui/material/Box';
 import axios from 'axios';
 import { Batch, Game } from '@/types/admin.interface';
 import {
+
   GridRowId,
 } from '@mui/x-data-grid';
 import Button2 from '@/components/interface/admin/Button2';
@@ -92,44 +92,16 @@ const BatchesPage = () => {
     }
   }
 
-  const RowExample: React.FC = () => {
-    type DataKeys = "id" | "name" | "age" | "city" | "ggg" | "nnnn" | "vvvvv" | "jjjjjj";
-    
-    type DataRow = {
-        [key in DataKeys]: any;  
-    };
 
-    interface Column {
-        key: DataKeys;  
-        label: any;
-    }
-
-    const columns: Column[] = [
-        { key: "name", label: "Имя" },
-        { key: "age", label: "Возраст" },
-        { key: "ggg", label: "пппп" },
-        { key: "jjjjjj", label: "hjghjghjghj" },
-    ];
-
-    const initialData: DataRow[] = [
-        { id: 4,  name: 'fdfsdfsdf', age: 30, city: "Нью-Йорк", ggg: 23, nnnn: true, vvvvv: 'fgdfgdfg', jjjjjj: 'GHFIGUHIDFUO' },
-        { id: 5,  name: 'fdfsdfsdf', age: 30, city: "Нью-Йорк", ggg:  23, nnnn: true, vvvvv: 'fgdfgdfg', jjjjjj: 'GHFIGUHIDFUOIH' },
-        { id: 6,  name: 'fdfsdfsdf', age: 30, city: "Нью-Йорк", ggg: 23, nnnn: true, vvvvv: 'fgdfgdfg', jjjjjj: 'GHFIGUHIDFUOIHUO' },
-    ];
-
-    const [data, setData] = useState<DataRow[]>(initialData);
 
   return (
-    <Box style={{ height: batches.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8 ">
-      <div className="flex flex-row justify-between m-6 mt-20 md:mt-8 align-middle">
-        <Button2 className="px-2 mb-6 w-[177px] h-[56px]" onClick={() => router.push("/admin/batches/create")}> + Create Batche</Button2>
-      </div>
+    <div style={{ height: batches.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8 ">
       <DataGrid
-          data={data}
-          columns={columns} 
+        data={data}
+        columns={columns} 
       />
-    </Box>
+    </div>
   )
-}}
+}
 
 export default BatchesPage

@@ -20,22 +20,6 @@ interface DataGridProps<T> {
     }[];
 }
 
-interface DataGridProps<T> {
-    data: T[];
-    columns: {
-        key: keyof T;
-        label: string;
-    }[];
-}
-
-interface ChooseRowsProps {
-    onChange: (value: number) => void;
-}
-
-type PaginationProps = {
-    totalItems: number;
-    itemsPerPage: number;
-}
 
 const DataGrid = <T extends DataRow>({ data, columns }: DataGridProps<T>) => {
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: string } | null>(null);
@@ -102,28 +86,31 @@ const DataGrid = <T extends DataRow>({ data, columns }: DataGridProps<T>) => {
         <div className="space-y-2">
         <div className="overflow-x-auto">
         <div className='grid' style={{
-            gridTemplateColumns: `repeat(${columns.length}, 1fr)`,
-            gridTemplateRows: `repeat(${displayedData.length}, 1fr)`,
-        }}>
-            {columns.map(({ key, label }) => (
-                <div 
-                    key={key.toString()} 
-                    className="text-white cursor-pointer"
-                >
-                    
-                    <div className='h-[60px] bg-[#7E50FF33] rounded-2xl flex items-center'>
+                gridTemplateColumns: `repeat(${columns.length}, 1fr)`,
+                gridTemplateRows: `repeat(${displayedData.length + 1}, 1fr)`, // +1 для заголовков
+            }}>
+                {/* Заголовки */}
+                {columns.map(({ key, label }, colIndex) => (
+                    <div
+                        key={key.toString()}
+                        className={`h-[60px] bg-[#7E50FF33] flex items-center mb-[10px] ${colIndex === 0 ? 'rounded-l-[15px]' : ''} ${colIndex === columns.length - 1 ? 'rounded-r-[15px]' : ''}`}
+                    >
                         {label}
                     </div>
-                    
-                    {displayedData.map((row, index) => (
-                        <div key={row.id} >
-                                {row[key]}
+                ))}
+
+                {displayedData.map((row) => (
+                    columns.map(({ key }, colIndex) => (
+                        <div
+                            key={`${row.id}-${colIndex}`}
+                            className={`h-[60px] bg-[#7E50FF33] flex items-center  mb-[10px] ${colIndex === 0 ? 'rounded-l-[15px]' : ''} ${colIndex === columns.length - 1 ? 'rounded-r-[15px]' : ''}`}
+                        >
+                            {row[key]}
                         </div>
-                    ))}
-                </div>
-            ))}
-        </div>
-        </div>
+                    ))
+                ))}
+            </div>
+            </div>
             <div className='h-[1px] w-[100%] bg-[#aabcf977]'></div>
             <div className="flex justify-between items-center h-[32px] my-[20px]">
                 <div className="text-[#AABCF9] ml-[40px] py-[3px]">
