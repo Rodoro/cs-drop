@@ -50,7 +50,7 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible, onClose, className }) => {
         >
             <div className='flex justify-between items-center mb-[40px] max-md:hidden'>
                 <Link href="/">
-                    <Image
+                    <img
                         src='/img/interface/nav/logo+text.png'
                         alt="Логотип"
                         width={180}

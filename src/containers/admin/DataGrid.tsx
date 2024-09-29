@@ -5,6 +5,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import { IoCheckmarkSharp } from "react-icons/io5";
 import ChooseRows from '@/components/interface/admin/ChooseRows';
+import Select from '@/components/interface/admin/Select';
 
 
 type DataRow = { 
@@ -79,6 +80,11 @@ const DataGrid = <T extends DataRow>({ data, columns }: DataGridProps<T>) => {
         }
     };
 
+    const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const checked = event.target.checked;
+        const newSelectedRows = checked ? new Set(displayedData.map(row => row.id)) : new Set();
+        setSelectedRows(newSelectedRows);
+    };
 
     const displayedData = sortedData.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
 
@@ -86,32 +92,54 @@ const DataGrid = <T extends DataRow>({ data, columns }: DataGridProps<T>) => {
         <div className="space-y-2">
         <div className="overflow-x-auto">
         <div className='grid' style={{
-                gridTemplateColumns: `repeat(${columns.length}, 1fr)`,
-                gridTemplateRows: `repeat(${displayedData.length + 1}, 1fr)`, // +1 для заголовков
-            }}>
-                {/* Заголовки */}
-                {columns.map(({ key, label }, colIndex) => (
-                    <div
-                        key={key.toString()}
-                        className={`h-[60px] bg-[#7E50FF33] flex items-center mb-[10px] ${colIndex === 0 ? 'rounded-l-[15px]' : ''} ${colIndex === columns.length - 1 ? 'rounded-r-[15px]' : ''}`}
-                    >
-                        {label}
-                    </div>
-                ))}
+            gridTemplateColumns: `repeat(${columns.length + 1}, 1fr)`,
+            gridTemplateRows: `repeat(${displayedData.length + 1}, 1fr)`,
+        }}>
+            {/* Заголовки */}
+            <div className={`h-[60px] flex items-center pl-[12px] mb-[10px] rounded-l-[15px] bg-[#7E50FF33]`}>
+                <Select onChange={handleSelectAll} />
+            </div>
 
-                {displayedData.map((row) => (
-                    columns.map(({ key }, colIndex) => (
+            {columns.map(({ key, label }, colIndex) => (
+                <div
+                    key={key.toString()}
+                    className={`h-[60px] flex items-center mb-[10px] bg-[#7E50FF33] ${colIndex === columns.length - 1 ? 'rounded-r-[15px]' : ''}`}
+                >
+                    {label}
+                </div>
+            ))}
+
+            {displayedData.map((row, rowIndex) => (
+                <React.Fragment key={row.id}>
+                    <div className={`h-[60px] flex items-center mb-[10px] pl-[12px] ${rowIndex === displayedData.length - 1 ? 'rounded-bl-[15px]' : ''} rounded-l-[15px] ${selectedRows.has(row.id) ? 'bg-[#7E50FF33]' : ''}`}>
+                        <Select
+                            checked={selectedRows.has(row.id)}
+                            onChange={() => handleSelectRow(row.id)}
+                        />
+                    </div>
+                    {columns.map(({ key }, colIndex) => (
                         <div
                             key={`${row.id}-${colIndex}`}
-                            className={`h-[60px] bg-[#7E50FF33] flex items-center  mb-[10px] ${colIndex === 0 ? 'rounded-l-[15px]' : ''} ${colIndex === columns.length - 1 ? 'rounded-r-[15px]' : ''}`}
+                            className={`h-[60px] flex items-center mb-[10px] ${colIndex === columns.length - 1 ? 'rounded-r-[15px]' : ''} ${selectedRows.has(row.id) ? 'bg-[#7E50FF33]' : ''}`}
                         >
-                            {row[key]}
+                            {typeof row[key] === 'boolean' ? (
+                                row[key] === true ?
+                                    <div className='w-[30px] h-[30px] text-[#7FFF52] flex justify-center items-center rounded-lg bg-[#1E2E35] border border-[#7FFF52A6]'>
+                                        <IoCheckmarkSharp />
+                                    </div> :
+                                    <div className='w-[30px] h-[30px] text-[#FF8585] flex justify-center items-center rounded-lg bg-[#2B1B36] border border-[#FF8585A6]'>
+                                        <RxCross2 />
+                                    </div>
+                            ) : (
+                                row[key]
+                            )}
                         </div>
-                    ))
-                ))}
-            </div>
-            </div>
-            <div className='h-[1px] w-[100%] bg-[#aabcf977]'></div>
+                    ))}
+                </React.Fragment>
+            ))}
+        </div>
+        </div>
+        <div className='h-[1px] w-[100%] bg-[#aabcf977]'></div>
             <div className="flex justify-between items-center h-[32px] my-[20px]">
                 <div className="text-[#AABCF9] ml-[40px] py-[3px]">
                     {data.length} rows selected
