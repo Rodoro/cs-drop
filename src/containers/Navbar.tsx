@@ -107,7 +107,7 @@ const Navbar = () => {
                   <>
                     <PurpurButon2 href='/payment'>
                       <span className='text-xl font-bold'>+</span>
-                      Deposti
+                      Deposit
                     </PurpurButon2>
                     {/* <Profile images={user.image} /> */}
                     <SettingsButton />

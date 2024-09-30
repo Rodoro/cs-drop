@@ -7,7 +7,6 @@ import { IoIosArrowDown } from "react-icons/io";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { GoArrowUpRight } from "react-icons/go";
-import style from './page.module.css'
 
 const variants = {
   hidden: { opacity: 0 },
