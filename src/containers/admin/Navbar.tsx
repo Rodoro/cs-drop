@@ -82,6 +82,13 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible, onClose, className }) => {
                     </Link>
                 </div>
                 <div className='mb-[10px]'>
+                    <Link href="/admin/games">
+                        <Button className={`w-full ${pathname === '/admin/games' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)]' : 'bg-transparent'}`}>
+                            <IoIosDocument /><p className='ml-[10px]'>Games</p>
+                        </Button>
+                    </Link>
+                </div>
+                <div className='mb-[10px]'>
                     <Link href="/admin/items">
                         <Button className={`w-full ${pathname === '/admin/items' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}`}>
                             <HiMiniBriefcase /><p className='ml-[10px]'>Items</p>
