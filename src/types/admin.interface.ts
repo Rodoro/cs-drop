@@ -8,6 +8,7 @@ export interface Batch {
 }
 
 export interface Game {
+    title: any;
     id: number;
     name: string;
     steamGameID: number;

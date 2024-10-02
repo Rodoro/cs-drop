@@ -2,8 +2,7 @@
 /* eslint-disable react/jsx-key */
 "use client"
 import React, { useEffect, useState } from 'react'
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import Box from '@mui/material/Box';
+import DataGrid from '@/containers/admin/DataGrid';
 import { LootCases } from '@/types/admin.interface';
 import Button2 from '@/components/interface/admin/Button2';
 import { useRouter } from 'next/navigation';
@@ -32,37 +31,24 @@ const LootsPage = () => {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const res = await axiosWithAuthAdmin.get('/admin/lootcases/get-cases');
-    //         console.log(res.data)
-    //         setLoots(res.data.result)
-    //         setLoading(false);
-    //     };
-    //     fetchData();
-
-    //     return() => {
-
-    //     }
-    // }, [])
-
-    const { data, isSuccess } = useQuery({
-        queryKey: ['loot-casesAdmin'],
-        queryFn: getData,
-        select: data => data.data,
-    })
-
     useEffect(() => {
-        if(isSuccess) {
-            setLoots(data.result)
-            setLoading(false)
-        }
-    }, [isSuccess, data])
-
+        const fetchData = async () => {
+            try {
+                const res = await axiosWithAuthAdmin.get('/admin/lootcases/get-cases');
+                setLoots(res.data.result);
+            } catch (error) {
+                console.error("Ошибка при получении лут-кейсов:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        
+        fetchData();
+    }, []);
 
     const duplicateLoot = React.useCallback(
         (index: GridRowId) => async () => {
-            const res = await axiosWithAuthAdmin.post('/admin/lootcases/replicate', { caseId: index })
+            const res = await axiosWithAuthAdmin.post('/admin/lootcases/replicate', { caseId: index });
             setLoots((prevRows) => {
                 const rowToDuplicate = prevRows.find((row) => row.id === index)!;
                 return [...prevRows, { ...rowToDuplicate, id: res.data.result.id }];
@@ -73,135 +59,48 @@ const LootsPage = () => {
 
     const editLoot = React.useCallback(
         (id: GridRowId) => () => {
-            router.push("/admin/loot-cases/" + id + "/edit")
+            router.push("/admin/loot-cases/" + id + "/edit");
         },
         [],
     );
 
     const viewLoot = React.useCallback(
         (id: GridRowId) => () => {
-            router.push("/admin/loot-cases/" + id + "/view")
+            router.push("/admin/loot-cases/" + id + "/view");
         },
         [],
     );
 
     const deleteLoot = React.useCallback(
         (id: GridRowId) => async () => {
-            await axiosWithAuthAdmin.delete('/admin/lootcases/remove-case?caseId=' + id).then(() => {
-                setTimeout(() => {
-                    setLoots((prevRows) => prevRows.filter((row) => row.id !== id));
-                });
-            });
+            await axiosWithAuthAdmin.delete('/admin/lootcases/remove-case?caseId=' + id);
+            setLoots((prevRows) => prevRows.filter((row) => row.id !== id));
         },
         [],
     );
 
-    const columns: GridColDef[] = [
-        { field: 'id', headerName: 'ID', flex: 90, minWidth: 80 },
-        {
-            field: 'game',
-            headerName: 'Game',
-            flex: 90,
-            minWidth: 80
-        },
-        {
-            field: 'title',
-            headerName: 'Title',
-            flex: 200,
-            minWidth: 180
-        },
-        {
-            field: 'price',
-            headerName: 'Price',
-            flex: 120,
-            minWidth: 110,
-            valueGetter: (value: string) => '$ ' + value,
-        },
-        {
-            field: 'netPrice',
-            headerName: 'Net Price',
-            flex: 120,
-            minWidth: 110,
-            valueGetter: (value: string) => '$ ' + value,
-        },
-        {
-            field: 'batch',
-            headerName: 'Batch',
-            flex: 200,
-            minWidth: 150
-        },
-        {
-            field: 'isVisible',
-            headerName: 'Is Visible',
-            flex: 90,
-            type: 'boolean',
-            minWidth: 80
-        },
-        {
-            field: 'actions',
-            type: 'actions',
-            resizable: false,
-            getActions: (params: any) => [
-                <GridActionsCellItem
-                    icon={<FileCopyIcon />}
-                    label="Duplicate"
-                    onClick={duplicateLoot(params.id)}
-                    showInMenu
-                />,
-                <GridActionsCellItem
-                    icon={<SettingsIcon />}
-                    label="Edit"
-                    onClick={editLoot(params.id)}
-                    showInMenu
-                />,
-                <GridActionsCellItem
-                    icon={<VisibilityIcon />}
-                    label="View"
-                    onClick={viewLoot(params.id)}
-                />,
-                <GridActionsCellItem
-                    icon={<DeleteIcon />}
-                    label="Delete"
-                    onClick={deleteLoot(params.id)}
-                />,
-            ],
-        },
-    ];
-
+const columns = [
+    { key: "id" as keyof LootCases, label: "ID" },
+    { key: "game" as keyof LootCases, label: "Game", render: (record: LootCases) => record.game.title }, 
+    { key: "locales" as keyof LootCases, label: "Locales", render: (record: LootCases) => record.locales.join(", ") }, 
+    { key: "title" as keyof LootCases, label: "Title" },
+    { key: "price" as keyof LootCases, label: "Price", render: (record: LootCases) => `$${record.price.toFixed(2)}` },
+    { key: "netPrice" as keyof LootCases, label: "Net Price", render: (record: LootCases) => `$${record.netPrice.toFixed(2)}` }, 
+    { key: "isVisible" as keyof LootCases, label: "Visible", render: (record: LootCases) => (record.isVisible ? "Yes" : "No") },
+    { key: "image" as keyof LootCases, label: "Image", render: (record: LootCases) => <img src={record.image} alt={record.title} style={{ width: 50, height: 50 }} /> }, 
+    { key: "imageHover" as keyof LootCases, label: "Image Hover", render: (record: LootCases) => <img src={record.imageHover} alt={record.title} style={{ width: 50, height: 50 }} /> }, 
+];
     return (
-        <Box style={{ height: loots.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
+        <div style={{ height: loading ? 400 : loots.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
             <div className="flex flex-row justify-between m-6 mt-20 md:mt-8 align-middle">
-                <Button2 className="px-2 mb-6 w-[177px] h-[56px]" onClick={() => router.push("/admin/loot-cases/create")}>+ Create Loot Cases</Button2>
+                <Button2 className="px-2 mb-6 w-[177px] h-[56px]" onClick={() => router.push("/admin/loot-cases/create")}>+ Создать лут-кейсы</Button2>
             </div>
             <DataGrid
-                rows={loots}
+                data={loots}
                 columns={columns}
-                rowHeight={60}
-                checkboxSelection
-                initialState={{
-                    pagination: { paginationModel: { pageSize: 10 } },
-                }}
-                pageSizeOptions={[5, 10, 25]}
-                loading={loading}
-                sx={{
-                    color: "#fff",
-                    borderWidth: '0px',
-                    '& .MuiDataGrid-booleanCell[data-value="true"]': { color: '#1e9a19' },
-                    '& .MuiDataGrid-booleanCell[data-value="false"]': { color: '#cd2a4d' },
-                    '--DataGrid-rowBorderColor': "#272B35",
-                    '--DataGrid-containerBackground': "#272B35",
-                    '& .MuiButtonBase-root.MuiIconButton-root': { color: '#fff' },
-                    '& .MuiDataGrid-footerContainer': { background: '#272B35' },
-                    '& .MuiTablePagination-root': { color: '#fff' },
-                    '& .MuiCheckbox-root': { color: '#fff' },
-                    '& .MuiDataGrid-cell:focus': { outlineColor: '#fff' },
-                    '& .MuiDataGrid-overlay': { background: '#191D3E' },
-                    '& .MuiDataGrid-columnHeader:focus': { outline: '#fff' },
-                    '& .MuiDataGrid-columnHeader:focus-within': { outline: '#fff' },
-                }}
             />
-        </Box>
+        </div>
     )
 }
 
-export default LootsPage
+export default LootsPage;

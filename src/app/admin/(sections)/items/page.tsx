@@ -1,123 +1,63 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 import React, { useEffect, useState } from 'react'
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import Box from '@mui/material/Box';
+import DataGrid from '@/containers/admin/DataGrid';
 import { Item } from '@/types/admin.interface';
-import Avatar from "@mui/material/Avatar";
-import {
-  GridActionsCellItem,
-  GridRowId,
-} from '@mui/x-data-grid';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useRouter } from 'next/navigation';
 import { axiosWithAuthAdmin } from '@/api/intreceptors';
 
 
 const ItemsPage = () => {
-  const [items, setItems] = useState<Item[]>([]);
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
+    const [items, setItems] = useState<Item[]>([]);
+    const [loading, setLoading] = useState(true);
+    const router = useRouter();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await axiosWithAuthAdmin.get('/admin/items/get-all');
-      setItems(res.data)
-      setLoading(false);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await axiosWithAuthAdmin.get('/admin/items/get-all');
+                setItems(res.data);
+            } catch (error) {
+                console.error("Ошибка при получении предметов:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
+
+    const viewItem = (id: number) => () => {
+        router.push("/admin/items/" + id + "/view");
     };
-    fetchData();
-  }, [])
 
-  const viewBatche = React.useCallback(
-    (id: GridRowId) => () => {
-      router.push("/admin/items/" + id + "/view")
-    },
-    [],
-  );
+    const columns = [
+        { key: "id" as keyof Item, label: "ID" },
+        { key: "game" as keyof Item, label: "Game" },
+        { key: "title" as keyof Item, label: "Title" },
+        { key: "imageUrl" as keyof Item, label: "Image URL" },
+        { key: "gameId" as keyof Item, label: "Game ID" },
+        { key: "gameTitleRu" as keyof Item, label: "Game Title (RU)" },
+        { key: "gameTitleEn" as keyof Item, label: "Game Title (EN)" },
+        { key: "price" as keyof Item, label: "Price" },
+        { key: "rarity" as keyof Item, label: "Rarity" },
+        { key: "quality" as keyof Item, label: "Quality" },
+        {
+            key: "action" as keyof Item,
+            label: "Action",
+            renderCell: (params: any) => (
+                <button onClick={viewItem(params.row.id)}>View</button>
+            ),
+        },
+    ];
 
-  const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    {
-      field: 'game',
-      headerName: 'Game',
-      width: 90,
-    },
-    {
-      field: 'gameTitleRu',
-      headerName: 'Title',
-      width: 400,
-    },
-    {
-      field: 'imageUrl',
-      headerName: 'Img',
-      width: 150,
-      renderCell: (params: any) => {
-        return (
-          <div>
-            <Avatar src={params.value} variant="square" sx={{ width: 60, height: 60 }} />
-          </div>
-        );
-      }
-    },
-    {
-      field: 'price',
-      headerName: 'Price',
-      width: 90,
-    },
-    {
-      field: 'rarity',
-      headerName: 'Rarity',
-      width: 200,
-    },
-    {
-      field: 'title',
-      headerName: 'Title En',
-      width: 400,
-    },
-    {
-      field: 'actions',
-      type: 'actions',
-      resizable: false,
-      getActions: (params: any) => [
-        // eslint-disable-next-line react/jsx-key
-        <GridActionsCellItem
-          icon={<VisibilityIcon />}
-          label="View"
-          onClick={viewBatche(params.id)}
-        />
-      ],
-    },
-  ];
+    return (
+        <div style={{ height: loading ? 400 : items.length === 0 ? 400 : 'auto', width: '100%' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
+            <DataGrid
+                data={items}
+                columns={columns}
+            />
+        </div>
+    );
+};
 
-  return (
-    <Box style={{ height: items.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
-      <DataGrid
-        rows={items}
-        columns={columns}
-        rowHeight={60}
-        checkboxSelection
-        initialState={{
-          pagination: { paginationModel: { pageSize: 10 } },
-        }}
-        pageSizeOptions={[5, 10, 25]}
-        loading={loading}
-        sx={{
-          color: "#fff",
-          borderWidth: '0px',
-          '--DataGrid-rowBorderColor': "#272B35",
-          '--DataGrid-containerBackground': "#272B35",
-          '& .MuiButtonBase-root.MuiIconButton-root': { color: '#fff' },
-          '& .MuiDataGrid-footerContainer': { background: '#272B35' },
-          '& .MuiTablePagination-root': { color: '#fff' },
-          '& .MuiCheckbox-root': { color: '#fff' },
-          '& .MuiDataGrid-cell:focus': { outlineColor: '#fff' },
-          '& .MuiDataGrid-overlay': { background: '#191D3E' },
-          '& .MuiDataGrid-columnHeader:focus': { outline: '#fff' },
-          '& .MuiDataGrid-columnHeader:focus-within': { outline: '#fff' },
-        }}
-      />
-    </Box>
-  )
-}
-
-export default ItemsPage
+export default ItemsPage;

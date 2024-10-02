@@ -5,7 +5,7 @@ import Button3 from '@/components/interface/admin/Buttоn';
 import { Game } from '@/types/admin.interface';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
-import Button from '@/components/interface/Button'
+import Button from '@/components/interface/admin/Buttоn';
 import { authService } from '@/services/auth/auth.services';
 import { FaDoorOpen } from "react-icons/fa6";
 
@@ -117,7 +117,7 @@ const CreateBatches = () => {
                             value={title} 
                             onChange={e => setTitle(e.target.value)} 
                             required 
-                            className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                            className=" focus:outline-none flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
                         />
                     </td>
                 </tr>
@@ -130,9 +130,9 @@ const CreateBatches = () => {
                             required 
                             className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] focus:text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
                         >
-                            <option className='bg-[#191434' value='' disabled>-/-</option>
+                            <option className='bg-[#191434] focus:outline-none ' value='' disabled>-/-</option>
                             {games.map((game) => (
-                                <option className='bg-[#191434]' key={game.id} value={game.id}>
+                                <option className='bg-[#191434] ' key={game.id} value={game.id}>
                                     {game.name}
                                 </option>
                             ))}
@@ -147,7 +147,7 @@ const CreateBatches = () => {
                             value={sort} 
                             onChange={e => setSort(e.target.value)} 
                             required 
-                            className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                            className="focus:outline-none flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
                         />
                     </td>
                 </tr>
@@ -169,7 +169,7 @@ const CreateBatches = () => {
                                                 value={locale.title} 
                                                 onChange={e => handleChangeTitle(index, e.target.value)} 
                                                 required 
-                                                className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                                                className=" focus:outline-none flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
                                             />
                                         </td>
                                         <td>
@@ -177,7 +177,7 @@ const CreateBatches = () => {
                                                 value={locale.text} 
                                                 onChange={e => handleChangeText(index, e.target.value)} 
                                                 required 
-                                                className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                                                className=" focus:outline-none flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
                                             />
                                         </td>
                                         <td>
@@ -202,7 +202,7 @@ const CreateBatches = () => {
             </tbody>
         </table>
             <div className='flex flex-row justify-end space-x-3 mt-4'>
-                <button onClick={() => router.push("/admin/batches")}>Cancel</button>
+                <Button onClick={() => router.push("/admin/batches")}>Cancel</Button>
                 <Button3 className='bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] justify-center w-[110px]' onClick={() => handleSubmitAndMain()}>Create</Button3>
                 <Button3 className='bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] justify-center w-[203px]' onClick={handleSubmitAndNew}>Create and Open New</Button3>
             </div>

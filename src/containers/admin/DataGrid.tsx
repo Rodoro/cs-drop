@@ -95,7 +95,6 @@ const DataGrid = <T extends DataRow>({ data, columns }: DataGridProps<T>) => {
             gridTemplateColumns: `repeat(${columns.length + 1}, 1fr)`,
             gridTemplateRows: `repeat(${displayedData.length + 1}, 1fr)`,
         }}>
-            {/* Заголовки */}
             <div className={`h-[60px] flex items-center pl-[12px] mb-[10px] rounded-l-[15px] bg-[#7E50FF33]`}>
                 <Select onChange={handleSelectAll} />
             </div>
