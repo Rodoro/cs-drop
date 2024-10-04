@@ -15,12 +15,18 @@ type DataRow = {
 
 interface DataGridProps<T> {
     data: T[];
-    columns: {
-        key: keyof T;
+    columns: Array<{
+        key: keyof T | string;
         label: string;
-    }[];
+        render?: (row: T) => React.ReactNode;
+    }>;
 }
 
+interface Column<T> {
+    key: keyof T | string; // Позволяем string в качестве ключа
+    label: string;
+    render?: (row: T) => React.ReactNode; // render теперь опционален
+}
 
 const DataGrid = <T extends DataRow>({ data, columns }: DataGridProps<T>) => {
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: string } | null>(null);
@@ -89,54 +95,63 @@ const DataGrid = <T extends DataRow>({ data, columns }: DataGridProps<T>) => {
     const displayedData = sortedData.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
 
     return (
-        <div className="space-y-2">
-        <div className="overflow-x-auto">
-        <div className='grid' style={{
-            gridTemplateColumns: `repeat(${columns.length + 1}, 1fr)`,
-            gridTemplateRows: `repeat(${displayedData.length + 1}, 1fr)`,
-        }}>
-            <div className={`h-[60px] flex items-center pl-[12px] mb-[10px] rounded-l-[15px] bg-[#7E50FF33]`}>
-                <Select onChange={handleSelectAll} />
-            </div>
-
-            {columns.map(({ key, label }, colIndex) => (
-                <div
-                    key={key.toString()}
-                    className={`h-[60px] flex items-center mb-[10px] bg-[#7E50FF33] ${colIndex === columns.length - 1 ? 'rounded-r-[15px]' : ''}`}
-                >
-                    {label}
+        <div className="space-y-2 ">
+        <div className="overflow-hidden"> {/* Добавляем overflow-hidden */}
+            <div className='grid' style={{
+                gridTemplateColumns: `repeat(${columns.length + 1}, 1fr)`,
+                gridTemplateRows: `repeat(${displayedData.length + 1}, 1fr)`,
+            }}>
+                <div className={`h-[60px] flex items-center pl-[12px] mb-[10px] rounded-l-[15px] bg-[#7E50FF33]`}>
+                    <Select onChange={handleSelectAll} />
                 </div>
-            ))}
 
-            {displayedData.map((row, rowIndex) => (
-                <React.Fragment key={row.id}>
-                    <div className={`h-[60px] flex items-center mb-[10px] pl-[12px] ${rowIndex === displayedData.length - 1 ? 'rounded-bl-[15px]' : ''} rounded-l-[15px] ${selectedRows.has(row.id) ? 'bg-[#7E50FF33]' : ''}`}>
-                        <Select
-                            checked={selectedRows.has(row.id)}
-                            onChange={() => handleSelectRow(row.id)}
-                        />
+                {columns.map(({ key, label }, colIndex) => (
+                    <div
+                        key={key.toString()}
+                        className={`h-[60px] flex items-center mb-[10px] bg-[#7E50FF33] ${colIndex === columns.length - 1 ? 'rounded-r-[15px]' : ''}`}
+                    >
+                        {label}
                     </div>
-                    {columns.map(({ key }, colIndex) => (
-                        <div
-                            key={`${row.id}-${colIndex}`}
-                            className={`h-[60px] flex items-center mb-[10px] ${colIndex === columns.length - 1 ? 'rounded-r-[15px]' : ''} ${selectedRows.has(row.id) ? 'bg-[#7E50FF33]' : ''}`}
-                        >
-                            {typeof row[key] === 'boolean' ? (
-                                row[key] === true ?
-                                    <div className='w-[30px] h-[30px] text-[#7FFF52] flex justify-center items-center rounded-lg bg-[#1E2E35] border border-[#7FFF52A6]'>
-                                        <IoCheckmarkSharp />
-                                    </div> :
-                                    <div className='w-[30px] h-[30px] text-[#FF8585] flex justify-center items-center rounded-lg bg-[#2B1B36] border border-[#FF8585A6]'>
-                                        <RxCross2 />
-                                    </div>
-                            ) : (
-                                row[key]
-                            )}
+                ))}
+
+                {displayedData.map((row, rowIndex) => (
+                    <React.Fragment key={row.id}>
+                        <div className={`h-[60px] flex items-center mb-[10px] pl-[12px] ${rowIndex === displayedData.length - 1 ? 'rounded-bl-[15px]' : ''} rounded-l-[15px] ${selectedRows.has(row.id) ? 'bg-[#7E50FF33]' : ''}`}>
+                            <Select
+                                checked={selectedRows.has(row.id)}
+                                onChange={() => handleSelectRow(row.id)}
+                            />
                         </div>
-                    ))}
-                </React.Fragment>
-            ))}
-        </div>
+                        {columns.map(({ key }, colIndex) => (
+                            <div
+                                key={`${row.id}-${colIndex}`}
+                                className={`h-[60px] flex items-center mb-[10px] ${colIndex === columns.length - 1 ? 'rounded-r-[15px]' : ''} ${selectedRows.has(row.id) ? 'bg-[#7E50FF33]' : ''}`}
+                            >
+                                {key === 'imageUrl' ? (
+                                    <img
+                                        src={row[key].replace(/ /g, '%20')}
+                                        alt={row.title} // или любое другое значение, отвечающее за название
+                                        style={{ width: '50px', height: '50px', objectFit: 'cover' }} // меняйте размеры, по необходимости
+                                        onError={(e) => { e.currentTarget.src = 'fallback-image-url'; }} // замените на своего URL
+                                    />
+                                ) : (
+                                    typeof row[key] === 'boolean' ? (
+                                        row[key] === true ?
+                                            <div className='w-[30px] h-[30px] text-[#7FFF52] flex justify-center items-center rounded-lg bg-[#1E2E35] border border-[#7FFF52A6]'>
+                                                <IoCheckmarkSharp />
+                                            </div> :
+                                            <div className='w-[30px] h-[30px] text-[#FF8585] flex justify-center items-center rounded-lg bg-[#2B1B36] border border-[#FF8585A6]'>
+                                                <RxCross2 />
+                                            </div>
+                                    ) : (
+                                        row[key] === 'null' ? 'no' : row[key]
+                                    )
+                                )}
+                            </div>
+                        ))}
+                    </React.Fragment>
+                ))}
+            </div>
         </div>
         <div className='h-[1px] w-[100%] bg-[#aabcf977]'></div>
             <div className="flex justify-between items-center h-[32px] my-[20px]">

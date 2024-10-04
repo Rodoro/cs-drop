@@ -42,10 +42,12 @@ export default function DashboardLayout({
 
     return (
         <section>
-            <div className='w-[511px] h-[511px] rounded-full bg-[#821FFF] absolute z-[-1] top-[585px] left-[1181px] blur-[130px] opacity-25'></div>
-            <div className='w-[511px] h-[511px] rounded-full bg-[#C51FFF] absolute z-[-1] top-[-114px] left-[-76px] blur-[130px] opacity-25'></div>
+            <div className='fixed inset-0 pointer-events-none'>
+                <div className='w-[511px] h-[511px] rounded-full bg-[#821FFF] absolute z-[-1] top-[585px] left-[1181px] blur-[130px] opacity-25'></div>
+                <div className='w-[511px] h-[511px] rounded-full bg-[#C51FFF] absolute z-[-1] top-[-114px] left-[-76px] blur-[130px] opacity-25'></div>
+            </div>
             <div>
-                <Navbar isVisible={isNavVisible} onClose={toggleNavbar} />
+                <Navbar isVisible={isNavVisible} onClose={toggleNavbar} className = 'max-lg:w-[240px]'/>
                 <div>
                     <div className="flex flex-row md:justify-end mt-[40px]">
                         <div className='flex justify-between w-full'>
@@ -58,10 +60,6 @@ export default function DashboardLayout({
                                 </button>
                             </div>
                         </div>
-                        <Button className='max-md:hidden' onClick={() => { authService.logout(); window.location.reload(); }}>
-                            <p className='mr-[10px]'>Exit</p>
-                            <FaDoorOpen className=''/>
-                        </Button>
                     </div>
                     {children}
                 </div>

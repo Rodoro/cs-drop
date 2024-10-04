@@ -7,6 +7,11 @@ import { Batch, Game } from '@/types/admin.interface';
 import Button2 from '@/components/interface/admin/Button2';
 import { useRouter } from 'next/navigation';
 import { axiosWithAuthAdmin } from '@/api/intreceptors';
+import Delete from '@/components/interface/admin/Delete';
+import Setting from '@/components/interface/admin/Settings';
+import Button from '@/components/interface/Button'
+import { authService } from '@/services/auth/auth.services';
+import { FaDoorOpen } from "react-icons/fa6";
 
 const BatchesPage = () => {
   const [batches, setBatches] = useState<Batch[]>([]);
@@ -30,38 +35,45 @@ const BatchesPage = () => {
         setGames(res2.data)
         setLoading(false);
       }
-    };
+    };                                     
     fetchData();
   }, [])
 
+  const deleteBatche = React.useCallback(
+    (id: number) => async () => {
+      await axiosWithAuthAdmin.get('/admin/batches/delete/' + id).then(() => {
+        setTimeout(() => {
+          setBatches((prevRows) => prevRows.filter((row) => row.id !== id));
+        });
+      });
+    },
+    [],
+  );    
 
   const duplicateBatche = React.useCallback(
     (index: number) => async () => {
-      // Получаем информацию по заданному индексу
+      
       const res = await axiosWithAuthAdmin.get('/admin/batches/get/' + index);
       const data: Batch = res.data;
   
-      // Извлекаем нужные поля, чтобы создать новый Batch
       const { gameId, title, languages, sort, game } = data;
       
-      // Создаем новый объект, основываясь на текущих данных
-      const filteredLanguages = languages.map(({ id, ...language }) => language); // Убираем id языков
+      const filteredLanguages = languages.map(({ id, ...language }) => language); 
       const result: Batch = {
-        id: 0, // Устанавливаем временный id, который будет заменен сервером
+        id: 0, 
         title,
         gameId,
         languages: filteredLanguages,
-        game, // Передаем объект игры
-        sort, // Сохраняем сортировку
+        game, 
+        sort, 
       };
   
-      // Отправляем новый объект на сервер для создания
       const res2 = await axiosWithAuthAdmin.post('/admin/batches/create', result);
   
-      // Обновляем локальное состояние с новым объектом Batch и новым id
+
       setBatches((prevRows) => [
         ...prevRows,
-        { ...result, id: res2.data.id }, // Используем новый id, возвращаемый сервером
+        { ...result, id: res2.data.id }, 
       ]);
     },
     [],
@@ -92,17 +104,22 @@ const BatchesPage = () => {
     { key: "id" as keyof Game, label: "ID" },
     { key: "name" as keyof Game, label: "Game" },
     {
-      key: "sort" as unknown as keyof Game, 
-      label: "Sort",
-      render: () => 1, 
+      key: "sort" as keyof Batch, 
+      label: "Sort"
     },
   ];
 
   return (
-    <div style={{ height: games.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 lg:ml-[270px] md:mt-8 mb-8">
-      <Button2 className="px-2 mb-6" onClick={() => router.push("/admin/batches/create")}>+ Создать игру</Button2>
+    <div style={{ height: games.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-60 lg:ml-[270px] max-md:ml-[0px] md:mt-8 mb-8 ">
+      <div className = "md:flex md:justify-between max-md:w-full">
+        <Button2 className="px-2 mb-6 max-md:w-full" onClick={() => router.push("/admin/batches/create")}>+ Create Batch</Button2>
+        <Button className='max-md:hidden' onClick={() => { authService.logout(); window.location.reload(); }}>
+          <p className='mr-[10px]'>Exit</p>
+          <FaDoorOpen className=''/>
+        </Button>
+      </div>
       <DataGrid
-        data={games} // Using games array as the data source
+        data={games} 
         columns={columns}
       />
     </div>

@@ -8,6 +8,7 @@ export interface Batch {
 }
 
 export interface Game {
+    iconUrl: any;
     title: any;
     id: number;
     name: string;

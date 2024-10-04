@@ -82,21 +82,22 @@ const LootsPage = () => {
 const columns = [
     { key: "id" as keyof LootCases, label: "ID" },
     { key: "game" as keyof LootCases, label: "Game", render: (record: LootCases) => record.game.title }, 
-    { key: "locales" as keyof LootCases, label: "Locales", render: (record: LootCases) => record.locales.join(", ") }, 
     { key: "title" as keyof LootCases, label: "Title" },
     { key: "price" as keyof LootCases, label: "Price", render: (record: LootCases) => `$${record.price.toFixed(2)}` },
     { key: "netPrice" as keyof LootCases, label: "Net Price", render: (record: LootCases) => `$${record.netPrice.toFixed(2)}` }, 
-    { key: "isVisible" as keyof LootCases, label: "Visible", render: (record: LootCases) => (record.isVisible ? "Yes" : "No") },
-    { key: "image" as keyof LootCases, label: "Image", render: (record: LootCases) => <img src={record.image} alt={record.title} style={{ width: 50, height: 50 }} /> }, 
-    { key: "imageHover" as keyof LootCases, label: "Image Hover", render: (record: LootCases) => <img src={record.imageHover} alt={record.title} style={{ width: 50, height: 50 }} /> }, 
+    { key: "isVisible" as keyof LootCases, label: "Is Visible"}, 
 ];
     return (
         <div style={{ height: loading ? 400 : loots.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
-            <div className="flex flex-row justify-between m-6 mt-20 md:mt-8 align-middle">
-                <Button2 className="px-2 mb-6 w-[177px] h-[56px]" onClick={() => router.push("/admin/loot-cases/create")}>+ Создать лут-кейсы</Button2>
-            </div>
+        <div className = "flex justify-between">
+            <Button2 className="px-2 mb-6" onClick={() => router.push("/admin/batches/create")}>+ Create Loot case</Button2>
+            <Button className='max-md:hidden' onClick={() => { authService.logout(); window.location.reload(); }}>
+                <p className='mr-[10px]'>Exit</p>
+                <FaDoorOpen className=''/>
+            </Button>
+        </div>
             <DataGrid
-                data={loots}
+                data={loots}  
                 columns={columns}
             />
         </div>

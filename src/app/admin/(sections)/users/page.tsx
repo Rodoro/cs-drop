@@ -30,19 +30,21 @@ const UsersPage = () => {
 
     const columns = [
         { key: 'id' as keyof User, label: 'ID' },
+        { key: 'username' as keyof User, label: 'Name' },
         { key: 'uUid' as keyof User, label: 'UUID' },
-        { key: 'username' as keyof User, label: 'Имя пользователя' },
         { key: 'steamId' as keyof User, label: 'Steam ID' },
-        { key: 'steamCreated' as keyof User, label: 'Создан на Steam' },
-        { key: 'link' as keyof User, label: 'Ссылка' },
-        {
-            key: 'action' as keyof User,
-            label: 'Действия',
-        },
+        { key: 'steamCreated' as keyof User, label: 'Steam Created' },
+        { key: 'link' as keyof User, label: 'Link' },
     ];
 
     return (
         <div style={{ height: users.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
+            <div className = "flex justify-end">
+                <Button className='max-md:hidden' onClick={() => { authService.logout(); window.location.reload(); }}>
+                    <p className='mr-[10px]'>Exit</p>
+                    <FaDoorOpen className=''/>
+                </Button>
+            </div>
             <DataGrid
                 data={users}
                 columns={columns}

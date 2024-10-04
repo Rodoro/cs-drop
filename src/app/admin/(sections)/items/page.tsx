@@ -5,7 +5,9 @@ import DataGrid from '@/containers/admin/DataGrid';
 import { Item } from '@/types/admin.interface';
 import { useRouter } from 'next/navigation';
 import { axiosWithAuthAdmin } from '@/api/intreceptors';
-
+import Button from '@/components/interface/Button'
+import { authService } from '@/services/auth/auth.services';
+import { FaDoorOpen } from "react-icons/fa6";
 
 const ItemsPage = () => {
     const [items, setItems] = useState<Item[]>([]);
@@ -16,6 +18,7 @@ const ItemsPage = () => {
         const fetchData = async () => {
             try {
                 const res = await axiosWithAuthAdmin.get('/admin/items/get-all');
+                console.log("Fetched items:", res.data); // Выводим данные
                 setItems(res.data);
             } catch (error) {
                 console.error("Ошибка при получении предметов:", error);
@@ -34,24 +37,30 @@ const ItemsPage = () => {
         { key: "id" as keyof Item, label: "ID" },
         { key: "game" as keyof Item, label: "Game" },
         { key: "title" as keyof Item, label: "Title" },
-        { key: "imageUrl" as keyof Item, label: "Image URL" },
-        { key: "gameId" as keyof Item, label: "Game ID" },
-        { key: "gameTitleRu" as keyof Item, label: "Game Title (RU)" },
-        { key: "gameTitleEn" as keyof Item, label: "Game Title (EN)" },
-        { key: "price" as keyof Item, label: "Price" },
-        { key: "rarity" as keyof Item, label: "Rarity" },
-        { key: "quality" as keyof Item, label: "Quality" },
         {
-            key: "action" as keyof Item,
-            label: "Action",
-            renderCell: (params: any) => (
-                <button onClick={viewItem(params.row.id)}>View</button>
+            key: "imageUrl" as keyof Item,
+            label: "Image",
+            render: (record: Item) => (
+                <img
+                    src={record.imageUrl.replace(/ /g, '%20')} // Заменяем пробелы на %20
+                    alt={record.title}
+                    style={{ width: 50, height: 50 }}
+                    onError={(e) => { e.currentTarget.src = 'fallback-image-url'; }} // Замените на URL изображения по умолчанию
+                />
             ),
         },
+        { key: "price" as keyof Item, label: "Price" },
+        { key: "rarity" as keyof Item, label: "Rarity" },
     ];
 
     return (
         <div style={{ height: loading ? 400 : items.length === 0 ? 400 : 'auto', width: '100%' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
+            <div className = "flex justify-end">
+                <Button className='max-md:hidden' onClick={() => { authService.logout(); window.location.reload(); }}>
+                    <p className='mr-[10px]'>Exit</p>
+                    <FaDoorOpen className=''/>
+                </Button>
+            </div>
             <DataGrid
                 data={items}
                 columns={columns}
