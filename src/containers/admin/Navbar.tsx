@@ -50,7 +50,7 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible, onClose, className }) => {
         >
             <div className='flex justify-between items-center mb-[40px] max-md:hidden'>
                 <Link href="/">
-                    <img
+                    <Image
                         src='/img/interface/nav/logo+text.png'
                         alt="Логотип"
                         width={180}
@@ -59,7 +59,7 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible, onClose, className }) => {
                 </Link>
             </div>
             <div className='md:hidden flex justify-between mb-[50px]'>
-                <div><img src='/img/interface/nav/logo.png' alt="Логотип" width={'39px'} height={'41px'}/></div>
+                <div><Image src='/img/interface/nav/logo.png' alt="Логотип" width={39} height={41}/></div>
                 <div>
                     <button onClick={onClose}>
                         <RxCross2 className='text-white text-[32px]' />

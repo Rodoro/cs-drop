@@ -22,22 +22,21 @@ export default function DashboardLayout({
     //     router.replace("/login");
     // }
 
-    const [isNavVisible, setIsNavVisible] = useState(false); // Изначально Nav скрыт
-    const toggleNavbar = () => setIsNavVisible((prev) => !prev); // Функция для переключения Nav
+    const [isNavVisible, setIsNavVisible] = useState(false); 
+    const toggleNavbar = () => setIsNavVisible((prev) => !prev);  
 
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth > 768) {
-                setIsNavVisible(true); // Показываем Navbar при ширине больше 768px
+                setIsNavVisible(true); 
             } else {
-                setIsNavVisible(false); // Скрываем Navbar при меньшей ширине
+                setIsNavVisible(false); 
             }
         };
 
-        handleResize(); // Установить значение при первом рендере
-
-        window.addEventListener('resize', handleResize); // Добавляем слушатель изменения размера окна
-        return () => window.removeEventListener('resize', handleResize); // Удаляем слушатель при размонтировании
+        handleResize(); 
+        window.addEventListener('resize', handleResize); 
+        return () => window.removeEventListener('resize', handleResize); 
     }, []);
 
     return (

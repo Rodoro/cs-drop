@@ -88,10 +88,10 @@ const columns = [
     { key: "isVisible" as keyof LootCases, label: "Is Visible"}, 
 ];
     return (
-        <div style={{ height: loading ? 400 : loots.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
+        <div style={{ height: loading ? 400 : loots.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-60 lg:ml-[270px] max-md:ml-[0px] md:mt-8 mb-8 ">
         <div className = "flex justify-between">
-            <Button2 className="px-2 mb-6" onClick={() => router.push("/admin/batches/create")}>+ Create Loot case</Button2>
-            <Button className='max-md:hidden' onClick={() => { authService.logout(); window.location.reload(); }}>
+            <Button2 className="px-2 mb-6 max-md:w-full" onClick={() => router.push("/admin/batches/create")}>+ Create Loot case</Button2>
+            <Button className='max-md:hidden ' onClick={() => { authService.logout(); window.location.reload(); }}>
                 <p className='mr-[10px]'>Exit</p>
                 <FaDoorOpen className=''/>
             </Button>

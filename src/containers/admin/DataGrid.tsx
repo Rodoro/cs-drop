@@ -6,7 +6,7 @@ import { RxCross2 } from "react-icons/rx";
 import { IoCheckmarkSharp } from "react-icons/io5";
 import ChooseRows from '@/components/interface/admin/ChooseRows';
 import Select from '@/components/interface/admin/Select';
-
+import Image from 'next/image'
 
 type DataRow = { 
     [key: string]: any; 
@@ -96,19 +96,19 @@ const DataGrid = <T extends DataRow>({ data, columns }: DataGridProps<T>) => {
 
     return (
         <div className="space-y-2 ">
-        <div className="overflow-hidden"> {/* Добавляем overflow-hidden */}
+        <div className="overflow-hidden"> 
             <div className='grid' style={{
                 gridTemplateColumns: `repeat(${columns.length + 1}, 1fr)`,
                 gridTemplateRows: `repeat(${displayedData.length + 1}, 1fr)`,
             }}>
-                <div className={`h-[60px] flex items-center pl-[12px] mb-[10px] rounded-l-[15px] bg-[#7E50FF33]`}>
+                <div className={`h-[60px] flex items-center pl-[12px] mb-[10px] rounded-l-[15px] bg-[#1B1E4F] border-l-[1px] border-[#3A3269] border-b-[1px] border-t-[1px]`}>
                     <Select onChange={handleSelectAll} />
                 </div>
 
                 {columns.map(({ key, label }, colIndex) => (
                     <div
                         key={key.toString()}
-                        className={`h-[60px] flex items-center mb-[10px] bg-[#7E50FF33] ${colIndex === columns.length - 1 ? 'rounded-r-[15px]' : ''}`}
+                        className={`h-[60px] flex items-center mb-[10px] bg-[#1B1E4F] border-b-[1px] border-t-[1px] border-[#3A3269] ${colIndex === columns.length - 1 ? 'rounded-r-[15px] border-r-[1px] border-[#3A3269] border-b-[1px] border-t-[1px]' : ''}`}
                     >
                         {label}
                     </div>
@@ -116,7 +116,7 @@ const DataGrid = <T extends DataRow>({ data, columns }: DataGridProps<T>) => {
 
                 {displayedData.map((row, rowIndex) => (
                     <React.Fragment key={row.id}>
-                        <div className={`h-[60px] flex items-center mb-[10px] pl-[12px] ${rowIndex === displayedData.length - 1 ? 'rounded-bl-[15px]' : ''} rounded-l-[15px] ${selectedRows.has(row.id) ? 'bg-[#7E50FF33]' : ''}`}>
+                        <div className={`h-[60px] flex items-center mb-[10px] pl-[12px] ${rowIndex === displayedData.length - 1 ? 'rounded-l-[15px] ' : ''}  border-[#3A3269] ${selectedRows.has(row.id) ? 'bg-[#7E50FF33]' : ''}`}>
                             <Select
                                 checked={selectedRows.has(row.id)}
                                 onChange={() => handleSelectRow(row.id)}
@@ -130,9 +130,9 @@ const DataGrid = <T extends DataRow>({ data, columns }: DataGridProps<T>) => {
                                 {key === 'imageUrl' ? (
                                     <img
                                         src={row[key].replace(/ /g, '%20')}
-                                        alt={row.title} // или любое другое значение, отвечающее за название
-                                        style={{ width: '50px', height: '50px', objectFit: 'cover' }} // меняйте размеры, по необходимости
-                                        onError={(e) => { e.currentTarget.src = 'fallback-image-url'; }} // замените на своего URL
+                                        alt={row.title} 
+                                        style={{ width: '50px', height: '50px', objectFit: 'cover' }} 
+                                        onError={(e) => { e.currentTarget.src = 'fallback-image-url'; }}
                                     />
                                 ) : (
                                     typeof row[key] === 'boolean' ? (
@@ -153,38 +153,40 @@ const DataGrid = <T extends DataRow>({ data, columns }: DataGridProps<T>) => {
                 ))}
             </div>
         </div>
-        <div className='h-[1px] w-[100%] bg-[#aabcf977]'></div>
-            <div className="flex justify-between items-center h-[32px] my-[20px]">
-                <div className="text-[#AABCF9] ml-[40px] py-[3px]">
+        <div className='h-[1px] w-full bg-[#aabcf977]'></div>
+            <div className="flex justify-between items-center h-[32px] my-[20px] w-full">
+                <div className="max-sm:hidden text-[#AABCF9] ml-[40px] py-[3px]">
                     {data.length} rows selected
                 </div>
-                <div className="flex items-center mr-[40px]">
+                <div className="flex sm:items-center max-sm:justify-between max-sm:w-full ">
                     <div className="flex items-center mr-[25px]">
                         <div className="text-white mr-[10px]">Rows per page:</div>
                         <ChooseRows onChange={setRowsPerPage} />
                     </div>
-                    <button
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 1}
-                        className="text-white inline-flex items-center justify-center"
-                    >
-                        <IoIosArrowBack />
-                    </button>
-                    <div className="cursor-pointer inline-flex items-center justify-center ml-[15px] mr-[15px] text-white w-[32px] h-[32px] bg-[#7E50FF] shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] rounded-lg text-center">
-                        {currentPage}
+                    <div >
+                        <button
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === 1}
+                            className="text-white inline-flex items-center justify-center"
+                        >
+                            <IoIosArrowBack />
+                        </button>
+                        <div className="cursor-pointer inline-flex items-center justify-center ml-[15px] mr-[15px] text-white w-[32px] h-[32px] bg-[#7E50FF] shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] rounded-lg text-center">
+                            {currentPage}
+                        </div>
+                        {totalPages > 1 && (
+                        <div className="cursor-pointer inline-flex items-center justify-center w-[32px] h-[32px] text-white rounded-lg text-center bg-[#22276E99] mr-[15px]">
+                            ...
+                        </div>
+                        )}
+                        <button
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                            className="text-white inline-flex items-center justify-center"
+                        >
+                            <IoIosArrowForward />
+                        </button>
                     </div>
-                    {totalPages > 1 && (
-                    <div className="cursor-pointer inline-flex items-center justify-center w-[32px] h-[32px] text-white rounded-lg text-center bg-[#22276E99] mr-[15px]">
-                        ...
-                    </div>
-                    )}
-                    <button
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage === totalPages}
-                        className="text-white inline-flex items-center justify-center"
-                    >
-                        <IoIosArrowForward />
-                    </button>
                 </div>
             </div>
         </div>

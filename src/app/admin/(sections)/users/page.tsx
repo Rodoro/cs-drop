@@ -38,7 +38,7 @@ const UsersPage = () => {
     ];
 
     return (
-        <div style={{ height: users.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
+        <div style={{ height: users.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-60 lg:ml-[270px] max-md:ml-[0px] md:mt-8 mb-8 ">
             <div className = "flex justify-end">
                 <Button className='max-md:hidden' onClick={() => { authService.logout(); window.location.reload(); }}>
                     <p className='mr-[10px]'>Exit</p>
