@@ -97,17 +97,13 @@ const BatchesPage = () => {
     return item ? item.name : null;
   };
 
-  
-
-
   const columns = [
-    { key: "id" as keyof Game, label: "ID" },
+    { key: "id" as keyof Game, label: "ID" },                 
     { key: "name" as keyof Game, label: "Game" },
-    {
-      key: "sort" as keyof Batch, 
-      label: "Sort"
-    },
-  ];
+    { key: "title" as keyof Batch, label: "Name"},
+    { key: "sort" as keyof Batch, label: "Sort" },
+  ]
+
 
   return (
     <div style={{ height: games.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-60 lg:ml-[270px] max-md:ml-[0px] md:mt-8 mb-8 ">
