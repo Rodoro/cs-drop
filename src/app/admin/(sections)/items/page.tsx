@@ -54,8 +54,8 @@ const ItemsPage = () => {
     ];
 
     return (
-        <div style={{ height: loading ? 400 : items.length === 0 ? 400 : 'auto', width: '100%' }} className="mt-20 mr-8 ml-8 md:ml-60 lg:ml-[270px] max-md:ml-[0px] md:mt-8 mb-8 ">
-            <div className = "flex justify-end">
+        <div className="mt-20 mr-8 ml-8 md:ml-60 lg:ml-[270px] max-md:ml-[0px] md:mt-8 mb-8 ">
+            <div className = "flex justify-end mb-[50px]">
                 <Button className='max-md:hidden' onClick={() => { authService.logout(); window.location.reload(); }}>
                     <p className='mr-[10px]'>Exit</p>
                     <FaDoorOpen className=''/>
