@@ -46,7 +46,7 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible, onClose, className }) => {
 
     return (
         <div
-            className={`w-[273px] max-md:w-full bg-[#0A0D1D33] z-[2] h-full fixed left-0 top-0 px-[40px] py-[35px] transition-transform duration-300 ${isVisible ? 'translate-x-0' : '-translate-x-full'} ${className}`}
+            className={`w-[273px] max-md:w-full  max-md:h-[90%] max-md:absolute max-md:top-[10%] md:bg-[#0A0D1D33] z-[2] h-full fixed left-0 top-0 px-[40px] py-[35px] transition-transform duration-300 ${isVisible ? 'translate-x-0' : '-translate-x-full'} ${className}`}
         >
             <div className='flex justify-between items-center mb-[40px] max-md:hidden'>
                 <Link href="/">
@@ -54,17 +54,9 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible, onClose, className }) => {
                         src='/img/interface/nav/logo+text.png'
                         alt="Логотип"
                         width={180}
-                        height={40}
+                        height={60}
                     />
                 </Link>
-            </div>
-            <div className='md:hidden flex justify-between mb-[50px]'>
-                <div><Image src='/img/interface/nav/logo.png' alt="Логотип" width={39} height={41}/></div>
-                <div>
-                    <button onClick={onClose}>
-                        <RxCross2 className='text-white text-[32px]' />
-                    </button>
-                </div>
             </div>
             <div>
                 <div className='mb-[10px]'>

@@ -104,7 +104,6 @@ const DataGrid = <T extends DataRow>({ data, columns }: DataGridProps<T>) => {
                 <div className={`h-[60px] flex items-center pl-[12px] mb-[10px] rounded-l-[15px] bg-[#1B1E4F] border-l-[1px] border-[#3A3269] border-b-[1px] border-t-[1px]`}>
                     <Select onChange={handleSelectAll} />
                 </div>
-
                 {columns.map(({ key, label }, colIndex) => (
                     <div
                         key={key.toString()}

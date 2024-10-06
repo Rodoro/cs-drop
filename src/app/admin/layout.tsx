@@ -5,6 +5,7 @@ import React, { useEffect, useState} from 'react'
 import Button from '@/components/interface/Button'
 import { authService } from '@/services/auth/auth.services';
 import { FaDoorOpen } from "react-icons/fa6";
+import { RxCross2 } from "react-icons/rx"
 import { BsListNested } from "react-icons/bs";
 
 export default function DashboardLayout({
@@ -13,15 +14,6 @@ export default function DashboardLayout({
     children: React.ReactNode
 }) {
     const router = useRouter();
-    // const { status: sessionStatus } = useSession();
-
-    // if (sessionStatus === "loading") {
-    //     return <h1 className="flex min-h-screen flex-col items-center mt-6">Загрузка...</h1>
-    // }
-    // if (sessionStatus === "unauthenticated") {
-    //     router.replace("/login");
-    // }
-
     const [isNavVisible, setIsNavVisible] = useState(false); 
     const toggleNavbar = () => setIsNavVisible((prev) => !prev);  
 
@@ -46,7 +38,9 @@ export default function DashboardLayout({
                 <div className='w-[511px] h-[511px] rounded-full bg-[#C51FFF] absolute z-[-1] top-[-114px] left-[-76px] blur-[130px] opacity-25'></div>
             </div>
             <div>
-                <Navbar isVisible={isNavVisible} onClose={toggleNavbar} className = 'max-lg:w-[240px]'/>
+                <div className={`transition-opacity duration-300 ${isNavVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                    {isNavVisible && <Navbar isVisible={isNavVisible} onClose={toggleNavbar} className='max-lg:w-[240px] items-end' />}
+                </div>
                 <div>
                     <div className="flex flex-row md:justify-end mt-[40px]">
                         <div className='flex justify-between w-full'>
@@ -54,15 +48,24 @@ export default function DashboardLayout({
                                 <img src='/img/interface/nav/logo.png' alt="Логотип" width={'39px'} height={'41px'} />
                             </div>
                             <div className='inline-block'>
-                                <button onClick={toggleNavbar}>
-                                    <BsListNested className='inline-block text-[32px] md:hidden' />
+                                <button onClick={toggleNavbar} className={`transition-transform duration-300`}>
+                                    {isNavVisible ? (
+                                        <RxCross2 className='inline-block text-[32px] md:hidden transform transition-transform duration-300' />
+                                    ) : (
+                                        <BsListNested className='inline-block text-[32px] md:hidden transform transition-transform duration-300' />
+                                    )}
                                 </button>
                             </div>
                         </div>
                     </div>
-                    {children}
+                    <div className='md:hidden'>
+                        {!isNavVisible && children}
+                    </div>
+                    <div className='max-md:hidden'>
+                        {children}
+                    </div>
                 </div>
             </div>
         </section>
-    )
+    );
 }

@@ -201,7 +201,7 @@ const CreateBatches = () => {
                 </tr>
             </tbody>
         </table>
-            <div className='flex flex-row justify-end space-x-3 mt-4'>
+            <div className='flex flex-row justify-end space-x-3 mt-4 block'>
                 <Button onClick={() => router.push("/admin/batches")}>Cancel</Button>
                 <Button3 className='bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] justify-center w-[110px]' onClick={() => handleSubmitAndMain()}>Create</Button3>
                 <Button3 className='bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] justify-center w-[203px]' onClick={handleSubmitAndNew}>Create and Open New</Button3>
