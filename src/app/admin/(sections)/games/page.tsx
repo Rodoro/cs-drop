@@ -68,6 +68,7 @@ const GamesPage = () => {
             <DataGrid
                 data={modifiedGames} 
                 columns={columns}
+                showSettingsButton={true}
             />
         </div>
     )

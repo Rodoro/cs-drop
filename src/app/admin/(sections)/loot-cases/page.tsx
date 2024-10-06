@@ -99,6 +99,9 @@ const columns = [
             <DataGrid
                 data={loots}  
                 columns={columns}
+                showDeleteButton={true} 
+                showSettingsButton={true}
+                showStillButton={true}
             />
         </div>
     )

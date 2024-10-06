@@ -9,7 +9,7 @@ type DeleteProps = {
 const Delete: React.FC<DeleteProps> = ({ onClick }) => {
     return (
         <button onClick={onClick}>
-            <MdDelete />
+            <MdDelete className=" text-[20px]" />
         </button>
     );
 }
