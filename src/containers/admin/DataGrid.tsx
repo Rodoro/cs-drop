@@ -131,7 +131,7 @@ const DataGrid = <T extends DataRow>({ data, columns, showDeleteButton = false, 
                             {columns.map(({ key }, colIndex) => (
                                 <div
                                     key={`${row.id}-${colIndex}`}
-                                    className={`h-[60px] flex items-center mb-[10px] ${colIndex === columns.length - 1 ? 'rounded-r-[15px]' : ''} ${selectedRows.has(row.id) ? 'bg-[#7E50FF33]' : ''}`}
+                                    className={`h-[60px] flex items-center mb-[10px]  ${selectedRows.has(row.id) ? 'bg-[#7E50FF33]' : ''}`}
                                 >
                                     {key === 'imageUrl' ? (
                                         <img
