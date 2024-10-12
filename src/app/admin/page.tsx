@@ -13,6 +13,7 @@ const page = () => {
                     <p className='mr-[10px]'>Exit</p>
                     <FaDoorOpen className=''/>
                 </Button>
+                {/* //FIX: Перенести в лояут и сделать как компонент  */}
             </div>
         </div>
     )

@@ -46,6 +46,7 @@ export default function DashboardLayout({
                         <div className='flex justify-between w-full'>
                             <div className='inline-block md:hidden'>
                                 <img src='/img/interface/nav/logo.png' alt="Логотип" width={'39px'} height={'41px'} />
+                                {/* //FIX: В отдельный компонент и использовать от next */}
                             </div>
                             <div className='inline-block'>
                                 <button onClick={toggleNavbar} className={`transition-transform duration-300`}>
@@ -58,6 +59,7 @@ export default function DashboardLayout({
                             </div>
                         </div>
                     </div>
+                    {/* //FIX: Обьяснить и исправить этот ужас (у тебя нагрузка из-за этого х2)*/}
                     <div className='md:hidden'>
                         {!isNavVisible && children}
                     </div>

@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link'
-import React, {ForwardRefRenderFunction , ForwardedRef, useImperativeHandle, forwardRef, useRef} from 'react'
+import React, { ForwardRefRenderFunction, ForwardedRef, useImperativeHandle, forwardRef, useRef } from 'react'
 import Image from 'next/image'
 import Button from '@/components/interface/admin/Buttоn';
 import Button1 from '@/components/interface/Button'
@@ -22,6 +22,20 @@ interface NavbarProps {
     onClose: () => void;
     className?: string;
 }
+
+const menu = [
+    {
+        link: 'href',
+        icon: <IoIosDocument />,
+        name: 'Name'
+    },
+    {
+        link: 'href',
+        icon: <IoIosDocument />,
+        name: 'Name'
+    },
+]
+//FIX: Переделать в массив
 
 const Navbar: React.FC<NavbarProps> = ({ isVisible, onClose, className }) => {
     const pathname = usePathname();
@@ -111,7 +125,7 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible, onClose, className }) => {
                 <div className='md:hidden'>
                     <Button1 className='w-full' onClick={() => { authService.logout(); window.location.reload(); }}>
                         <p className='mr-[10px]'>Exit</p>
-                        <FaDoorOpen className=''/>
+                        <FaDoorOpen className='' />
                     </Button1>
                 </div>
             </div>

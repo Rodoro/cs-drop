@@ -27,11 +27,11 @@ interface DataGridProps<T> {
     showStillButton?: boolean;
 }
 
-interface Column<T> {
-    key: keyof T | string; 
-    label: string;
-    render?: (row: T) => React.ReactNode; 
-}
+// interface Column<T> {
+//     key: keyof T | string; 
+//     label: string;
+//     render?: (row: T) => React.ReactNode; 
+// }
 
 const DataGrid = <T extends DataRow>({ data, columns, showDeleteButton = false, showStillButton = false, showSettingsButton = false }: DataGridProps<T>) => {
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: string } | null>(null);

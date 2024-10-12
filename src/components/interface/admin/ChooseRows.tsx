@@ -30,6 +30,7 @@ const ChooseRows = React.forwardRef<HTMLButtonElement, ChooseRowsProps>((props, 
                 >
                     {selectedValue}
                     {isOpen ? <IoIosArrowUp className="ml-1 transition-transform duration-200" /> : <IoIosArrowDown className="ml-1 transition-transform duration-200" />}
+                    {/* //FIX: Переворот а не новый элемент */}
                 </button>
             </div>
 
@@ -45,6 +46,7 @@ const ChooseRows = React.forwardRef<HTMLButtonElement, ChooseRowsProps>((props, 
                         <a href="#" onClick={() => handleSelect(20)} className="block text-white hover:bg-[#22276E] px-[15px] transition-colors duration-200" role="menuitem">
                             20
                         </a>
+                        {/* //FIX: Зач ссылки? Это минус SEO */}
                     </div>
                 </div>
             )}

@@ -22,5 +22,5 @@ const Button2 = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 
 Button2.displayName = 'Button2'
-
+//FIX: Топ название
 export default Button2

@@ -34,7 +34,7 @@ const Still: React.FC<Settingprops> = ({ onClick1, onClick2 }) => {
                                 bg-[#171741] w-[148px] h-[99px] 
                                 absolute left-0 top-full z-50 rounded-[18px] 
                                 border border-[#FFFFFF26] 
-                                transition-opacity transition-transform 
+                                transition-all 
                                 duration-300 py-[17px] px-[10px]
                                 ${isExiting ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}
                     style={{
@@ -43,6 +43,7 @@ const Still: React.FC<Settingprops> = ({ onClick1, onClick2 }) => {
                     }}
                 >
                     <div>
+                        {/* //FIX: Больше гибкости окну. Сделать где нужно кнопки, где нужно ссылки */}
                         <button onClick={onClick1} className="inline-block mb-[5px] text-[15px]">
                             <IoDocuments className="inline-block"/> <p className="inline-block">Duplicate</p>
                         </button>
