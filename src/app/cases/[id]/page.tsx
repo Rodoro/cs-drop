@@ -34,7 +34,7 @@ const OpenCase = ({ params }: { params: { id: string } }) => {
     const wheelRef2 = useRef<HTMLDivElement>(null);
     const [move, setMove] = useState(0)
 
-    const [images, setImages] = useState(Array.from({ length: 25 }, (_, i) => `/img/example/ak47.png`)
+    const [images, setImages] = useState(Array.from({ length: 35 }, (_, i) => `/img/example/ak47.png`)
         .concat(['/img/example/batman-def.png', '/img/example/ak47.png', '/img/example/ak47.png']));
 
     const { data, isSuccess } = useQuery({
@@ -60,22 +60,23 @@ const OpenCase = ({ params }: { params: { id: string } }) => {
             setPosition('win')
         } else {
             setImages(Object.values(images).map((image, index) => {
-                if (index < 28 && index != 25) {
+                if (index < 38 && index != 34) {
+                    // TODO: Больше рандомного дропа в спине
                     const randomItem = lootCase.items[Math.floor(Math.random() * lootCase.items.length)];
                     return randomItem.image;
-                } else if (index == 25) {
+                } else if (index == 34) {
                     return res.image
                 } else {
                     return image
                 }
             }))
             setPosition('spin')
-            setMove(-200 * 23);
+            setMove(-200 * 32);
             // if (wheelRef2.current) console.log(wheelRef2.current.clientWidth)
             let timeoutId: NodeJS.Timeout;
             timeoutId = setTimeout(() => {
                 setPosition('win')
-            }, 4500);
+            }, 20500);
         }
     }
 
@@ -154,8 +155,8 @@ const OpenCase = ({ params }: { params: { id: string } }) => {
                     </div>
                 }
             </div>
-            <div ref={wheelRef2} className={(position == 'spin' ? " " : " hidden ") + ' flex gap-7 flex-col items-center justify-center'}>
-                <div className='relative bg-[url(/img/interface/bg/case-win.png)] max-w-[1101px] w-full bg-center bg-no-repeat h-[250px] rounded-[30px]' style={{ backgroundSize: "auto 100%" }}>
+            <div ref={wheelRef2} className={(position == 'spin' ? " " : " hidden ") + ' mb-[650px] relative flex gap-7 flex-col items-center justify-center'}>
+                <div className='relative bg-[url(/img/interface/bg/case-win.png)] max-w-[1101px] z-[1] w-full bg-center bg-no-repeat h-[250px] rounded-[30px]' style={{ backgroundSize: "auto 100%" }}>
                     <div className={'w-full h-full overflow-hidden flex items-center'}>
                         <div ref={wheelRef} className={style.container + ' scroler relative left-0 inline-flex m-auto'}>
                             {Object.values(images).map((image, index) => (
@@ -179,6 +180,14 @@ const OpenCase = ({ params }: { params: { id: string } }) => {
                         <div className="text-gray-50 text-center text-sm font-semibold leading-[normal]">Skip animation</div>
                     </GradientButton2>
                 </div>
+                {/* <video width="1282" autoPlay playsInline muted preload='none' loop >
+                    <source src="/video/open-case.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video> */}
+                <Image
+                    src={'/img/example/open-case.png'} alt={'maskot'} width={'1228'} height={120}
+                    className='absolute -top-9 right-0 left-2 m-auto'
+                />
             </div>
             <div className={(position == 'win' ? '' : 'hidden ') + 'flex flex-col items-center justify-center w-full gap-7'}>
                 <div className='-z-10 relative bg-[url(/img/interface/bg/case-win.png)] max-w-[1101px] w-full bg-center bg-no-repeat rounded-[30px] py-5 items-center justify-center flex' style={{ backgroundSize: "auto 100%" }}>
@@ -214,6 +223,7 @@ const OpenCase = ({ params }: { params: { id: string } }) => {
                     </GradientButton2>
                 </div>
             </div>
+            {/* footer */}
             <div className="my-8 flex items-center gap-1.5 opacity-[0.6]">
                 <svg width={21} height={22} viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M8.56784 3.92672V5.37572H12.4318V3.92672C12.4318 3.79862 12.381 3.67577 12.2904 3.58519C12.1998 3.49461 12.0769 3.44372 11.9488 3.44372H9.05084C8.92274 3.44372 8.79989 3.49461 8.70931 3.58519C8.61873 3.67577 8.56784 3.79862 8.56784 3.92672ZM6.63584 5.37572V3.92672C6.63584 2.59364 7.71776 1.51172 9.05084 1.51172H11.9488C13.2819 1.51172 14.3638 2.59364 14.3638 3.92672V5.37572H16.2958C17.3206 5.37572 18.3035 5.78282 19.0281 6.50746C19.7527 7.2321 20.1598 8.21492 20.1598 9.23972V10.2057C20.1598 10.9743 19.8545 11.7114 19.311 12.2549C18.7676 12.7984 18.0304 13.1037 17.2618 13.1037H12.4318V12.1377C12.4318 11.8815 12.3301 11.6358 12.1489 11.4547C11.9677 11.2735 11.722 11.1717 11.4658 11.1717H9.53384C9.27764 11.1717 9.03194 11.2735 8.85078 11.4547C8.66962 11.6358 8.56784 11.8815 8.56784 12.1377V13.1037H3.73784C2.96925 13.1037 2.23213 12.7984 1.68865 12.2549C1.14517 11.7114 0.839844 10.9743 0.839844 10.2057V9.23972C0.839844 8.21492 1.24694 7.2321 1.97158 6.50746C2.69622 5.78282 3.67905 5.37572 4.70384 5.37572H6.63584ZM0.839844 14.0697V16.9677C0.839844 17.9925 1.24694 18.9753 1.97158 19.7C2.69622 20.4246 3.67905 20.8317 4.70384 20.8317H16.2958C17.3206 20.8317 18.3035 20.4246 19.0281 19.7C19.7527 18.9753 20.1598 17.9925 20.1598 16.9677V14.0697C19.3523 14.6764 18.3496 15.0357 17.2618 15.0357H12.4318V16.0017C12.4318 16.2579 12.3301 16.5036 12.1489 16.6848C11.9677 16.8659 11.722 16.9677 11.4658 16.9677H9.53384C9.27764 16.9677 9.03194 16.8659 8.85078 16.6848C8.66962 16.5036 8.56784 16.2579 8.56784 16.0017V15.0357H3.73784C2.69253 15.0373 1.67517 14.6981 0.839844 14.0697Z" fill="white" />
