@@ -103,13 +103,13 @@ const Navbar = () => {
               <div className='flex flex-row gap-7 items-center'>
                 <SelectLanguage />
                 {/* TODO: Вернуть навбар в обратное состояние */}
-                {!user ?
+                {user ?
                   <>
                     <PurpurButon2 href='/payment'>
                       <span className='text-xl font-bold'>+</span>
                       Deposit
                     </PurpurButon2>
-                    {/* <Profile images={user.image} /> */}
+                    <Profile images={user.image} />
                     <SettingsButton />
                     <EarnMoneyButton />
                   </> :
