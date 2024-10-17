@@ -33,7 +33,7 @@ export default function useMenuAnimation(isOpen: boolean) {
           delay: isOpen ? staggerMenuItems : 0,
         }
       );
-    },  [animate]);
+    },  [isOpen]);
   
     return scope;
   }

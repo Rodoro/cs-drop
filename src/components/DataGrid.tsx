@@ -2,7 +2,7 @@
 import React, { useState} from 'react'
 import { IoIosArrowBack } from "react-icons/io"
 import { IoIosArrowForward } from "react-icons/io"
-import { Select } from './interface/admin/Select'
+import  Select  from './interface/admin/Select'
 import ChooseRows  from  './interface/admin/ChooseRows'
 
 
