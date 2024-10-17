@@ -7,8 +7,6 @@ import { Batch, Game } from '@/types/admin.interface';
 import Button2 from '@/components/interface/admin/Button2';
 import { useRouter } from 'next/navigation';
 import { axiosWithAuthAdmin } from '@/api/intreceptors';
-import Delete from '@/components/interface/admin/Delete';
-import Setting from '@/components/interface/admin/Still';
 import Button from '@/components/interface/Button'
 import { authService } from '@/services/auth/auth.services';
 import { FaDoorOpen } from "react-icons/fa6";

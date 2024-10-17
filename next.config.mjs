@@ -3,6 +3,14 @@ const nextConfig = {
     experimental: {
         missingSuspenseWithCSRBailout: false,
     },
+    eslint: {
+        rules: {
+            'next/no-img-element': 'off',
+        },
+    },
+    experimental: {
+        buildCache: true,
+    },
     images: {
         remotePatterns: [
             {
