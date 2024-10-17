@@ -9,6 +9,7 @@ import Select from '@/components/interface/admin/Select';
 import Delete from '@/components/interface/admin/Delete';
 import Setting from '@/components/interface/admin/Setting';
 import Still from '@/components/interface/admin/Still';
+import Image from 'next/image'
 
 type DataRow = { 
     [key: string]: any; 
@@ -148,7 +149,7 @@ const DataGrid = <T extends DataRow>({
                                     className={`h-[60px] flex items-center mb-[10px]  ${selectedRows.has(row.id) ? 'bg-[#7E50FF33]' : ''}`}
                                 >
                                     {key === 'imageUrl' ? (
-                                        <img 
+                                        <Image
                                             src={row[key].replace(/ /g, '%20')}
                                             alt={row.title}
                                             style={{ width: '50px', height: '50px', objectFit: 'cover' }}
