@@ -117,7 +117,11 @@ const CreateBatches = () => {
                             value={title} 
                             onChange={e => setTitle(e.target.value)} 
                             required 
-                            className=" focus:outline-none flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                            style={{
+                                border: '1px solid transparent',
+                                background: 'linear-gradient(#18173D, #18173D) padding-box, linear-gradient(to top, #FFFFFF01, #FFFFFF26) border-box',
+                            }}
+                            className=" focus:outline-none flex flex-row border text-sm rounded-2xl h-[51px] w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
                         />
                     </td>
                 </tr>
@@ -127,12 +131,16 @@ const CreateBatches = () => {
                         <select 
                             value={selectGame} 
                             onChange={e => setSelectGame(e.target.value)} 
-                            required 
-                            className="flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] focus:text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                            required
+                            style={{
+                                border: '1px solid transparent',
+                                background: 'linear-gradient(#18173D, #18173D) padding-box, linear-gradient(to top, #FFFFFF01, #FFFFFF26) border-box',
+                            }}
+                            className="flex flex-row focus:outline-none border text-sm text-[#AABCF9] rounded-2xl w-full h-[51px] p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] focus:text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
                         >
-                            <option className='bg-[#191434] focus:outline-none ' value='' disabled>-/-</option>
+                            <option className='bg-[#191434] focus:outline-none text-[#AABCF9]' value='' disabled>-/-</option>
                             {games.map((game) => (
-                                <option className='bg-[#191434] ' key={game.id} value={game.id}>
+                                <option className='bg-[#191434] border' key={game.id} value={game.id}>
                                     {game.name}
                                 </option>
                             ))}
@@ -147,7 +155,11 @@ const CreateBatches = () => {
                             value={sort} 
                             onChange={e => setSort(e.target.value)} 
                             required 
-                            className="focus:outline-none flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                            style={{
+                                border: '1px solid transparent',
+                                background: 'linear-gradient(#18173D, #18173D) padding-box, linear-gradient(to top, #FFFFFF01, #FFFFFF26) border-box',
+                            }}
+                            className="focus:outline-none flex flex-row border text-sm text-[#AABCF9] rounded-2xl w-full h-[51px] p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9]  focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
                         />
                     </td>
                 </tr>
@@ -155,10 +167,10 @@ const CreateBatches = () => {
                     <td className="px-6 py-4 whitespace-nowrap">Title locales *</td>
                     <td className="px-6 py-4 whitespace-nowrap flex flex-col space-y-3">
                         <table className="w-full">
-                            <thead>
-                                <tr>
-                                    <th>Language</th>
-                                    <th>Title</th>
+                            <thead className=''>
+                                <tr className=''>
+                                    <th className=''>Language:</th>
+                                    <th className=''>Title:</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -169,7 +181,11 @@ const CreateBatches = () => {
                                                 value={locale.title} 
                                                 onChange={e => handleChangeTitle(index, e.target.value)} 
                                                 required 
-                                                className=" focus:outline-none flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                                                style={{
+                                                    border: '1px solid transparent',
+                                                    background: 'linear-gradient(#18173D, #18173D) padding-box, linear-gradient(to right, #242447, #1B1D41) border-box',
+                                                }}
+                                                className=" focus:outline-none flex flex-row border text-sm text-[#AABCF9] rounded-2xl w-full h-[51px] p-2.5 m-[3px] bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9]  focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
                                             />
                                         </td>
                                         <td>
@@ -177,13 +193,17 @@ const CreateBatches = () => {
                                                 value={locale.text} 
                                                 onChange={e => handleChangeText(index, e.target.value)} 
                                                 required 
-                                                className=" focus:outline-none flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                                                style={{
+                                                    border: '1px solid transparent',
+                                                    background: 'linear-gradient(#18173D, #18173D) padding-box, linear-gradient(to right, #242447, #1B1D41) border-box',
+                                                }}
+                                                className=" focus:outline-none flex flex-row border text-sm text-[#AABCF9] rounded-2xl w-full h-[51px] p-2.5 m-[3px] bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9]  focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
                                             />
                                         </td>
                                         <td>
                                         <button 
                                             onClick={() => handleDeleteRow(index)} 
-                                            className='text-red-700 ml-3 p-1 px-3 rounded-full border-2'
+                                            className='text-red-700 ml-3 p-1 px-3 rounded-full w-[37px] h-[37px] border-2'
                                             style={{
                                                 border: '1px solid transparent',
                                                 background: 'linear-gradient(#2A1B36, #2A1B36) padding-box, linear-gradient(to right, #6A3B4D, #38223C) border-box',

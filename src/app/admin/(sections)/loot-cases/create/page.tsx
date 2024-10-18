@@ -134,7 +134,11 @@ const LootCreate = () => {
                             value={title} 
                             onChange={e => setTitle(e.target.value)} 
                             required 
-                            className="placeholder-[#AABCF9] text-[#AABCF9] focus:outline-none flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                            style={{
+                                border: '1px solid transparent',
+                                background: 'linear-gradient(#18173D, #18173D) padding-box, linear-gradient(to top, #FFFFFF01, #FFFFFF26) border-box',
+                            }}
+                            className=" focus:outline-none flex flex-row border text-sm rounded-2xl h-[51px] w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
                         />
                         </td>
                     </tr>
@@ -152,10 +156,28 @@ const LootCreate = () => {
                                     {locales.map((locale, index) => (
                                         <tr key={index}>
                                             <td>
-                                                <input value={locale.title} onChange={e => handleChangeTitle(index, e.target.value)} required className="focus:outline-none flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" />
+                                                <input 
+                                                    value={locale.title} 
+                                                    onChange={e => handleChangeTitle(index, e.target.value)}
+                                                    required 
+                                                    style={{
+                                                        border: '1px solid transparent',
+                                                        background: 'linear-gradient(#18173D, #18173D) padding-box, linear-gradient(to top, #FFFFFF01, #FFFFFF26) border-box',
+                                                    }}
+                                                    className=" focus:outline-none flex flex-row border text-sm rounded-2xl h-[51px] w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                                                />
                                             </td>
                                             <td>
-                                                <input value={locale.text} onChange={e => handleChangeText(index, e.target.value)} required className="focus:outline-none flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" />
+                                                <input 
+                                                value={locale.text} 
+                                                onChange={e => handleChangeText(index, e.target.value)} 
+                                                required 
+                                                style={{
+                                                    border: '1px solid transparent',
+                                                    background: 'linear-gradient(#18173D, #18173D) padding-box, linear-gradient(to top, #FFFFFF01, #FFFFFF26) border-box',
+                                                }}
+                                                className=" focus:outline-none flex flex-row border text-sm rounded-2xl h-[51px] w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                                                />
                                             </td>
                                             <td>
                                                 <button 
@@ -179,21 +201,49 @@ const LootCreate = () => {
                     <tr className="bg-[#0A0D1D4D] rounded-lg">
                         <td className="px-6 py-4 whitespace-nowrap">Image URL *</td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                            <input value={imgUrl} onChange={e => setImgUrl(e.target.value)} required className="focus:outline-none flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]">
+                            <input 
+                                value={imgUrl} 
+                                onChange={e => setImgUrl(e.target.value)} 
+                                required 
+                                style={{
+                                    border: '1px solid transparent',
+                                    background: 'linear-gradient(#18173D, #18173D) padding-box, linear-gradient(to top, #FFFFFF01, #FFFFFF26) border-box',
+                                }}
+                                className=" focus:outline-none flex flex-row border text-sm rounded-2xl h-[51px] w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                            >
                             </input>
                         </td>
                     </tr>
                     <tr className="bg-[#0A0D1D4D]  rounded-lg">
                         <td className="px-6 py-4 whitespace-nowrap">Image hover URL *</td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                            <input value={imgHoverUrl} onChange={e => setImgHoverUrl(e.target.value)} required className="focus:outline-none flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]">
+                            <input 
+                            value={imgHoverUrl} 
+                            onChange={e => setImgHoverUrl(e.target.value)} 
+                            required 
+                            style={{
+                                border: '1px solid transparent',
+                                background: 'linear-gradient(#18173D, #18173D) padding-box, linear-gradient(to top, #FFFFFF01, #FFFFFF26) border-box',
+                            }}
+                            className=" focus:outline-none flex flex-row border text-sm rounded-2xl h-[51px] w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                            >
                             </input>
                         </td>
                     </tr>
                     <tr className="bg-[#0A0D1D4D] b rounded-lg">
                         <td className="px-6 py-4 whitespace-nowrap">Price *</td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                            <input value={price} onChange={e => setPrice(e.target.value)} required type="number" className="focus:outline-none flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]">
+                            <input 
+                            value={price}
+                            onChange={e => setPrice(e.target.value)} 
+                            required 
+                            type="number" 
+                            style={{
+                                border: '1px solid transparent',
+                                background: 'linear-gradient(#18173D, #18173D) padding-box, linear-gradient(to top, #FFFFFF01, #FFFFFF26) border-box',
+                            }}
+                            className=" focus:outline-none flex flex-row border text-sm rounded-2xl h-[51px] w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                            >
                             </input>
                         </td>
                     </tr>

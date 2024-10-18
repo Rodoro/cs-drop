@@ -25,7 +25,7 @@ interface NavbarProps {
 
 
 
-const Navbar: React.FC<NavbarProps> = ({ isVisible, onClose, className }) => {
+const Navbar: React.FC<NavbarProps> = ({ isVisible, className }) => {
     const pathname = usePathname();
     const [menu, setMenu] = React.useState([
         {
@@ -55,7 +55,8 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible, onClose, className }) => {
         },
         {
             id: 5,
-            link: '/admin/loot-cases/create',
+            link: '/admin/loot-cases',
+            link2: '/admin/loot-cases/create',
             icon: <GiTrophyCup />,
             name: 'Loot case'
         },
