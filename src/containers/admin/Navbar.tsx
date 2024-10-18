@@ -91,7 +91,7 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible, onClose, className }) => {
             </div>
             <div>
                 {menu.map( menu =>
-                    <div className='mb-[10px]'>
+                    <div className='mb-[10px]' key={menu.id}>
                         <Link href={menu.link}>
                             <Button className={`w-full ${pathname === menu.link || pathname === menu.link2 ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)]':'bg-transparent'}`}>
                                 {menu.icon}<p className='ml-[10px]'>{menu.name}</p> 
