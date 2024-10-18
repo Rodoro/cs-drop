@@ -23,40 +23,57 @@ interface NavbarProps {
     className?: string;
 }
 
-const menu = [
-    {
-        link: 'href',
-        icon: <IoIosDocument />,
-        name: 'Name'
-    },
-    {
-        link: 'href',
-        icon: <IoIosDocument />,
-        name: 'Name'
-    },
-]
-//FIX: Переделать в массив
+
 
 const Navbar: React.FC<NavbarProps> = ({ isVisible, onClose, className }) => {
     const pathname = usePathname();
-    const [mobileOpen, setMobileOpen] = React.useState(false);
-    const [isClosing, setIsClosing] = React.useState(false);
+    const [menu, setMenu] = React.useState([
+        {
+            id: 1,
+            link: '/admin',
+            icon: <GoHomeFill />,
+            name: 'Main'
+        },
+        {
+            id: 2,
+            link: '/admin/batches',
+            link2: '/admin/batches/create',
+            icon: <IoIosDocument />,
+            name: 'Batches'
+        },
+        {
+            id: 3,
+            link: '/admin/games',
+            icon: <IoIosDocument />,
+            name: 'Games'
+        },
+        {
+            id: 4,
+            link: '/admin/items',
+            icon: <HiMiniBriefcase />,
+            name: 'Items'
+        },
+        {
+            id: 5,
+            link: '/admin/loot-cases/create',
+            icon: <GiTrophyCup />,
+            name: 'Loot case'
+        },
+        {
+            id: 6,
+            link: '/admin/staff',
+            icon: <BiSupport />,
+            name: 'Staff'
+        },
+        {
+            id: 7,
+            link: '/admin/users',
+            icon: <FaUsers />,
+            name: 'Users'
+        },
+    ])
 
-    const handleDrawerClose = () => {
-        setIsClosing(true);
-        setMobileOpen(false);
-        onClose(); // Закрываем компонент через onClose при закрытии
-    };
 
-    const handleDrawerTransitionEnd = () => {
-        setIsClosing(false);
-    };
-
-    const handleDrawerToggle = () => {
-        if (!isClosing) {
-            setMobileOpen(!mobileOpen);
-        }
-    };
 
     return (
         <div
@@ -73,55 +90,15 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible, onClose, className }) => {
                 </Link>
             </div>
             <div>
-                <div className='mb-[10px]'>
-                    <Link href="/admin">
-                        <Button className={`w-full ${pathname === '/admin' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)]' : 'bg-transparent'}`}>
-                            <GoHomeFill /><p className='ml-[10px]'>Main</p>
-                        </Button>
-                    </Link>
-                </div>
-                <div className='mb-[10px]'>
-                    <Link href="/admin/batches">
-                        <Button className={`w-full ${pathname === '/admin/batches' || pathname === '/admin/batches/create' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)]' : 'bg-transparent'}`}>
-                            <IoIosDocument /><p className='ml-[10px]'>Batches</p>
-                        </Button>
-                    </Link>
-                </div>
-                <div className='mb-[10px]'>
-                    <Link href="/admin/games">
-                        <Button className={`w-full ${pathname === '/admin/games' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)]' : 'bg-transparent'}`}>
-                            <IoIosDocument /><p className='ml-[10px]'>Games</p>
-                        </Button>
-                    </Link>
-                </div>
-                <div className='mb-[10px]'>
-                    <Link href="/admin/items">
-                        <Button className={`w-full ${pathname === '/admin/items' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}`}>
-                            <HiMiniBriefcase /><p className='ml-[10px]'>Items</p>
-                        </Button>
-                    </Link>
-                </div>
-                <div className='mb-[10px]'>
-                    <Link href="/admin/loot-cases">
-                        <Button className={`w-full ${pathname === '/admin/loot-cases' || pathname === '/admin/loot-cases/create' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}`}>
-                            <GiTrophyCup /><p className='ml-[10px]'>Loot case</p>
-                        </Button>
-                    </Link>
-                </div>
-                <div className='mb-[10px]'>
-                    <Link href="/admin/staff">
-                        <Button className={`w-full ${pathname === '/admin/staff' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}`}>
-                            <BiSupport /><p className='ml-[10px]'>Staff</p>
-                        </Button>
-                    </Link>
-                </div>
-                <div className='mb-[20px]'>
-                    <Link href="/admin/users">
-                        <Button className={`w-full ${pathname === '/admin/users' ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] ' : 'bg-transparent'}`}>
-                            <FaUsers /><p className='ml-[10px]'>Users</p>
-                        </Button>
-                    </Link>
-                </div>
+                {menu.map( menu =>
+                    <div className='mb-[10px]'>
+                        <Link href={menu.link}>
+                            <Button className={`w-full ${pathname === menu.link || pathname === menu.link2 ? 'bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)]':'bg-transparent'}`}>
+                                {menu.icon}<p className='ml-[10px]'>{menu.name}</p> 
+                            </Button>
+                        </Link>
+                    </div>
+                )}
                 <div className='md:hidden'>
                     <Button1 className='w-full' onClick={() => { authService.logout(); window.location.reload(); }}>
                         <p className='mr-[10px]'>Exit</p>
