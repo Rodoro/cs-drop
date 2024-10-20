@@ -147,11 +147,22 @@ const DataGrid = <T extends DataRow>({
                                     ) : (
                                         typeof row[key] === 'boolean' ? (
                                             row[key] === true ? (
-                                                <div className='w-[30px] h-[30px] text-[#7FFF52] flex justify-center items-center rounded-lg bg-[#1E2E35] border border-[#7FFF52A6]'>
+                                                <div
+                                                style={{
+                                                    border: '1px solid transparent',
+                                                    background: 'linear-gradient(#1E2C35, #1E2C35) padding-box, linear-gradient(to top, #223536, #355D3C) border-box',
+                                                }}
+                                                    className='w-[30px] h-[30px] text-[#7FFF52] flex justify-center items-center rounded-lg bg-[#1E2E35] border border-[#7FFF52A6]'
+                                                >
                                                     <IoCheckmarkSharp />
                                                 </div>
                                             ) : (
-                                                <div className='w-[30px] h-[30px] text-[#FF8585] flex justify-center items-center rounded-lg bg-[#2B1B36] border border-[#FF8585A6]'>
+                                                <div
+                                                style={{
+                                                    border: '1px solid transparent',
+                                                    background: 'linear-gradient(#2B1B36, #2B1B36) padding-box, linear-gradient(to top,#33203A, #593348) border-box',
+                                                }}
+                                                className='w-[30px] h-[30px] text-[#FF8585] flex justify-center items-center rounded-lg bg-[#2B1B36] border border-[#FF8585A6]'>
                                                     <RxCross2 />
                                                 </div>
                                             )

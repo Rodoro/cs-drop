@@ -7,6 +7,7 @@ import { Batch, Game } from '@/types/admin.interface';
 import Button2 from '@/components/interface/admin/Button2';
 import { useRouter } from 'next/navigation';
 import { axiosWithAuthAdmin } from '@/api/intreceptors';
+
 import ButtonExit from '@/components/interface/admin/ButtonExit';
 
 const BatchesPage = () => {
@@ -58,6 +59,7 @@ const BatchesPage = () => {
     { key: "title" as keyof Batch, label: "Name" },
     { key: "sort" as keyof Batch, label: "Sort" },
   ];
+
 
   return (
     <div style={{ height: games.length === 0 ? 400 : undefined }} className="mt-20 ml-8 xl:ml-[110px] lg:ml-[250px] md:ml-60 lg:ml-[150px] max-md:ml-[0px] md:mt-8 mb-8 ">
