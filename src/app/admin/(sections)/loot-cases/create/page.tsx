@@ -99,12 +99,27 @@ const LootCreate = () => {
     return (
         <div className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8">
             <ErrorModal status={status} message={message} visible={open} setVisible={setOpen} />
-            <table className="table-auto w-full rounded-lg">
+            <table
+                style={{
+                    border: '1px solid transparent',
+                    background: 'linear-gradient(#141330, #141330) padding-box, linear-gradient(to top, #171833, #3D3456) border-box',
+                }}
+                className="table-auto w-full rounded-lg"
+            >
                 <tbody>
                     <tr className="bg-[#0A0D1D4D]  rounded-lg">
                         <td className="px-6 py-4 whitespace-nowrap">Game *</td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                            <select value={selectGame} onChange={e => setSelectGame(e.target.value)} required className="placeholder-[#AABCF9] focus:outline-none flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]">
+                            <select 
+                                value={selectGame} 
+                                onChange={e => setSelectGame(e.target.value)} 
+                                required 
+                                style={{
+                                    border: '1px solid transparent',
+                                    background: 'linear-gradient(#18173D, #18173D) padding-box, linear-gradient(to top, #FFFFFF01, #FFFFFF26) border-box',
+                                }}
+                                className="text-[#AABCF9]  focus:outline-none flex flex-row border text-sm rounded-2xl h-[51px] w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                                >
                                 <option value='' disabled selected>-/-</option>
                                 {games.map((game) => (
                                     <option key={game.id} value={game.id}>
@@ -117,10 +132,19 @@ const LootCreate = () => {
                     <tr className="bg-[#0A0D1D4D] rounded-lg">
                         <td className="px-6 py-4 whitespace-nowrap">Batch *</td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                            <select value={selectBatch} onChange={e => setSelectBatch(e.target.value)} required className="focus:outline-none flex flex-row border text-sm rounded-lg w-full p-2.5 bg-[#22276E33] border-[#FFFFFF26] placeholder-[#AABCF9] text-[#F9FAFB] focus:bg-[#8B32FC33] focus:border-[#6A12FA]">
-                                <option value='' disabled selected>-/-</option>
-                                {batches.map((batch) => (
-                                    <option key={batch.id} value={batch.id}>
+                            <select 
+                                value={selectBatch} 
+                                onChange={e => setSelectBatch(e.target.value)} 
+                                required 
+                                style={{
+                                    border: '1px solid transparent',
+                                    background: 'linear-gradient(#18173D, #18173D) padding-box, linear-gradient(to top, #FFFFFF01, #FFFFFF26) border-box',
+                                }}
+                                className=" focus:outline-none flex flex-row border text-sm rounded-2xl h-[51px] w-full p-2.5  bg-[#22276E33] border-[#FFFFFF26] text-[#AABCF9] focus:bg-[#8B32FC33] focus:border-[#6A12FA]" 
+                                >
+                                <option value='' disabled selected className='bg-[#22276E]'>-/-</option>
+                                    {batches.map((batch) => (
+                                    <option key={batch.id} value={batch.id} className='bg-[#22276E]'>
                                         {batch.title}
                                     </option>
                                 ))}
@@ -182,7 +206,7 @@ const LootCreate = () => {
                                             <td>
                                                 <button 
                                                     onClick={() => handleDeleteRow(index)}
-                                                    className='text-red-700 ml-3 p-1 px-3 rounded-full border-2'
+                                                    className='text-red-700 ml-3 p-1 px-3 rounded-full w-[37px] h-[37px] border-2'
                                                     style={{
                                                         border: '1px solid transparent',
                                                         background: 'linear-gradient(#2A1B36, #2A1B36) padding-box, linear-gradient(to right, #6A3B4D, #38223C) border-box',

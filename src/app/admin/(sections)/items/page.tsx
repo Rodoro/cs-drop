@@ -5,9 +5,8 @@ import DataGrid from '@/containers/admin/DataGrid';
 import { Item } from '@/types/admin.interface';
 import { useRouter } from 'next/navigation';
 import { axiosWithAuthAdmin } from '@/api/intreceptors';
-import Button from '@/components/interface/Button'
-import { authService } from '@/services/auth/auth.services';
-import { FaDoorOpen } from "react-icons/fa6";
+import ButtonExit from '@/components/interface/admin/ButtonExit';
+import Image from 'next/image'
 
 const ItemsPage = () => {
     const [items, setItems] = useState<Item[]>([]);
@@ -18,7 +17,7 @@ const ItemsPage = () => {
         const fetchData = async () => {
             try {
                 const res = await axiosWithAuthAdmin.get('/admin/items/get-all');
-                console.log("Fetched items:", res.data); // Выводим данные
+                console.log("Fetched items:", res.data); 
                 setItems(res.data);
             } catch (error) {
                 console.error("Ошибка при получении предметов:", error);
@@ -34,32 +33,31 @@ const ItemsPage = () => {
     };
 
     const columns = [
-        { key: "id" as keyof Item, label: "ID" },
-        { key: "game" as keyof Item, label: "Game" },
-        { key: "title" as keyof Item, label: "Title" },
+        { key: 'id', label: 'ID' },
+        { key: 'game', label: 'Game' },
+        { key: 'title', label: 'Title' },
         {
-            key: "imageUrl" as keyof Item,
-            label: "Image",
+            key: 'imageUrl',
+            label: 'Image',
             render: (record: Item) => (
-                <img
-                    src={record.imageUrl.replace(/ /g, '%20')} // Заменяем пробелы на %20
-                    alt={record.title}
-                    style={{ width: 50, height: 50 }}
-                    onError={(e) => { e.currentTarget.src = 'fallback-image-url'; }} // Замените на URL изображения по умолчанию
-                />
+                <Image
+                src={record.imageUrl.replace(/ /g, '%20')}
+                alt={record.title}
+                onError={(e) => {
+                    e.currentTarget.src = 'fallback-image-url';
+                }}
+                style={{ width: 50, height: 50 }}
+            />
             ),
         },
-        { key: "price" as keyof Item, label: "Price" },
-        { key: "rarity" as keyof Item, label: "Rarity" },
+        { key: 'price', label: 'Price' },
+        { key: 'rarity', label: 'Rarity' },
     ];
 
     return (
-        <div className="mt-20 mr-8 ml-8 md:ml-60 lg:ml-[150px] max-md:ml-[0px] md:mt-8 mb-8 ">
+        <div className="mt-20 ml-8 xl:ml-[110px] lg:ml-[250px] md:ml-60 lg:ml-[150px] max-md:ml-[0px] md:mt-8 mb-8 ">
             <div className = "flex justify-end mb-[50px]">
-                <Button className='max-md:hidden' onClick={() => { authService.logout(); window.location.reload(); }}>
-                    <p className='mr-[10px]'>Exit</p>
-                    <FaDoorOpen className=''/>
-                </Button>
+                <ButtonExit/>
             </div>
             <DataGrid
                 data={items}

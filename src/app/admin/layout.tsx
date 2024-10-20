@@ -41,8 +41,8 @@ export default function DashboardLayout({
                     {isNavVisible && <Navbar isVisible={isNavVisible} onClose={toggleNavbar} className='max-lg:w-[240px] items-end' />}
                 </div>
                 <div>
-                    <div className="flex flex-row md:justify-end ">
-                        <div className='flex justify-between w-full'>
+                    <div className="flex flex-row md:justify-end mt-[30px]">
+                        <div className='flex justify-between w-full '>
                             <div className='inline-block md:hidden'>
                                 <Logo/>
                             </div>

@@ -11,7 +11,7 @@ import { HiMiniBriefcase } from "react-icons/hi2";
 import { GiTrophyCup } from "react-icons/gi";
 import { BiSupport } from "react-icons/bi";
 import { FaUsers } from "react-icons/fa";
-import { RxCross2 } from "react-icons/rx"
+import { CgGames } from "react-icons/cg";
 import { FaDoorOpen } from "react-icons/fa6";
 import { authService } from '@/services/auth/auth.services';
 
@@ -44,7 +44,7 @@ const Navbar: React.FC<NavbarProps> = ({ isVisible, className }) => {
         {
             id: 3,
             link: '/admin/games',
-            icon: <IoIosDocument />,
+            icon: <CgGames/>,
             name: 'Games'
         },
         {

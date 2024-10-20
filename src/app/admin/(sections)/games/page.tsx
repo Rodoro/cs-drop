@@ -9,9 +9,7 @@ import {
 } from '@mui/x-data-grid';
 import { useRouter } from 'next/navigation';
 import { axiosWithAuthAdmin } from '@/api/intreceptors';
-import Button from '@/components/interface/Button'
-import { authService } from '@/services/auth/auth.services';
-import { FaDoorOpen } from "react-icons/fa6";
+import ButtonExit from '@/components/interface/admin/ButtonExit';
 
 const GamesPage = () => {
     const [games, setGames] = useState<Game[]>([]);
@@ -58,12 +56,9 @@ const GamesPage = () => {
     ]
 
     return (
-        <div style={{ height: loading ? 400 : games.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-60 lg:ml-[150px] max-md:ml-[0px] md:mt-8 mb-8 ">
+        <div style={{ height: loading ? 400 : games.length === 0 ? 400 : '' }} className="mt-20 ml-8 xl:ml-[110px] lg:ml-[250px] md:ml-60 lg:ml-[150px] max-md:ml-[0px] md:mt-8 mb-8 ">
             <div className = "flex justify-end mb-6">
-                <Button className='max-md:hidden' onClick={() => { authService.logout(); window.location.reload(); }}>
-                    <p className='mr-[10px]'>Exit</p>
-                    <FaDoorOpen className=''/>
-                </Button>
+                <ButtonExit/>
             </div>
             <DataGrid
                 data={modifiedGames} 

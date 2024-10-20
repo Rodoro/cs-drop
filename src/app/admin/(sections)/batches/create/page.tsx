@@ -22,7 +22,6 @@ const CreateBatches = () => {
     const [open, setOpen] = React.useState(false);
     const [status, setStatus] = React.useState('200');
     const [message, setMessage] = React.useState('Ok!')
-
     
 
     useEffect(() => {
@@ -108,7 +107,13 @@ const CreateBatches = () => {
     return (
         <div className="mt-20 mr-8 ml-8 md:ml-32 md:mt-8 mb-8" >
             <ErrorModal status={status} message={message} visible={open} setVisible={setOpen} />
-            <table className="table-auto w-full bg-[#0A0D1D4D]  border-[#FFFFFF26] rounded-lg overflow-hidden"> 
+            <table
+                style={{
+                    border: '1px solid transparent',
+                    background: 'linear-gradient(#141330, #141330) padding-box, linear-gradient(to top, #171833, #3D3456) border-box',
+                }}
+                className="table-auto w-full bg-[#0A0D1D4D] border-[1px]  border-[#FFFFFF26] rounded-lg overflow-hidden"
+                > 
             <tbody className='rounded-lg'>
                 <tr className="bg-[#0A0D1D4D]">
                     <td className="px-6 py-4 whitespace-nowrap">Title *</td>
@@ -154,7 +159,7 @@ const CreateBatches = () => {
                             type="number" 
                             value={sort} 
                             onChange={e => setSort(e.target.value)} 
-                            required 
+                            required
                             style={{
                                 border: '1px solid transparent',
                                 background: 'linear-gradient(#18173D, #18173D) padding-box, linear-gradient(to top, #FFFFFF01, #FFFFFF26) border-box',
@@ -222,7 +227,7 @@ const CreateBatches = () => {
             </tbody>
         </table>
             <div className='flex flex-row justify-end space-x-3 mt-4 block'>
-                <Button onClick={() => router.push("/admin/batches") } className="h-[45px]">Cancel</Button>
+                <Button onClick={() => router.push("/admin/batches") } className="h-[45px] text-white">Cancel</Button>
                 <Button3 className='bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] justify-center w-[110px] h-[45px]' onClick={() => handleSubmitAndMain()}>Create</Button3>
                 <Button3 className='bg-[#7E50FF] text-white shadow-[4px_4px_34px_0_rgba(139,50,252,0.2)] justify-center w-[203px] h-[45px]' onClick={handleSubmitAndNew}>Create and Open New</Button3>
             </div>

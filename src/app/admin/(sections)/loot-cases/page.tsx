@@ -10,15 +10,9 @@ import {
     GridActionsCellItem,
     GridRowId,
 } from '@mui/x-data-grid';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import SettingsIcon from '@mui/icons-material/Settings';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { axiosWithAuthAdmin } from '@/api/intreceptors';
 import { useQueries, useQuery } from '@tanstack/react-query';
-import { authService } from '@/services/auth/auth.services';
-import { FaDoorOpen } from "react-icons/fa6";
-import Button from '@/components/interface/Button'
+import ButtonExit from '@/components/interface/admin/ButtonExit';
 
 
 const getData = async () => {
@@ -88,13 +82,10 @@ const columns = [
     { key: "isVisible" as keyof LootCases, label: "Is Visible"}, 
 ];
     return (
-        <div style={{ height: loading ? 400 : loots.length === 0 ? 400 : '' }} className="mt-20 mr-8 ml-8 md:ml-60 lg:ml-[150px] max-md:ml-[0px] md:mt-8 mb-8 ">
+        <div style={{ height: loading ? 400 : loots.length === 0 ? 400 : '' }} className="mt-20 ml-8 xl:ml-[110px] lg:ml-[250px] md:ml-60 lg:ml-[150px] max-md:ml-[0px] md:mt-8 mb-8 ">
         <div className = "flex justify-between">
             <Button2 className="px-2 mb-6 md:w-[177px]" onClick={() => router.push("/admin/loot-cases/create")}>+ Create Loot case</Button2>
-            <Button className='max-md:hidden ' onClick={() => { authService.logout(); window.location.reload(); }}>
-                <p className='mr-[10px]'>Exit</p>
-                <FaDoorOpen className=''/>
-            </Button>
+            <ButtonExit/>
         </div>
             <DataGrid
                 data={loots}  

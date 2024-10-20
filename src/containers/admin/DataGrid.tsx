@@ -54,7 +54,8 @@ const DataGrid = <T extends DataRow>({
     const [selectedRows, setSelectedRows] = useState(new Set());
     const [rowsPerPage, setRowsPerPage] = useState<number>(5);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+    const [isAllSelected, setIsAllSelected] = useState(false);
+
 
     const totalPages = Math.ceil(data.length / rowsPerPage);
 
@@ -75,13 +76,6 @@ const DataGrid = <T extends DataRow>({
         return sortableItems;
     }, [data, sortConfig]);
 
-    const requestSort = (key: string) => {
-        let direction = 'ascending';
-        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
-            direction = 'descending';
-        }
-        setSortConfig({ key, direction });
-    };
 
     const handleSelectRow = (index:number) => {
         setSelectedRows((prevSelectedRows) => {
@@ -95,12 +89,6 @@ const DataGrid = <T extends DataRow>({
         });
     };
 
-    const selectAllRows = () => {
-        const allSelected = selectedRows.size === data.length;
-        const newSelectedRows = allSelected ? new Set<number>() : new Set<number>(data.map((_, index) => index));
-        setSelectedRows(newSelectedRows);
-    };
-
     const handlePageChange = (newPage: number) => {
         if (newPage >= 1 && newPage <= totalPages) {
             setCurrentPage(newPage);
@@ -109,6 +97,7 @@ const DataGrid = <T extends DataRow>({
 
     const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
         const checked = event.target.checked;
+        setIsAllSelected(checked);
         const newSelectedRows = checked ? new Set(displayedData.map(row => row.id)) : new Set();
         setSelectedRows(newSelectedRows);
     };
@@ -123,7 +112,7 @@ const DataGrid = <T extends DataRow>({
                     gridTemplateRows: `repeat(${displayedData.length + 1}, 1fr)`,
                 }}>
                     <div className={`h-[60px] flex items-center  pl-[12px] mb-[10px] rounded-l-[15px] bg-[#1B1E4F] border-l-[1px] border-[#3A3269] border-b-[1px] border-t-[1px]`}>
-                        <Select onChange={handleSelectAll} />
+                        <Select checked={isAllSelected} onChange={handleSelectAll} />
                     </div>
                     {columns.map(({ key, label }, colIndex) => (
                         <div
@@ -152,7 +141,7 @@ const DataGrid = <T extends DataRow>({
                                         <Image
                                             src={row[key].replace(/ /g, '%20')}
                                             alt={row.title}
-                                            style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                                            style={{ objectFit: 'cover',  width: 50, height: 50 }}
                                             onError={(e) => { e.currentTarget.src = 'fallback-image-url'; }}
                                         />
                                     ) : (
